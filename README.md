@@ -133,7 +133,7 @@ nomes, telefones, endereços, IDs, valores, tokens e dados de clientes.
 
 ### Background
 
-`background` no dado (anos, instituições, períodos, empresa e cargos) e
+`background` no dado (início da trajetória em tecnologia, instituições, períodos, empresa e cargos) e
 `background` nos dicionários (títulos de curso, status, "Desde").
 
 ## Internacionalização
