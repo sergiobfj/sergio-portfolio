@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Build / cache
+*.tsbuildinfo
+.turbo/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+
+# ==========================================
+# AI / Claude / development context
+# ==========================================
+
+.claude/
+claude-code/
+CLAUDE.md
+
+PROMPT.md
+alteracao.md
+contexto.md
+CONTEXTO.md
+HANDOFF.md
+BI_V2_HANDOFF.md
+
+prompts/
+context/
+contexts/
+
+# Visual references used only during development
+references/
+
+# Secrets / credentials
+credentials.json
+*.pem
+*.key
