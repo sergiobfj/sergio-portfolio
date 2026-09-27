@@ -263,7 +263,7 @@ const es: Dictionary = {
       },
       stack: {
         title: "Ficha técnica",
-        access: "Control de acceso al entorno gestionado a través de CloudPanel.",
+        access: "Entorno con control de acceso gestionado.",
       },
     },
     "jornada-cliente": {
@@ -508,7 +508,7 @@ const es: Dictionary = {
         "Entré por el soporte. Pasé a construir sistemas, automatizaciones e infraestructura para la operación.",
       headline: ["Empecé resolviendo tickets.", "Después empecé a resolver procesos."],
       captions: {
-        promotion: "De Aprendiz a Asistente de TI",
+        promotion: "Momento de la promoción",
         "former-manager": "Con el antiguo gerente del área",
       },
     },
@@ -539,16 +539,13 @@ const es: Dictionary = {
       start: {
         title: "El comienzo",
         quote:
-          "En los primeros meses, muchas cosas eran literalmente la primera vez: abrir una notebook, diagnosticar hardware, armar conectores de red y entender cómo funciona la tecnología dentro de una empresa real.",
+          "En los primeros meses, muchas cosas eran literalmente la primera vez: abrir una notebook, diagnosticar hardware, trabajar con infraestructura de red y entender cómo funciona la tecnología dentro de una empresa real.",
         fundamentalsLabel: "Fundamentos",
         fundamentals: [
           "Soporte técnico",
           "Hardware y mantenimiento",
-          "Redes",
-          "Aprendizaje de infraestructura",
-          "Armado de conectores RJ45",
-          "Participación en la estructuración de la red",
-          "Estudio a fondo de Ploomes",
+          "Infraestructura de red",
+          "Ploomes",
         ],
         ploomes:
           "Ploomes es el principal CRM de la empresa. Estudiarlo a fondo en esa etapa fue lo que después permitió construir sistemas e integraciones sobre su API.",
@@ -562,10 +559,10 @@ const es: Dictionary = {
       },
       broaderScope: {
         title: "Más responsabilidades",
-        text: "Con la salida del gerente del área, asumí temporalmente una parte mayor de las responsabilidades técnicas y operativas, hasta que el equipo se recompuso.",
+        text: "Con la salida del gerente del área, pasé a asumir una parte mayor de las responsabilidades técnicas y operativas.",
         todayLabel: "Hoy",
         today:
-          "El área tiene dos profesionales de TI. Sigo con responsabilidad directa sobre diversos sistemas, automatizaciones, infraestructura y aplicaciones que construí y mantengo.",
+          "Sigo directamente involucrado en la infraestructura, los sistemas, las automatizaciones y las aplicaciones que construí y mantengo.",
       },
       infrastructure: {
         title: "Del código a la infraestructura",
@@ -575,12 +572,12 @@ const es: Dictionary = {
           "Contratación de la VPS",
           "Aprovisionamiento inicial",
           "Configuración",
-          "CloudPanel",
           "Deploy de las aplicaciones",
           "Mantenimiento continuo",
           "Soporte a los sistemas alojados",
         ],
         stackLabel: "Infraestructura",
+        stack: ["VPS Linux", "Deploy", "Administración de servicios", "Mantenimiento"],
       },
       closing: {
         statement: ["Mi primer empleo", "también fue mi primer", "gran laboratorio."],
@@ -646,7 +643,7 @@ const es: Dictionary = {
   background: {
     title: "Trayectoria",
     since: "Desde",
-    years: "Años construyendo con tecnología",
+    technology: "Aprendiendo y construyendo con tecnología",
     technical: {
       value: "Técnico",
       title: "Análisis y Desarrollo de Sistemas",

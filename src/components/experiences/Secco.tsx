@@ -15,10 +15,10 @@ import { Contact } from "@/components/sections/Contact";
 import { Reveal } from "@/components/ui/Reveal";
 import { RevealLines } from "@/components/ui/RevealLines";
 import { CaseGrid } from "@/components/work/CaseGrid";
-import { fit } from "@/lib/cn";
+import { cn, fit } from "@/lib/cn";
 import { listOf } from "@/lib/dates";
 import { mediaSrc } from "@/lib/media";
-import { pairSpans } from "@/lib/spreads";
+import { growStyle, pairSpans } from "@/lib/spreads";
 
 /**
  * Uma talk ou oficina. A que ainda não aconteceu (`upcoming`) não finge foto:
@@ -31,12 +31,14 @@ function TalkItem({
   dict,
   locale,
   className,
+  style,
 }: {
   talk: Talk;
   number: number;
   dict: Dictionary;
   locale: Locale;
   className?: string;
+  style?: React.CSSProperties;
 }) {
   const copy = dict.experienceStories.secco.talks;
   const text = copy.items[talk.key];
@@ -44,7 +46,7 @@ function TalkItem({
   const showFigure = !upcoming || Boolean(mediaSrc(talk.media));
 
   return (
-    <article className={className}>
+    <article className={className} style={style}>
       {showFigure ? (
         <Figure
           media={talk.media}
@@ -167,11 +169,20 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
           <div className="mt-[10vh] flex flex-col gap-y-[12vh]">
             {numbered.map((group) => {
               const spans = pairSpans(false);
+              // Todas com foto: larguras pela proporção, fotos na mesma altura
+              // (como na galeria). Com um item só de texto, fica o grid 7/5.
+              const matched =
+                group.items.length > 1 && group.items.every(({ number }) => number > 0);
               return (
                 <section key={group.event} aria-label={group.event}>
                   <Reveal variant="draw" className="h-px w-full bg-ink/15" />
                   <h3 className="label mt-5 text-ash">{group.event}</h3>
-                  <div className="mt-8 grid grid-cols-1 items-start gap-x-[clamp(0.625rem,1vw,1rem)] gap-y-14 md:grid-cols-12">
+                  <div
+                    className={cn(
+                      "mt-8 items-start gap-x-[clamp(0.625rem,1vw,1rem)] gap-y-14",
+                      matched ? "flex flex-col md:flex-row" : "grid grid-cols-1 md:grid-cols-12",
+                    )}
+                  >
                     {group.items.map(({ talk, number }, i) => (
                       <TalkItem
                         key={talk.key}
@@ -179,10 +190,13 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
                         number={number}
                         dict={dict}
                         locale={locale}
+                        style={matched ? growStyle(talk.media.ratio) : undefined}
                         className={
-                          group.items.length === 1
-                            ? "md:col-span-8"
-                            : `${spans[i % 2]} ${i % 2 === 1 ? "md:pl-[3%]" : ""}`
+                          matched
+                            ? "min-w-0 md:[flex:var(--grow)_1_0%]"
+                            : group.items.length === 1
+                              ? "md:col-span-8"
+                              : `${spans[i % 2]} ${i % 2 === 1 ? "md:pl-[3%]" : ""}`
                         }
                       />
                     ))}

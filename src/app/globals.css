@@ -702,6 +702,64 @@
   .swatch[data-fill] {
     background-color: var(--band-ink);
   }
+
+  /* Progressão de fases (case/Flow): um filete contínuo com um ponto por
+     etapa. Vertical no celular; do tablet em diante, o filete corre por
+     cima, e o último segue até a margem — "manter" não termina. */
+  .progression {
+    --dot: 0.4375rem;
+    --line: color-mix(in srgb, var(--band-ink) 20%, transparent);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .progression > li {
+    position: relative;
+    padding: 0 0 1.75rem 1.75rem;
+    border-left: 1px solid var(--line);
+  }
+
+  .progression > li:last-child {
+    padding-bottom: 0;
+    border-left-color: transparent;
+  }
+
+  .progression > li::before {
+    content: "";
+    position: absolute;
+    top: 0.05rem;
+    left: calc(var(--dot) / -2 - 0.5px);
+    width: var(--dot);
+    height: var(--dot);
+    border-radius: 999px;
+    background-color: var(--band-ink);
+  }
+
+  @media (min-width: 640px) {
+    .progression {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      row-gap: 2.75rem;
+    }
+
+    .progression > li,
+    .progression > li:last-child {
+      padding: 1.5rem 1.5rem 0 0;
+      border-top: 1px solid var(--line);
+      border-left: 0;
+    }
+
+    .progression > li::before {
+      top: calc(var(--dot) / -2 - 0.5px);
+      left: 0;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .progression {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+  }
 }
 
 /* ==========================================================================

@@ -259,7 +259,7 @@ const en: Dictionary = {
       },
       stack: {
         title: "Tech specs",
-        access: "Environment access control managed through CloudPanel.",
+        access: "Environment with managed access control.",
       },
     },
     "jornada-cliente": {
@@ -504,7 +504,7 @@ const en: Dictionary = {
         "I started in support. Then I began building systems, automations and infrastructure for the operation.",
       headline: ["I started by solving tickets.", "Then I started solving processes."],
       captions: {
-        promotion: "From Apprentice to IT Assistant",
+        promotion: "Promotion milestone",
         "former-manager": "With the department’s former manager",
       },
     },
@@ -535,16 +535,13 @@ const en: Dictionary = {
       start: {
         title: "The beginning",
         quote:
-          "In the first months, a lot of things were literally a first: opening a laptop, diagnosing hardware, crimping network connectors and understanding how technology works inside a real company.",
+          "In the first months, a lot of things were literally a first: opening a laptop, diagnosing hardware, working with network infrastructure and understanding how technology works inside a real company.",
         fundamentalsLabel: "Fundamentals",
         fundamentals: [
           "Technical support",
           "Hardware & maintenance",
-          "Networking",
-          "Learning infrastructure",
-          "Crimping RJ45 connectors",
-          "Helping structure the network",
-          "In-depth study of Ploomes",
+          "Network infrastructure",
+          "Ploomes",
         ],
         ploomes:
           "Ploomes is the company’s main CRM. Studying it in depth at that stage is what later made it possible to build systems and integrations on its API.",
@@ -558,10 +555,10 @@ const en: Dictionary = {
       },
       broaderScope: {
         title: "A broader scope",
-        text: "When the department’s manager left, I temporarily took on a larger share of the area’s technical and operational responsibilities until the team was rebuilt.",
+        text: "When the department’s manager left, I took on a larger share of the area’s technical and operational responsibilities.",
         todayLabel: "Today",
         today:
-          "The department now has two IT professionals. I remain directly responsible for a number of systems, automations, infrastructure and applications that I built and maintain.",
+          "I remain directly involved in the infrastructure, systems, automations and applications I built and maintain.",
       },
       infrastructure: {
         title: "From code to infrastructure",
@@ -571,12 +568,12 @@ const en: Dictionary = {
           "Contracting the VPS",
           "Initial provisioning",
           "Configuration",
-          "CloudPanel",
           "Application deploys",
           "Ongoing maintenance",
           "Support for hosted systems",
         ],
         stackLabel: "Infrastructure",
+        stack: ["Linux VPS", "Deploy", "Service administration", "Maintenance"],
       },
       closing: {
         statement: ["My first job", "was also my first", "big lab."],
@@ -642,7 +639,7 @@ const en: Dictionary = {
   background: {
     title: "Background",
     since: "Since",
-    years: "Years building with technology",
+    technology: "Learning and building with technology",
     technical: {
       value: "Technical",
       title: "Systems Analysis and Development",

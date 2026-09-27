@@ -154,7 +154,7 @@ export const cases: WorkCase[] = [
       { group: "integration", items: ["Ploomes API", "Requests"] },
       { group: "data", items: ["OpenPyXL"] },
       { group: "frontend", items: ["HTML", "CSS", "JavaScript"] },
-      { group: "infrastructure", items: ["Hostinger VPS", "CloudPanel"] },
+      { group: "infrastructure", items: ["VPS Linux"] },
     ],
     media: { src: "/projects/router-planner/hero.webp", ratio: "16 / 10" },
     images: [
@@ -349,14 +349,12 @@ export const virtronStory = {
   promotion: {
     date: "2025-12",
     images: [
-      { id: "promotion", src: "/experience/virtron/promotion.webp", ratio: "4 / 5" },
-      { id: "former-manager", src: "/experience/virtron/former-manager.webp", ratio: "4 / 5" },
+      { id: "promotion", src: "/experience/virtron/promotion.webp", ratio: "4 / 3" },
+      { id: "former-manager", src: "/experience/virtron/former-manager.webp", ratio: "4 / 3" },
     ] satisfies GalleryImage[],
   },
   /** Saída do gestor do setor: responsabilidades ampliadas, sem cargo novo. */
   broaderScope: "2026-02",
-  /** Só nomes de produto — nenhum IP, porta, URL ou regra de rede. */
-  infrastructure: ["Hostinger VPS", "Ubuntu", "CloudPanel"],
   /** Mini-case contado dentro da página. */
   firstTool: "relatorio-merger" as CaseKey,
 };
@@ -445,13 +443,14 @@ export const milestones: {
    ------------------------------------------------------------------------- */
 
 export const background: {
-  yearsBuilding: string;
+  /** Início da trajetória em tecnologia (curso de Informática Básica), não de experiência profissional. */
+  techSince: string;
   technicalEducation: { institution: string; from: string; to: string };
   degree: { institution: string; from: string; to: string };
   /** O primeiro cargo vira a palavra grande; os outros, a legenda. */
   entrepreneurship: { company: string; roles: string[]; since: string };
 } = {
-  yearsBuilding: "04+",
+  techSince: "2020",
   technicalEducation: {
     institution: "ETE Ministro Fernando Lyra",
     from: "2022",

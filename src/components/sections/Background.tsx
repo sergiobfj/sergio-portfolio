@@ -4,8 +4,8 @@ import { Metrics, type Metric } from "@/components/case/Metrics";
 import { RevealLines } from "@/components/ui/RevealLines";
 
 /**
- * Background em quatro medidas: experiência, formação técnica, graduação,
- * empreendedorismo. Uma palavra grande e uma legenda curta cada — nada de
+ * Background em quatro medidas: trajetória em tecnologia, formação técnica,
+ * graduação, empreendedorismo. Uma palavra grande e uma legenda curta cada — nada de
  * currículo, ícone ou card. Termina em SECCO, e a seção escura da SECCO vem
  * logo em seguida.
  */
@@ -15,7 +15,9 @@ export function Background({ dict }: { dict: Dictionary }) {
   const [role, ...titles] = entrepreneurship.roles;
 
   const items: Metric[] = [
-    { value: background.yearsBuilding, lines: [copy.years] },
+    // Trajetória em tecnologia, não "anos de experiência": começa no curso
+    // de Informática Básica.
+    { prefix: copy.since, value: background.techSince, lines: [copy.technology] },
     {
       value: copy.technical.value,
       lines: [copy.technical.title],

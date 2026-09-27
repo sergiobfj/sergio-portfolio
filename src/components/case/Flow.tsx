@@ -95,14 +95,11 @@ export function InlineFlow({
   steps,
   focus,
   size = "md",
-  stack = false,
   className,
 }: {
   steps: readonly string[];
   focus?: number;
   size?: "md" | "sm";
-  /** No celular, uma etapa por linha — para etapas longas ("Entender a operação"). */
-  stack?: boolean;
   className?: string;
 }) {
   return (
@@ -116,12 +113,10 @@ export function InlineFlow({
         )}
       >
         {steps.map((step, i) => (
-          <li key={step} className={stack ? "block sm:inline" : "inline"}>
-            {/* Etapa inteira na mesma linha. Empilhada no celular, uma etapa
-                longa ("Understand the operation") pode quebrar sem vazar. */}
+          <li key={step} className="inline">
             <span
               className={cn(
-                stack ? "sm:whitespace-nowrap" : "whitespace-nowrap",
+                "whitespace-nowrap",
                 i === focus && "pill",
               )}
             >
@@ -136,6 +131,34 @@ export function InlineFlow({
                 </span>{" "}
               </>
             ) : null}
+          </li>
+        ))}
+      </ol>
+    </Reveal>
+  );
+}
+
+/**
+ * Progressão de fases: um filete contínuo com um ponto em cada etapa, número
+ * em cima e nome em display. Uma linha no desktop, duas no tablet, vertical
+ * no celular — a ordem se lê de relance e nenhuma etapa pesa mais que outra.
+ */
+export function Progression({
+  steps,
+  className,
+}: {
+  steps: readonly string[];
+  className?: string;
+}) {
+  return (
+    <Reveal className={className}>
+      <ol className="progression">
+        {steps.map((step, i) => (
+          <li key={step}>
+            <span className="meta block opacity-55">{pad(i + 1)}</span>
+            <span className="display mt-3 block text-[clamp(1.5rem,2.1vw,2.25rem)] leading-[0.95]">
+              {step}
+            </span>
           </li>
         ))}
       </ol>

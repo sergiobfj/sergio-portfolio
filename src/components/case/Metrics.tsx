@@ -3,6 +3,8 @@ import { cn } from "@/lib/cn";
 
 export type Metric = {
   value: string;
+  /** Palavra antes do valor, na serifa ("Desde 2020"): não disputa com o número. */
+  prefix?: string;
   lines: readonly string[];
   note?: string | null;
   /** Período ou data, em algarismos tabulares. */
@@ -11,7 +13,7 @@ export type Metric = {
 
 /**
  * Medidas editoriais: uma palavra ou número grande, uma legenda curta e um
- * filete por cima. O tamanho acompanha a coluna (cqi), então "04+" e
+ * filete por cima. O tamanho acompanha a coluna (cqi), então "2020" e
  * "Técnico" dividem a mesma régua em qualquer largura. Horizontal a partir
  * do tablet; no celular, uma embaixo da outra. `sm` é para palavras longas
  * ("Construcción"), `lg` para números curtos.
@@ -48,6 +50,11 @@ export function Metrics({
                 size === "sm" && "text-[min(16cqi,5rem)]",
               )}
             >
+              {item.prefix ? (
+                <span className="voice mr-[0.2em] text-[0.46em] tracking-normal normal-case italic">
+                  {item.prefix}
+                </span>
+              ) : null}
               {item.value}
             </p>
             <p className="label mt-5 max-w-[26ch] text-[0.75rem] leading-[1.35] opacity-65">

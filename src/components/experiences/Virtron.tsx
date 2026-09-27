@@ -1,6 +1,6 @@
 import { casesAt, findCase, pad, virtronStory } from "@/data/portfolio";
 import { Band } from "@/components/case/Band";
-import { InlineFlow, StepList } from "@/components/case/Flow";
+import { Progression, StepList } from "@/components/case/Flow";
 import { Gallery } from "@/components/case/Gallery";
 import { Metrics } from "@/components/case/Metrics";
 import {
@@ -67,13 +67,13 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
 
           <div className="mt-[14vh]">
             <p className="label text-ash">{story.intro.evolutionLabel}</p>
-            <InlineFlow steps={story.intro.evolution} stack className="mt-6" />
+            <Progression steps={story.intro.evolution} className="mt-8" />
           </div>
         </Band>
 
         {/* O começo */}
         <Band tone="void" after="paper" labelledBy="virtron-start">
-          <Chapter id="virtron-start" title={story.start.title}>
+          <Chapter id="virtron-start" title={story.start.title} inset>
             <Reveal>
               <p className="voice text-[clamp(1.75rem,3vw,3rem)] leading-[1.08] text-pretty">
                 {story.start.quote}
@@ -207,7 +207,7 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
               <Reveal delay={120} className="mt-10">
                 <p className="label text-fog">{story.infrastructure.stackLabel}</p>
                 <p className="display mt-4 flex flex-wrap gap-x-[0.5em] text-[clamp(1.6rem,2.6vw,2.5rem)] leading-[0.95]">
-                  {virtronStory.infrastructure.map((tech, i) => (
+                  {story.infrastructure.stack.map((tech, i) => (
                     <span key={tech} className="whitespace-nowrap">
                       {i > 0 ? (
                         <span aria-hidden="true" className="mr-[0.5em] opacity-30">

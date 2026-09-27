@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { pad, type MediaSlot, type SurfaceTone } from "@/data/portfolio";
 import { Surface } from "@/components/ui/Surface";
 import { Reveal } from "@/components/ui/Reveal";
@@ -17,6 +18,7 @@ export function Figure({
   sizes,
   priority = false,
   className,
+  style,
 }: {
   media: MediaSlot;
   number: number;
@@ -29,11 +31,12 @@ export function Figure({
   sizes: string;
   priority?: boolean;
   className?: string;
+  style?: CSSProperties;
 }) {
   const index = pad(number);
 
   return (
-    <figure className={className}>
+    <figure className={className} style={style}>
       <Surface
         tone={tone}
         media={media}

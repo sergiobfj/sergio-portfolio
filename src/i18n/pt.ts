@@ -162,7 +162,7 @@ const experiences: Record<ExperienceKey, ExperienceCopy> = {
       "Entrei pelo suporte. Passei a construir sistemas, automações e infraestrutura para a operação.",
     headline: ["Comecei resolvendo chamados.", "Depois comecei resolvendo processos."],
     captions: {
-      promotion: "De Jovem Aprendiz a Assistente de T.I.",
+      promotion: "Registro da promoção",
       "former-manager": "Com o antigo gestor do setor",
     },
   },
@@ -310,7 +310,7 @@ const stories = {
     },
     stack: {
       title: "Ficha técnica",
-      access: "Controle de acesso ao ambiente gerenciado pelo CloudPanel.",
+      access: "Ambiente com controle de acesso gerenciado.",
     },
   },
   "jornada-cliente": {
@@ -557,16 +557,13 @@ const experienceStories = {
     start: {
       title: "O começo",
       quote:
-        "Nos primeiros meses, muita coisa era literalmente a primeira vez: abrir um notebook, diagnosticar hardware, montar conectores de rede e entender como funciona a tecnologia dentro de uma empresa real.",
+        "Nos primeiros meses, muita coisa era literalmente a primeira vez: abrir um notebook, diagnosticar hardware, trabalhar com infraestrutura de rede e entender como funciona a tecnologia dentro de uma empresa real.",
       fundamentalsLabel: "Fundamentos",
       fundamentals: [
         "Suporte técnico",
         "Hardware e manutenção",
-        "Redes",
-        "Aprendizado de infraestrutura",
-        "Montagem de conectores RJ45",
-        "Participação na estruturação da rede",
-        "Estudo aprofundado do Ploomes",
+        "Infraestrutura de rede",
+        "Ploomes",
       ],
       ploomes:
         "O Ploomes é o principal CRM da empresa. Estudá-lo a fundo nessa fase foi o que depois permitiu construir sistemas e integrações sobre a API dele.",
@@ -580,10 +577,10 @@ const experienceStories = {
     },
     broaderScope: {
       title: "Responsabilidades ampliadas",
-      text: "Com a saída do gestor do setor, passei temporariamente a assumir uma parcela maior das responsabilidades técnicas e operacionais da área, até a recomposição da equipe.",
+      text: "Com a saída do gestor do setor, passei a assumir uma parcela maior das responsabilidades técnicas e operacionais da área.",
       todayLabel: "Hoje",
       today:
-        "O setor tem dois profissionais de T.I. Sigo com responsabilidade direta sobre diversos sistemas, automações, infraestrutura e aplicações que construí e mantenho.",
+        "Sigo diretamente envolvido na infraestrutura, nos sistemas, nas automações e nas aplicações que construí e mantenho.",
     },
     infrastructure: {
       title: "Do código à infraestrutura",
@@ -593,12 +590,13 @@ const experienceStories = {
         "Contratação da VPS",
         "Provisionamento inicial",
         "Configuração",
-        "CloudPanel",
         "Deploy das aplicações",
         "Manutenção contínua",
         "Suporte aos sistemas hospedados",
       ],
       stackLabel: "Infraestrutura",
+      // Versão pública: sem provedor nem painel.
+      stack: ["VPS Linux", "Deploy", "Administração de serviços", "Manutenção"],
     },
     closing: {
       statement: ["Meu primeiro emprego", "também foi meu primeiro", "grande laboratório."],
@@ -732,7 +730,7 @@ const pt = {
   background: {
     title: "Background",
     since: "Desde",
-    years: "Anos construindo com tecnologia",
+    technology: "Aprendendo e construindo com tecnologia",
     technical: {
       value: "Técnico",
       title: "Análise e Desenvolvimento de Sistemas",
