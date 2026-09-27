@@ -56,6 +56,7 @@ const es: Dictionary = {
     tools: {
       title: ["Experimentos &", "Herramientas"],
       description: "Herramientas personales, scripts y proyectos técnicos menores.",
+      outline: ["Herramientas personales", "Scripts", "Proyectos técnicos"],
     },
   },
   cases: {
@@ -66,16 +67,23 @@ const es: Dictionary = {
       tags: ["Producto interno", "Logística"],
       captions: {
         "legacy-excel": "Proceso anterior basado en Excel",
-        dashboard: "Panel de Router Planner",
         "route-selection": "Selección de rutas dentro de Router Planner",
         export: "Archivo generado automáticamente para la operación",
         validation: "Verificaciones antes de la operación",
       },
     },
-    sentavos: { summary: "Producto propio de finanzas personales." },
+    sentavos: {
+      summary: "Producto propio de finanzas personales.",
+      captions: { dashboard: "Presupuesto del mes" },
+    },
     geocarbo: {
       kicker: "Climate tech · dMRV · Carbono",
       tags: ["Climate tech", "dMRV", "Carbono"],
+      captions: {
+        dashboard: "Vista general del monitoreo",
+        "cadastro-propriedade": "Registro de una propiedad para monitoreo",
+        relatorios: "Informes generados",
+      },
     },
     "crm-textil": {
       kicker: "Sistema en desarrollo",
@@ -88,7 +96,6 @@ const es: Dictionary = {
       kicker: "BI comercial · Automatización · Ploomes API",
       tags: ["BI comercial & automatización", "En producción"],
       captions: {
-        dashboard: "Dashboard comercial",
         "telegram-sale": "Notificación de nueva venta en Telegram",
         "telegram-question": "Una pregunta en lenguaje natural al bot",
         looker: "Panel en Looker Studio",
@@ -102,7 +109,7 @@ const es: Dictionary = {
       tags: ["Experiencia digital", "São João de Caruaru 2026"],
       captions: {
         calculator: "Calculadora de impacto de CO₂",
-        carousel: "Carrusel de fotos",
+        experiences: "Lo que el visitante encuentra en la Arena",
         mobile: "Versión móvil",
       },
     },
@@ -509,7 +516,10 @@ const es: Dictionary = {
       headline: ["Empecé resolviendo tickets.", "Después empecé a resolver procesos."],
       captions: {
         promotion: "Momento de la promoción",
+        start: "Estación de trabajo en Virtron",
         "former-manager": "Con el antiguo gerente del área",
+        "workstation-01": "Desarrollo en el día a día",
+        "workstation-02": "Mantenimiento de hardware",
       },
     },
     secco: {
@@ -517,6 +527,10 @@ const es: Dictionary = {
       pageRole: "Co-Founder · CPO · Developer",
       summary: "Ideas en producto. Tecnología en solución.",
       headline: ["Ideas en producto.", "Tecnología en solución."],
+      captions: {
+        "team-01": "El equipo SECCO",
+        "talk-room": "La charla en UniFavip Wyden",
+      },
     },
   },
   experienceStories: {

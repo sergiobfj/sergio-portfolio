@@ -60,9 +60,11 @@ export function StepList({
               <span className="meta w-[1.35rem] shrink-0 opacity-45">
                 {pad(i + 1)}
               </span>
+              {/* Largura máxima = o que sobra ao lado do número: um passo
+                  longo quebra por dentro em vez de descer inteiro. */}
               <span
                 className={cn(
-                  "display",
+                  "display max-w-[calc(100%-2.35rem)]",
                   small
                     ? "text-[clamp(1.25rem,1.75vw,1.7rem)]"
                     : "text-[clamp(1.55rem,2.6vw,2.5rem)]",

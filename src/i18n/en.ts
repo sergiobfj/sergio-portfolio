@@ -53,6 +53,7 @@ const en: Dictionary = {
     tools: {
       title: ["Experiments &", "Tools"],
       description: "Personal tools, scripts and smaller technical projects.",
+      outline: ["Personal tools", "Scripts", "Technical projects"],
     },
   },
   cases: {
@@ -63,16 +64,23 @@ const en: Dictionary = {
       tags: ["Internal product", "Logistics"],
       captions: {
         "legacy-excel": "The previous Excel-based process",
-        dashboard: "Router Planner dashboard",
         "route-selection": "Selecting routes inside Router Planner",
         export: "File generated automatically for the operation",
         validation: "Checks before the operation",
       },
     },
-    sentavos: { summary: "A personal finance product of my own." },
+    sentavos: {
+      summary: "A personal finance product of my own.",
+      captions: { dashboard: "Monthly budget" },
+    },
     geocarbo: {
       kicker: "Climate tech · dMRV · Carbon",
       tags: ["Climate tech", "dMRV", "Carbon"],
+      captions: {
+        dashboard: "Monitoring overview",
+        "cadastro-propriedade": "Registering a property for monitoring",
+        relatorios: "Generated reports",
+      },
     },
     "crm-textil": {
       kicker: "System in development",
@@ -85,7 +93,6 @@ const en: Dictionary = {
       kicker: "Commercial BI · Automation · Ploomes API",
       tags: ["Commercial BI & automation", "In production"],
       captions: {
-        dashboard: "Commercial dashboard",
         "telegram-sale": "New-sale notification on Telegram",
         "telegram-question": "A natural-language question to the bot",
         looker: "Looker Studio dashboard",
@@ -99,7 +106,7 @@ const en: Dictionary = {
       tags: ["Digital experience", "São João de Caruaru 2026"],
       captions: {
         calculator: "CO₂ impact calculator",
-        carousel: "Photo carousel",
+        experiences: "What visitors find at the Arena",
         mobile: "Mobile version",
       },
     },
@@ -505,7 +512,10 @@ const en: Dictionary = {
       headline: ["I started by solving tickets.", "Then I started solving processes."],
       captions: {
         promotion: "Promotion milestone",
+        start: "Workstation at Virtron",
         "former-manager": "With the department’s former manager",
+        "workstation-01": "Day-to-day development",
+        "workstation-02": "Hardware maintenance",
       },
     },
     secco: {
@@ -513,6 +523,10 @@ const en: Dictionary = {
       pageRole: "Co-Founder · CPO · Developer",
       summary: "Ideas into product. Technology into solutions.",
       headline: ["Ideas into product.", "Technology into solutions."],
+      captions: {
+        "team-01": "The SECCO team",
+        "talk-room": "The talk at UniFavip Wyden",
+      },
     },
   },
   experienceStories: {

@@ -114,18 +114,41 @@ Imagem planejada já pode estar no dado apontando para um arquivo que ainda
 não existe: sem o arquivo em `/public`, entra a prancha (tom, grão e número da
 figura); com ele, a imagem (`lib/media.ts`, checado no build). Publicar é
 salvar o arquivo no caminho e rodar o build de novo. `ratio` é o recorte:
-ajuste ao formato real de cada foto ou screenshot.
+ajuste ao formato real de cada foto ou screenshot (`position` escolhe o ponto
+focal quando o bloco corta a imagem).
 
-| Pasta | Arquivos |
-| --- | --- |
-| `public/projects/router-planner/` | `hero` `legacy-excel` `dashboard` `route-selection` `export` `validation` |
-| `public/projects/jornada-cliente/` | `hero` `dashboard` `telegram-sale` `telegram-question` `looker` `architecture` |
-| `public/projects/arena-sustentabilidade/` | `hero` `calculator` `carousel` `mobile` |
-| `public/experience/virtron/` | `promotion` `former-manager` `workstation-01` `workstation-02` |
-| `public/experience/secco/` | `recnplay-python` `recnplay-terminal` `unifavip-empreendedorismo` `bug-hunt` `team-01` `team-02` |
+| Pasta | No ar | Ainda prancha |
+| --- | --- | --- |
+| `public/images/` | `foto-principal-sergio.jpg` | |
+| `public/projects/router-planner/` | `tela-principal` `selecao-de-rotas` `validacoes` (tarjados) | `planilha-antiga` `exportacao-final` |
+| `public/projects/jornada-cliente/` | `bancada-desenvolvimento` `telegram-nova-venda` (+ `-card`, recorte) `telegram-pergunta` | `dashboard-looker` `arquitetura` |
+| `public/projects/arena-sustentabilidade/` | `tela-principal` `calculadora-co2` (+ `-recorte`) `experiencias` | `versao-mobile` |
+| `public/projects/relatorio-merger/` | `quadro-demonstracao` (quadro do vídeo de demonstração) | |
+| `public/projects/sentavos/` | `tela-principal` `dashboard` | |
+| `public/projects/geocarbo/` | `tela-principal` `dashboard` `cadastro-propriedade` `relatorios` (tarjados) | |
+| `public/experience/virtron/` | `estacao-de-trabalho` `promocao-assistente-ti` `foto-com-antigo-gestor` `trabalhando-virtron-01` `trabalhando-virtron-02` | |
+| `public/experience/secco/` | `recnplay-oficina-python` `recnplay-oficina-terminal` `unifavip-talk-empreendedorismo` `unifavip-talk-sala` `equipe-secco-01` | `bug-hunt` (só depois do evento) |
 
-Todos `.webp`. Antes de publicar screenshot de sistema interno, revisar:
-nomes, telefones, endereços, IDs, valores, tokens e dados de clientes.
+Prévias das categorias na home: `workCategories[].preview` — uma imagem
+principal que sangra pela borda e um recorte na frente, em % da prancha
+(`work/CategoryPreview`). Os arquivos `-card`/`-recorte` são enquadramentos
+dos prints originais, não montagens. Categoria sem prints usa
+`categories.<chave>.outline` (o índice do que vai morar ali).
+
+Marcas em `public/logos/` (`virtron-*.png`, `secco-*.svg`): monocromáticas nos
+tons do site — `-escura` (ink) para fundo claro, `-branca` (paper) para fundo
+escuro —, geradas do arquivo original sem mudar forma nem proporção. Entram
+pelo `logo` da experiência (componente `ui/Logo`), hoje só na hero da página
+da empresa. Links (redes, e-mail, site da SECCO) moram em `site`, `socials` e
+`experiences[].website`.
+
+Fotos em `.jpg`, screenshots em `.png`; nomes em minúsculas, com hífen. Fotos
+saem sem EXIF (GPS incluso) e com no máximo 2000 px no lado maior. Os
+originais ficam em `fotos-portifolio/`, fora do Git: alguns têm dados reais.
+
+Antes de publicar screenshot de sistema interno, revisar: nomes, telefones,
+endereços, IDs, códigos, valores, observações, tokens e dados de clientes.
+Tarja é retângulo opaco sobre o dado — blur pode ser revertido.
 
 - Foto do about: `aboutPortrait.src` (a pílula dentro da frase).
 - Hero: sem retrato por enquanto — a fotografia volta junto com a interação

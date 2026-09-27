@@ -15,14 +15,16 @@ import { RevealLines } from "@/components/ui/RevealLines";
 import { SectionCurve } from "@/components/ui/SectionCurve";
 import { Surface } from "@/components/ui/Surface";
 import { WorkCursor } from "@/components/ui/WorkCursor";
+import { CategoryOutline, CategoryPreview } from "@/components/work/CategoryPreview";
 import { caseTitle, countLabel } from "@/lib/work";
 import { routes } from "@/lib/routes";
 import { pairSpans } from "@/lib/spreads";
 
 /**
- * Um bloco por categoria: a superfície é a arte (o número, tom sobre tom,
- * afundando na borda) e a legenda diz o que há dentro — o nome da categoria
- * e os trabalhos que ela reúne. Categoria vazia mostra o que vai morar ali.
+ * Um bloco por categoria: a superfície é a prévia (os prints dos próprios
+ * projetos, compostos na prancha) e a legenda diz o que há dentro — o nome
+ * da categoria e os trabalhos que ela reúne. Categoria sem prints lista, tom
+ * sobre tom, o que vai morar ali; sem nem isso, fica o número.
  */
 function CategoryBlock({
   category,
@@ -51,6 +53,13 @@ function CategoryBlock({
           media={category.media}
           cover={number}
           coverSize="74cqw"
+          art={
+            category.preview ? (
+              <CategoryPreview preview={category.preview} />
+            ) : copy.outline ? (
+              <CategoryOutline items={copy.outline} />
+            ) : undefined
+          }
           lead={
             <span aria-hidden="true" className="meta">
               {number}

@@ -41,6 +41,8 @@ function CaseSurface({
       cover={caseTitle(item, dict)}
       lead={lead ? <span className="label">{lead}</span> : null}
       trail={item.year ? <span className="meta">{item.year}</span> : null}
+      // Sobre um screenshot o rótulo fica ilegível; a legenda embaixo já diz tudo.
+      labels="placeholder"
       sizes={sizes}
       className={className}
     />

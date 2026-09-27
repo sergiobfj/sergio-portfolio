@@ -61,6 +61,7 @@ function GenericCase({ item, dict, locale }: Props) {
 
         {mediaSrc(item.media) ? (
           <div className="gutter-x bg-stone pb-[12vh]">
+            {/* Mini-case: a figura acompanha o peso da hero — metade da largura. */}
             <Figure
               media={item.media}
               number={1}
@@ -68,7 +69,12 @@ function GenericCase({ item, dict, locale }: Props) {
               alt={title}
               tone={item.tone}
               priority
-              sizes="(max-width: 768px) 100vw, 92vw"
+              sizes={
+                item.weight === "mini"
+                  ? "(max-width: 1024px) 100vw, 46vw"
+                  : "(max-width: 768px) 100vw, 92vw"
+              }
+              className={item.weight === "mini" ? "lg:w-1/2" : undefined}
             />
           </div>
         ) : null}

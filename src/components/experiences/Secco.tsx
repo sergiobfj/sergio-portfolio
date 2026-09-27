@@ -193,7 +193,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
                         style={matched ? growStyle(talk.media.ratio) : undefined}
                         className={
                           matched
-                            ? "min-w-0 md:[flex:var(--grow)_1_0%]"
+                            ? "w-full min-w-0 md:[flex:var(--grow)_1_0%]"
                             : group.items.length === 1
                               ? "md:col-span-8"
                               : `${spans[i % 2]} ${i % 2 === 1 ? "md:pl-[3%]" : ""}`

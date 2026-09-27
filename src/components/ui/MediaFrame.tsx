@@ -42,6 +42,7 @@ export function MediaFrame({
           sizes={sizes}
           priority={priority}
           className="object-cover"
+          style={media.position ? { objectPosition: media.position } : undefined}
         />
       ) : (
         <span role="img" aria-label={alt} className="absolute inset-0" />

@@ -14,6 +14,8 @@ export type MediaSlot = {
   /** Caminho em /public. `null` mantém o placeholder gráfico. */
   src: string | null;
   ratio: string;
+  /** Ponto focal quando o recorte corta a imagem (object-position, ex.: "50% 20%"). */
+  position?: string;
 };
 
 /** Tom da superfície enquanto não há imagem (e fundo por trás dela). */
@@ -26,12 +28,13 @@ export const site = {
   /** Assinatura de autoria: idêntica em todos os idiomas. */
   signature: { lead: "Code", by: "by", name: "Sergio" },
   url: "https://sergiobarbosa.com", // [placeholder] domínio final
-  email: "ola@sergiobarbosa.com", // [placeholder] e-mail público final
+  email: "contato.sergiobfj@gmail.com",
 };
 
 export const aboutPortrait: MediaSlot = {
-  src: null,
+  src: "/images/foto-principal-sergio.jpg",
   ratio: "4 / 5",
+  position: "50% 12%",
 };
 
 /* ---------------------------------------------------------------------------
@@ -43,19 +46,100 @@ export const aboutPortrait: MediaSlot = {
 
 export type WorkCategoryKey = "products" | "automations" | "web" | "tools";
 
+/**
+ * Um print na prévia de uma categoria. Posição e tamanho em % da prancha,
+ * então a composição escala junto do bloco em qualquer largura.
+ */
+export type PreviewShot = {
+  src: string;
+  /** Proporção da caixa. Menor que a do arquivo, o print é recortado (sem distorcer). */
+  ratio: string;
+  /** Ponto focal do recorte (object-position). */
+  position?: string;
+  /** Distância da esquerda. */
+  x: number;
+  /** Principal: distância do topo (abaixo dos rótulos). */
+  y?: number;
+  /** Recorte: distância da base. */
+  bottom?: number;
+  /** Largura. A principal, sem `w`, sangra pela direita. */
+  w?: number;
+};
+
+/**
+ * A prévia de uma categoria com os prints dos próprios projetos: uma imagem
+ * principal, que sangra pela borda, e um recorte menor na frente. Poucos
+ * elementos fortes — nunca mosaico.
+ */
+export type CategoryPreview = {
+  main: PreviewShot;
+  inset?: PreviewShot;
+};
+
 export type WorkCategory = {
   /** Também é o slug da rota: /work/products. */
   key: WorkCategoryKey;
   tone: SurfaceTone;
-  /** Arte do bloco na home. Sem imagem, o número da categoria vira a arte. */
+  /** Proporção do bloco no celular (no desktop, a altura vem do par). */
   media: MediaSlot;
+  /** Sem prévia (categoria sem prints), o bloco lista o que vai morar ali. */
+  preview?: CategoryPreview;
 };
 
 /** Ordem = ordem na home e numeração (01–04). Blocos em pares 7/5 · 5/7. */
 export const workCategories: WorkCategory[] = [
-  { key: "products", tone: "void", media: { src: null, ratio: "4 / 3" } },
-  { key: "automations", tone: "mist", media: { src: null, ratio: "4 / 5" } },
-  { key: "web", tone: "stone", media: { src: null, ratio: "4 / 5" } },
+  {
+    key: "products",
+    tone: "void",
+    media: { src: null, ratio: "4 / 3" },
+    // O sistema interno (tabela com os dados tarjados) e o produto próprio.
+    preview: {
+      main: { src: "/projects/router-planner/tela-principal.png", ratio: "1274 / 636", x: 30, y: 21 },
+      inset: { src: "/projects/sentavos/tela-principal.png", ratio: "1339 / 646", x: 5, bottom: 8, w: 50 },
+    },
+  },
+  {
+    key: "automations",
+    tone: "mist",
+    // Quadrado também no celular: o chat é retrato e não pode perder as bordas.
+    media: { src: null, ratio: "1 / 1" },
+    // A pergunta ao bot e a notificação que ele dispara.
+    preview: {
+      main: {
+        src: "/projects/jornada-cliente/telegram-pergunta.jpg",
+        ratio: "3 / 4",
+        position: "50% 0%",
+        x: 30,
+        y: 19,
+        w: 64,
+      },
+      // Recorte do print da notificação: só o card, sem a tela de bloqueio.
+      inset: {
+        src: "/projects/jornada-cliente/telegram-nova-venda-card.png",
+        ratio: "734 / 423",
+        x: 5,
+        bottom: 8,
+        w: 58,
+      },
+    },
+  },
+  {
+    key: "web",
+    tone: "stone",
+    media: { src: null, ratio: "4 / 5" },
+    // O site público: o carrossel da Arena e a calculadora de CO₂.
+    preview: {
+      main: { src: "/projects/arena-sustentabilidade/tela-principal.png", ratio: "1342 / 767", x: 16, y: 19 },
+      // Recorte da calculadora: o título e os parâmetros, sem as margens.
+      inset: {
+        src: "/projects/arena-sustentabilidade/calculadora-co2-recorte.png",
+        ratio: "800 / 422",
+        x: 6,
+        bottom: 8,
+        w: 60,
+      },
+    },
+  },
   { key: "tools", tone: "mist", media: { src: null, ratio: "4 / 3" } },
 ];
 
@@ -156,13 +240,14 @@ export const cases: WorkCase[] = [
       { group: "frontend", items: ["HTML", "CSS", "JavaScript"] },
       { group: "infrastructure", items: ["VPS Linux"] },
     ],
-    media: { src: "/projects/router-planner/hero.webp", ratio: "16 / 10" },
+    // Prints com nomes, códigos, cidades e observações tarjados.
+    media: { src: "/projects/router-planner/tela-principal.png", ratio: "1274 / 636", position: "left top" },
+    // Par de abertura: a planilha de antes e o arquivo que o sistema gera.
     images: [
-      { id: "legacy-excel", src: "/projects/router-planner/legacy-excel.webp", ratio: "4 / 3" },
-      { id: "dashboard", src: "/projects/router-planner/dashboard.webp", ratio: "4 / 3" },
-      { id: "route-selection", src: "/projects/router-planner/route-selection.webp", ratio: "16 / 9" },
-      { id: "export", src: "/projects/router-planner/export.webp", ratio: "4 / 3" },
-      { id: "validation", src: "/projects/router-planner/validation.webp", ratio: "4 / 3" },
+      { id: "legacy-excel", src: "/projects/router-planner/planilha-antiga.png", ratio: "4 / 3" },
+      { id: "export", src: "/projects/router-planner/exportacao-final.png", ratio: "4 / 3" },
+      { id: "route-selection", src: "/projects/router-planner/selecao-de-rotas.png", ratio: "1246 / 632" },
+      { id: "validation", src: "/projects/router-planner/validacoes.png", ratio: "1284 / 626" },
     ],
   },
   {
@@ -173,7 +258,9 @@ export const cases: WorkCase[] = [
     weight: "placeholder",
     year: "2026",
     tone: "mist",
-    media: { src: null, ratio: "4 / 3" },
+    // Dados de demonstração, sem conta real.
+    media: { src: "/projects/sentavos/tela-principal.png", ratio: "1339 / 646", position: "left top" },
+    images: [{ id: "dashboard", src: "/projects/sentavos/dashboard.png", ratio: "1218 / 632" }],
   },
   {
     // [placeholder] case futuro da SECCO: ano, stack, links e imagens.
@@ -183,7 +270,13 @@ export const cases: WorkCase[] = [
     weight: "placeholder",
     company: "SECCO",
     tone: "stone",
-    media: { src: null, ratio: "4 / 5" },
+    // Nome da fazenda e município tarjados; o mapa de satélite ficou de fora.
+    media: { src: "/projects/geocarbo/tela-principal.png", ratio: "1343 / 643", position: "left center" },
+    images: [
+      { id: "dashboard", src: "/projects/geocarbo/dashboard.png", ratio: "1334 / 575" },
+      { id: "cadastro-propriedade", src: "/projects/geocarbo/cadastro-propriedade.png", ratio: "1302 / 764" },
+      { id: "relatorios", src: "/projects/geocarbo/relatorios.png", ratio: "1342 / 756" },
+    ],
   },
   {
     // [placeholder] sistema em desenvolvimento na SECCO.
@@ -214,13 +307,12 @@ export const cases: WorkCase[] = [
       { group: "interface", items: ["Telegram", "python-telegram-bot"] },
       { group: "infrastructure", items: ["Hostinger VPS", "Ubuntu", "systemd"] },
     ],
-    media: { src: "/projects/jornada-cliente/hero.webp", ratio: "16 / 10" },
+    media: { src: "/projects/jornada-cliente/bancada-desenvolvimento.jpg", ratio: "3 / 2" },
     images: [
-      { id: "dashboard", src: "/projects/jornada-cliente/dashboard.webp", ratio: "16 / 10" },
-      { id: "telegram-sale", src: "/projects/jornada-cliente/telegram-sale.webp", ratio: "4 / 5" },
-      { id: "telegram-question", src: "/projects/jornada-cliente/telegram-question.webp", ratio: "4 / 5" },
-      { id: "looker", src: "/projects/jornada-cliente/looker.webp", ratio: "16 / 10" },
-      { id: "architecture", src: "/projects/jornada-cliente/architecture.webp", ratio: "16 / 9" },
+      { id: "telegram-sale", src: "/projects/jornada-cliente/telegram-nova-venda.jpg", ratio: "792 / 640" },
+      { id: "telegram-question", src: "/projects/jornada-cliente/telegram-pergunta.jpg", ratio: "3 / 4" },
+      { id: "looker", src: "/projects/jornada-cliente/dashboard-looker.png", ratio: "16 / 10" },
+      { id: "architecture", src: "/projects/jornada-cliente/arquitetura.png", ratio: "16 / 9" },
     ],
   },
   {
@@ -234,11 +326,11 @@ export const cases: WorkCase[] = [
     technologies: [
       { group: "stack", items: ["HTML5", "CSS3", "JavaScript Vanilla", "Pillow"] },
     ],
-    media: { src: "/projects/arena-sustentabilidade/hero.webp", ratio: "16 / 10" },
+    media: { src: "/projects/arena-sustentabilidade/tela-principal.png", ratio: "1342 / 767" },
     images: [
-      { id: "calculator", src: "/projects/arena-sustentabilidade/calculator.webp", ratio: "4 / 3" },
-      { id: "carousel", src: "/projects/arena-sustentabilidade/carousel.webp", ratio: "4 / 3" },
-      { id: "mobile", src: "/projects/arena-sustentabilidade/mobile.webp", ratio: "4 / 5" },
+      { id: "calculator", src: "/projects/arena-sustentabilidade/calculadora-co2.png", ratio: "1020 / 758" },
+      { id: "experiences", src: "/projects/arena-sustentabilidade/experiencias.png", ratio: "1017 / 763" },
+      { id: "mobile", src: "/projects/arena-sustentabilidade/versao-mobile.png", ratio: "4 / 5" },
     ],
   },
   {
@@ -250,7 +342,8 @@ export const cases: WorkCase[] = [
     repositoryVisibility: "private",
     tone: "mist",
     technologies: [{ group: "stack", items: ["Python", "Pandas", "OpenPyXL"] }],
-    media: { src: null, ratio: "4 / 3" },
+    // Quadro do vídeo de demonstração: a janela e os arquivos de entrada e saída.
+    media: { src: "/projects/relatorio-merger/quadro-demonstracao.png", ratio: "680 / 652" },
   },
   {
     // Agrupador: scripts e automações pequenas demais para virar case cada
@@ -301,6 +394,23 @@ export function pad(value: number) {
 
 export type ExperienceKey = "virtron" | "secco";
 
+/**
+ * Marca da empresa, monocromática nos tons do site (public/logos/): a forma
+ * é a original, só o tom muda. `onLight` é a escura; `onDark`, a branca.
+ */
+export type BrandLogo = {
+  onLight: string;
+  onDark: string;
+  /** Dimensões do arquivo: dão a proporção. */
+  width: number;
+  height: number;
+  /**
+   * Altura relativa. Um símbolo quase quadrado precisa de mais altura que um
+   * logotipo largo para pesar o mesmo ao lado dele.
+   */
+  scale?: number;
+};
+
 export type ExperienceEntry = {
   /** Também é o slug da rota: /experience/virtron. */
   key: ExperienceKey;
@@ -308,6 +418,9 @@ export type ExperienceEntry = {
   company: string;
   /** Razão social ou nome completo, quando difere. */
   legalName?: string;
+  logo?: BrandLogo;
+  /** Site oficial da empresa. */
+  website?: string;
   from: string;
   /** `null` significa "até hoje" — o rótulo vem do dicionário. */
   to: string | null;
@@ -320,21 +433,35 @@ export const experiences: ExperienceEntry[] = [
     key: "virtron",
     company: "Virtron",
     legalName: "Virtron Energia Solar",
+    logo: {
+      onLight: "/logos/virtron-escura.png",
+      onDark: "/logos/virtron-branca.png",
+      width: 225,
+      height: 68,
+    },
     from: "2025-03",
     to: null,
     gallery: [
-      { id: "workstation-01", src: "/experience/virtron/workstation-01.webp", ratio: "4 / 3" },
-      { id: "workstation-02", src: "/experience/virtron/workstation-02.webp", ratio: "4 / 3" },
+      { id: "workstation-01", src: "/experience/virtron/trabalhando-virtron-01.jpg", ratio: "1288 / 966" },
+      { id: "workstation-02", src: "/experience/virtron/trabalhando-virtron-02.jpg", ratio: "3 / 4" },
     ],
   },
   {
     key: "secco",
     company: "SECCO",
+    logo: {
+      onLight: "/logos/secco-escura.svg",
+      onDark: "/logos/secco-branca.svg",
+      width: 183,
+      height: 223,
+      scale: 1.3,
+    },
+    website: "https://www.seccolab.com.br",
     from: "2025-12",
     to: null,
     gallery: [
-      { id: "team-01", src: "/experience/secco/team-01.webp", ratio: "4 / 3" },
-      { id: "team-02", src: "/experience/secco/team-02.webp", ratio: "4 / 3" },
+      { id: "team-01", src: "/experience/secco/equipe-secco-01.jpg", ratio: "1667 / 1111" },
+      { id: "talk-room", src: "/experience/secco/unifavip-talk-sala.jpg", ratio: "1600 / 1066" },
     ],
   },
 ];
@@ -349,14 +476,16 @@ export const virtronStory = {
   promotion: {
     date: "2025-12",
     images: [
-      { id: "promotion", src: "/experience/virtron/promotion.webp", ratio: "4 / 3" },
-      { id: "former-manager", src: "/experience/virtron/former-manager.webp", ratio: "4 / 3" },
+      { id: "promotion", src: "/experience/virtron/promocao-assistente-ti.jpg", ratio: "738 / 554" },
+      { id: "former-manager", src: "/experience/virtron/foto-com-antigo-gestor.jpg", ratio: "4 / 3" },
     ] satisfies GalleryImage[],
   },
   /** Saída do gestor do setor: responsabilidades ampliadas, sem cargo novo. */
   broaderScope: "2026-02",
   /** Mini-case contado dentro da página. */
   firstTool: "relatorio-merger" as CaseKey,
+  /** "O começo": a estação de trabalho do suporte. */
+  startPhoto: { src: "/experience/virtron/estacao-de-trabalho.jpg", ratio: "9 / 16" } satisfies MediaSlot,
 };
 
 /* ---------------------------------------------------------------------------
@@ -392,7 +521,7 @@ export const talks: Talk[] = [
     event: "REC'n'Play Caruaru",
     kind: "workshop",
     status: "done",
-    media: { src: "/experience/secco/recnplay-python.webp", ratio: "4 / 3" },
+    media: { src: "/experience/secco/recnplay-oficina-python.jpg", ratio: "3 / 4" },
   },
   {
     key: "recnplay-terminal",
@@ -400,7 +529,7 @@ export const talks: Talk[] = [
     event: "REC'n'Play Caruaru",
     kind: "workshop",
     status: "done",
-    media: { src: "/experience/secco/recnplay-terminal.webp", ratio: "4 / 3" },
+    media: { src: "/experience/secco/recnplay-oficina-terminal.jpg", ratio: "3 / 4" },
   },
   {
     key: "unifavip-empreendedorismo",
@@ -409,7 +538,7 @@ export const talks: Talk[] = [
     kind: "talk",
     status: "done",
     with: ["Igor", "Gabriel", "Luan", "Juan"],
-    media: { src: "/experience/secco/unifavip-empreendedorismo.webp", ratio: "16 / 10" },
+    media: { src: "/experience/secco/unifavip-talk-empreendedorismo.jpg", ratio: "4 / 3" },
   },
   {
     key: "bug-hunt",
@@ -417,7 +546,8 @@ export const talks: Talk[] = [
     event: "UniFavip Wyden",
     kind: "workshop",
     status: "upcoming",
-    media: { src: "/experience/secco/bug-hunt.webp", ratio: "16 / 10" },
+    // Ainda não aconteceu: sem foto até existir uma real.
+    media: { src: "/experience/secco/bug-hunt.jpg", ratio: "4 / 3" },
   },
 ];
 
@@ -466,7 +596,7 @@ export type SocialLink = {
 };
 
 export const socials: SocialLink[] = [
-  { label: "LinkedIn", href: "https://linkedin.com/in/" }, // [placeholder]
-  { label: "GitHub", href: "https://github.com/" }, // [placeholder]
-  { label: "Instagram", href: "https://instagram.com/" }, // [placeholder]
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/sergio-barbosa-03195133b" },
+  { label: "GitHub", href: "https://github.com/sergiobfj" },
+  { label: "Instagram", href: "https://www.instagram.com/sergiobfj.dev/" },
 ];

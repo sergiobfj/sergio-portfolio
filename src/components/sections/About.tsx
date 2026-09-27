@@ -55,6 +55,11 @@ export function About({ dict }: { dict: Dictionary }) {
                     fill
                     sizes="18vw"
                     className="object-cover"
+                    style={
+                      aboutPortrait.position
+                        ? { objectPosition: aboutPortrait.position }
+                        : undefined
+                    }
                   />
                 ) : null}
               </span>

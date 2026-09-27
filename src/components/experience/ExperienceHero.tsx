@@ -2,7 +2,9 @@ import { experiences, type ExperienceEntry } from "@/data/portfolio";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionary";
 import { PageHero } from "@/components/layout/PageHero";
+import { ArrowLink } from "@/components/ui/ArrowLink";
 import { BackLink } from "@/components/ui/BackLink";
+import { Logo } from "@/components/ui/Logo";
 import { NextLink } from "@/components/ui/NextLink";
 import { monthYear } from "@/lib/dates";
 import { routes } from "@/lib/routes";
@@ -16,7 +18,8 @@ export type ExperienceStoryProps = {
 /**
  * Topo de toda página de experiência: a empresa em display, o período com o
  * mês por extenso, a frase e o papel. A razão social, quando existe, vai
- * sob o rótulo.
+ * sob o rótulo; a marca, pequena, abre a coluna do papel; o site oficial,
+ * quando existe, vem como link externo.
  */
 export function ExperienceHero({ entry, dict, locale }: ExperienceStoryProps) {
   const copy = dict.experiences[entry.key];
@@ -43,7 +46,21 @@ export function ExperienceHero({ entry, dict, locale }: ExperienceStoryProps) {
       }
       aside={
         <>
+          {entry.logo ? (
+            // self-start: numa coluna flex, sem ele a imagem estica na largura.
+            <Logo
+              logo={entry.logo}
+              className="mb-4 self-start [--logo-h:1.75rem] md:mb-6 md:self-end md:[--logo-h:2.125rem]"
+            />
+          ) : null}
           <p className="label text-ash">{copy.pageRole ?? copy.role}</p>
+          {entry.website ? (
+            <ArrowLink
+              href={entry.website}
+              label={new URL(entry.website).hostname.replace(/^www\./, "")}
+              external
+            />
+          ) : null}
           <BackLink href={routes.home(locale, "experience")} label={dict.experience.back} />
         </>
       }

@@ -19,6 +19,8 @@ type CategoryCopy = {
   /** Em linhas: o título é composto, não quebra ao acaso. */
   title: string[];
   description: string;
+  /** Categoria sem trabalho publicado: o que vai morar ali, na prancha da home. */
+  outline?: string[];
 };
 
 /**
@@ -80,6 +82,7 @@ const categories: Record<WorkCategoryKey, CategoryCopy> = {
   tools: {
     title: ["Experimentos &", "Tools"],
     description: "Ferramentas pessoais, scripts e projetos técnicos menores.",
+    outline: ["Ferramentas pessoais", "Scripts", "Projetos técnicos"],
   },
 };
 
@@ -91,16 +94,23 @@ const cases: Record<CaseKey, CaseCopy> = {
     tags: ["Produto interno", "Logística"],
     captions: {
       "legacy-excel": "Processo anterior baseado em Excel",
-      dashboard: "Painel do Router Planner",
       "route-selection": "Seleção das rotas dentro do Router Planner",
       export: "Arquivo gerado automaticamente para a operação",
       validation: "Verificações antes da operação",
     },
   },
-  sentavos: { summary: "Produto próprio de finanças pessoais." },
+  sentavos: {
+    summary: "Produto próprio de finanças pessoais.",
+    captions: { dashboard: "Orçamento do mês" },
+  },
   geocarbo: {
     kicker: "Climate tech · dMRV · Carbono",
     tags: ["Climate tech", "dMRV", "Carbono"],
+    captions: {
+      dashboard: "Visão geral do monitoramento",
+      "cadastro-propriedade": "Cadastro de propriedade para monitoramento",
+      relatorios: "Relatórios gerados",
+    },
   },
   "crm-textil": {
     kicker: "Sistema em desenvolvimento",
@@ -112,7 +122,6 @@ const cases: Record<CaseKey, CaseCopy> = {
     kicker: "BI comercial · Automação · Ploomes API",
     tags: ["BI comercial & automação", "Em produção"],
     captions: {
-      dashboard: "Dashboard comercial",
       "telegram-sale": "Notificação de nova venda no Telegram",
       "telegram-question": "Pergunta em linguagem natural ao bot",
       looker: "Painel no Looker Studio",
@@ -126,7 +135,7 @@ const cases: Record<CaseKey, CaseCopy> = {
     tags: ["Experiência digital", "São João de Caruaru 2026"],
     captions: {
       calculator: "Calculadora de impacto de CO₂",
-      carousel: "Carrossel de fotos",
+      experiences: "O que o visitante encontra na Arena",
       mobile: "Versão mobile",
     },
   },
@@ -163,7 +172,10 @@ const experiences: Record<ExperienceKey, ExperienceCopy> = {
     headline: ["Comecei resolvendo chamados.", "Depois comecei resolvendo processos."],
     captions: {
       promotion: "Registro da promoção",
+      start: "Estação de trabalho na Virtron",
       "former-manager": "Com o antigo gestor do setor",
+      "workstation-01": "Desenvolvimento no dia a dia",
+      "workstation-02": "Manutenção de hardware",
     },
   },
   secco: {
@@ -171,6 +183,10 @@ const experiences: Record<ExperienceKey, ExperienceCopy> = {
     pageRole: "Co-Founder · CPO · Developer",
     summary: "Ideias em produto. Tecnologia em solução.",
     headline: ["Ideias em produto.", "Tecnologia em solução."],
+    captions: {
+      "team-01": "Equipe SECCO",
+      "talk-room": "Talk na UniFavip Wyden",
+    },
   },
 };
 

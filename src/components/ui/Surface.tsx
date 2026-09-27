@@ -17,6 +17,8 @@ type Props = {
   trail?: ReactNode;
   /** `placeholder`: os rótulos saem quando a imagem entra (screenshots). */
   labels?: "always" | "placeholder";
+  /** Arte composta no lugar da imagem (prévia de categoria). Vale como imagem. */
+  art?: ReactNode;
   /** Vazio quando a imagem é decorativa ou já tem legenda. */
   alt?: string;
   priority?: boolean;
@@ -45,13 +47,15 @@ export function Surface({
   lead,
   trail,
   labels = "always",
+  art,
   alt = "",
   priority = false,
   sizes,
   className,
 }: Props) {
   const src = mediaSrc(media);
-  const printed = (lead || trail) && (labels === "always" || !src);
+  const filled = Boolean(src || art);
+  const printed = (lead || trail) && (labels === "always" || !filled);
 
   return (
     <Reveal
@@ -60,8 +64,10 @@ export function Surface({
       style={{ "--ratio": media.ratio } as CSSProperties}
     >
       <div data-tone={tone} className="surface h-full">
-        <div className={cn("surface__scale", !src && "grain")}>
-          {src ? (
+        <div className={cn("surface__scale", !filled && "grain")}>
+          {art ? (
+            art
+          ) : src ? (
             <Image
               src={src}
               alt={alt}
@@ -69,6 +75,7 @@ export function Surface({
               priority={priority}
               sizes={sizes}
               className="object-cover"
+              style={media.position ? { objectPosition: media.position } : undefined}
             />
           ) : (
             <span

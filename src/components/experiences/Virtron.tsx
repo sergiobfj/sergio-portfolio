@@ -1,5 +1,6 @@
 import { casesAt, findCase, pad, virtronStory } from "@/data/portfolio";
 import { Band } from "@/components/case/Band";
+import { Figure } from "@/components/case/Figure";
 import { Progression, StepList } from "@/components/case/Flow";
 import { Gallery } from "@/components/case/Gallery";
 import { Metrics } from "@/components/case/Metrics";
@@ -71,34 +72,48 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
           </div>
         </Band>
 
-        {/* O começo */}
+        {/* O começo. A foto ocupa a coluna livre ao lado do título recuado;
+            no celular e no tablet, desce para depois do texto. */}
         <Band tone="void" after="paper" labelledBy="virtron-start">
-          <Chapter id="virtron-start" title={story.start.title} inset>
-            <Reveal>
-              <p className="voice text-[clamp(1.75rem,3vw,3rem)] leading-[1.08] text-pretty">
-                {story.start.quote}
-              </p>
-            </Reveal>
-            <Reveal delay={120} className="mt-14">
-              <p className="label text-fog">{story.start.fundamentalsLabel}</p>
-              <ul className="mt-5 grid grid-cols-1 gap-x-6 sm:grid-cols-2">
-                {story.start.fundamentals.map((entry, i) => (
-                  <li
-                    key={entry}
-                    className="flex items-baseline gap-5 border-t border-rule-dark py-4 text-[clamp(1.05rem,1.45vw,1.35rem)] leading-snug"
-                  >
-                    <span className="meta w-[1.35rem] shrink-0 text-fog">{pad(i + 1)}</span>
-                    {entry}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-            <Reveal delay={160}>
-              <p className="mt-12 max-w-[48ch] text-lead leading-snug text-paper/80">
-                {story.start.ploomes}
-              </p>
-            </Reveal>
-          </Chapter>
+          <div className="grid grid-cols-12 gap-x-6 gap-y-14">
+            <div className="col-span-12 lg:col-start-1 lg:row-start-1">
+              <Chapter id="virtron-start" title={story.start.title} inset>
+                <Reveal>
+                  <p className="voice text-[clamp(1.75rem,3vw,3rem)] leading-[1.08] text-pretty">
+                    {story.start.quote}
+                  </p>
+                </Reveal>
+                <Reveal delay={120} className="mt-14">
+                  <p className="label text-fog">{story.start.fundamentalsLabel}</p>
+                  <ul className="mt-5 grid grid-cols-1 gap-x-6 sm:grid-cols-2">
+                    {story.start.fundamentals.map((entry, i) => (
+                      <li
+                        key={entry}
+                        className="flex items-baseline gap-5 border-t border-rule-dark py-4 text-[clamp(1.05rem,1.45vw,1.35rem)] leading-snug"
+                      >
+                        <span className="meta w-[1.35rem] shrink-0 text-fog">{pad(i + 1)}</span>
+                        {entry}
+                      </li>
+                    ))}
+                  </ul>
+                </Reveal>
+                <Reveal delay={160}>
+                  <p className="mt-12 max-w-[48ch] text-lead leading-snug text-paper/80">
+                    {story.start.ploomes}
+                  </p>
+                </Reveal>
+              </Chapter>
+            </div>
+            <Figure
+              media={virtronStory.startPhoto}
+              number={1}
+              label={figure}
+              caption={copy.captions?.start}
+              tone="void"
+              sizes="(max-width: 1024px) 60vw, 22vw"
+              className="col-span-8 sm:col-span-5 md:col-span-4 lg:col-span-3 lg:col-start-1 lg:row-start-1 lg:self-start"
+            />
+          </div>
         </Band>
 
         {/* Primeira ferramenta: o mini-case contado aqui, com link */}
@@ -156,7 +171,7 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
               images={promotion.images}
               captions={copy.captions}
               label={figure}
-              start={1}
+              start={2}
             />
           </div>
 
@@ -208,7 +223,9 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
                 <p className="label text-fog">{story.infrastructure.stackLabel}</p>
                 <p className="display mt-4 flex flex-wrap gap-x-[0.5em] text-[clamp(1.6rem,2.6vw,2.5rem)] leading-[0.95]">
                   {story.infrastructure.stack.map((tech, i) => (
-                    <span key={tech} className="whitespace-nowrap">
+                    // Item inteiro pula de linha; só quebra por dentro se for
+                    // mais largo que a coluna (tablet: "Administração de serviços").
+                    <span key={tech} className="max-w-full">
                       {i > 0 ? (
                         <span aria-hidden="true" className="mr-[0.5em] opacity-30">
                           /
@@ -240,7 +257,7 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
                   images={entry.gallery}
                   captions={copy.captions}
                   label={figure}
-                  start={promotion.images.length + 1}
+                  start={promotion.images.length + 2}
                 />
               </Chapter>
             </div>

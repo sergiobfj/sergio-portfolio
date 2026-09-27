@@ -52,6 +52,9 @@ contexts/
 # Visual references used only during development
 references/
 
+# Original photos and screenshots (unredacted; public/ has the safe versions)
+fotos-portifolio/
+
 # Secrets / credentials
 credentials.json
 *.pem
