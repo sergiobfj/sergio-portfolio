@@ -6,8 +6,9 @@ import { RevealLines } from "@/components/ui/RevealLines";
 /**
  * Background em quatro medidas: trajetória em tecnologia, formação técnica,
  * graduação, empreendedorismo. Uma palavra grande e uma legenda curta cada — nada de
- * currículo, ícone ou card. Termina em SECCO, e a seção escura da SECCO vem
- * logo em seguida.
+ * currículo, ícone ou card. Mesma lógica da Experiência logo acima: o
+ * título em cima, centralizado; as quatro medidas lado a lado, na largura
+ * toda. Termina em SECCO, e a seção escura da SECCO vem logo em seguida.
  */
 export function Background({ dict }: { dict: Dictionary }) {
   const copy = dict.background;
@@ -40,13 +41,13 @@ export function Background({ dict }: { dict: Dictionary }) {
   return (
     <section
       aria-labelledby="background-heading"
-      className="gutter-x bg-paper pb-[20vh]"
+      className="gutter-x bg-paper pb-[18vh]"
     >
       <RevealLines
         as="h2"
         id="background-heading"
         lines={[copy.title]}
-        className="display mb-[6vh] text-[clamp(1.6rem,2.6vw,2.4rem)]"
+        className="display mb-[5vh] text-[clamp(1.6rem,2.6vw,2.4rem)] md:text-center"
       />
       <Metrics items={items} />
     </section>

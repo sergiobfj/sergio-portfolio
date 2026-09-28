@@ -1,10 +1,17 @@
-import { casesAt, milestones, pad, talks, type Talk } from "@/data/portfolio";
+import {
+  casesAt,
+  milestones,
+  pad,
+  seccoTeam,
+  talks,
+  upcomingAt,
+  type Talk,
+} from "@/data/portfolio";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionary";
 import { Band } from "@/components/case/Band";
 import { Figure } from "@/components/case/Figure";
 import { Gallery } from "@/components/case/Gallery";
-import { Metrics } from "@/components/case/Metrics";
 import {
   ExperienceHero,
   ExperienceNext,
@@ -92,6 +99,8 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
   const copy = dict.experiences.secco;
   const story = dict.experienceStories.secco;
   const built = casesAt(entry.company);
+  // Em desenvolvimento e não divulgado: só o nome, com "em breve".
+  const soon = upcomingAt(entry.company);
   const shown = milestones.filter(
     (milestone) => milestone.experience === entry.key && milestone.visible,
   );
@@ -103,7 +112,8 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
     if (group) group.items.push(talk);
     else events.push({ event: talk.event, items: [talk] });
   }
-  let figureCount = 0;
+  // Fig. 01 é a equipe, na abertura; talks e galeria seguem a numeração.
+  let figureCount = 1;
   const numbered = events.map((group) => ({
     ...group,
     items: group.items.map((talk) => {
@@ -117,41 +127,90 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
       <main id="content">
         <ExperienceHero entry={entry} dict={dict} locale={locale} />
 
-        {/* O que é a SECCO */}
+        {/* O que é a SECCO: a definição, e a frase ao lado da equipe */}
         <Band tone="paper" after="stone" labelledBy="secco-about">
-          <Chapter id="secco-about" title={story.about.title}>
+          <Chapter id="secco-about" title={story.about.title} stacked>
             <Reveal>
-              <p className="voice text-voice text-pretty">{story.about.text}</p>
+              <p className="voice text-voice text-balance md:text-center">{story.about.text}</p>
             </Reveal>
           </Chapter>
-          <Reveal className="mt-[14vh] border-t border-rule pt-10 md:pt-14">
-            <p className="voice max-w-[22ch] text-[clamp(2.2rem,4.8vw,5rem)] leading-[1.02] italic">
-              {story.about.quote}
-            </p>
-          </Reveal>
+          <div className="mt-[12vh] grid grid-cols-12 gap-x-6 gap-y-12 border-t border-rule pt-10 md:pt-14">
+            <Reveal className="col-span-12 lg:col-span-7">
+              <p className="voice max-w-[22ch] text-[clamp(2.2rem,4.4vw,4.75rem)] leading-[1.02] italic">
+                {story.about.quote}
+              </p>
+            </Reveal>
+            <Figure
+              media={seccoTeam}
+              number={1}
+              label={dict.caseStudy.figure}
+              caption={copy.captions?.[seccoTeam.id]}
+              tone="mist"
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              className="col-span-12 sm:col-span-10 lg:col-span-5 lg:self-end"
+            />
+          </div>
         </Band>
 
-        {/* Minha atuação: quatro dimensões */}
+        {/* Minha atuação: quatro dimensões, numeradas — o título em display,
+            o que entra nela em texto corrido, legível, no tom do fundo. */}
         <Band tone="void" after="paper" labelledBy="secco-role">
           <RevealLines
             as="h2"
             id="secco-role"
             lines={[story.role.title]}
-            className="display mb-[6vh] text-[clamp(1.6rem,2.6vw,2.4rem)]"
+            className="display mb-[7vh] text-[clamp(1.6rem,2.6vw,2.4rem)]"
           />
-          <Metrics
-            size="sm"
-            items={story.role.dimensions.map((dimension) => ({
-              value: dimension.title,
-              lines: dimension.items,
-            }))}
-          />
+          <ol className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 sm:gap-y-12 lg:grid-cols-4">
+            {story.role.dimensions.map((dimension, i) => (
+              <li key={dimension.title} className="@container">
+                <Reveal variant="draw" delay={i * 90} className="h-px w-full bg-rule-dark" />
+                <Reveal delay={i * 90 + 60} className="pt-6">
+                  <span className="meta text-fog">{pad(i + 1)}</span>
+                  <p className="display mt-5 text-[min(15.5cqi,2.75rem)] leading-[0.95] sm:text-[min(15.5cqi,3.6rem)]">
+                    {dimension.title}
+                  </p>
+                  <p className="mt-6 max-w-[26ch] text-[clamp(1.05rem,1.25vw,1.2rem)] leading-[1.45] text-paper/75">
+                    {dimension.items.map((line) => (
+                      <span key={line} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </p>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
         </Band>
 
         {/* O que construímos */}
         <Band tone="paper" after="void" labelledBy="secco-built">
           <Chapter id="secco-built" title={story.built.title} wide>
-            <CaseGrid items={built} dict={dict} locale={locale} context="category" />
+            <CaseGrid
+              items={built}
+              dict={dict}
+              locale={locale}
+              context="category"
+              trailing={
+                soon.length > 0 ? (
+                  <ul aria-label={dict.work.soon}>
+                    {soon.map((item) => (
+                      <li key={item.key} className="border-t border-rule pt-5">
+                        <p className="label text-ash">{dict.work.soon}</p>
+                        <p className="display mt-4 text-[clamp(1.75rem,2.6vw,2.5rem)] leading-[0.95] opacity-45">
+                          {item.title}
+                        </p>
+                        {dict.cases[item.key].kicker ? (
+                          <p className="mt-3 text-[0.9375rem] leading-snug text-ash">
+                            {dict.cases[item.key].kicker}
+                          </p>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                ) : undefined
+              }
+            />
           </Chapter>
         </Band>
 
@@ -210,30 +269,40 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
         {/* Marcos */}
         {shown.length > 0 ? (
           <Band tone="void" after="stone" labelledBy="secco-milestones">
-            <Chapter id="secco-milestones" title={story.milestones.title}>
-              <ol>
-                {shown.map((milestone, i) => (
-                  <li key={milestone.key}>
-                    <Reveal variant="draw" delay={i * 70} className="h-px w-full bg-rule-dark" />
-                    <Reveal
-                      delay={i * 70 + 50}
-                      className="grid grid-cols-12 gap-x-6 gap-y-2 py-6 md:py-8"
+            {/* Um marco por coluna: o número vazado dá o ritmo, o nome pesa, a
+                frase explica. Sem ícone, sem logo de terceiro. */}
+            <RevealLines
+              as="h2"
+              id="secco-milestones"
+              lines={[story.milestones.title]}
+              className="display mb-[7vh] text-[clamp(1.6rem,2.6vw,2.4rem)]"
+            />
+            <ol
+              className={cn(
+                "grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-3",
+                shown.length === 4 && "md:grid-cols-2 lg:grid-cols-4",
+              )}
+            >
+              {shown.map((milestone, i) => (
+                <li key={milestone.key} className="@container">
+                  <Reveal variant="draw" delay={i * 90} className="h-px w-full bg-rule-dark" />
+                  <Reveal delay={i * 90 + 60} className="pt-6">
+                    <span
+                      aria-hidden="true"
+                      className="display type-outline block text-[min(34cqi,5.5rem)] leading-[0.82] md:text-[min(34cqi,9.5rem)]"
                     >
-                      <span className="meta col-span-2 pt-[0.6em] text-fog md:col-span-1">
-                        {pad(i + 1)}
-                      </span>
-                      <span className="display col-span-10 text-[clamp(2rem,4.4vw,4.25rem)] md:col-span-6">
-                        {milestone.name}
-                      </span>
-                      <span className="label col-span-10 col-start-3 text-fog md:col-span-5 md:col-start-8 md:self-center">
-                        {story.milestones.items[milestone.key]}
-                      </span>
-                    </Reveal>
-                  </li>
-                ))}
-              </ol>
-              <Reveal variant="draw" className="h-px w-full bg-rule-dark" />
-            </Chapter>
+                      {pad(i + 1)}
+                    </span>
+                    <p className="display mt-8 text-[min(13cqi,3.4rem)] leading-[0.95]">
+                      {milestone.name}
+                    </p>
+                    <p className="mt-4 max-w-[30ch] text-[0.9375rem] leading-snug text-fog">
+                      {story.milestones.items[milestone.key]}
+                    </p>
+                  </Reveal>
+                </li>
+              ))}
+            </ol>
           </Band>
         ) : null}
 

@@ -1,7 +1,7 @@
 import { casesAt, findCase, pad, virtronStory } from "@/data/portfolio";
 import { Band } from "@/components/case/Band";
 import { Figure } from "@/components/case/Figure";
-import { Progression, StepList } from "@/components/case/Flow";
+import { InlineFlow, Progression } from "@/components/case/Flow";
 import { Gallery } from "@/components/case/Gallery";
 import { Metrics } from "@/components/case/Metrics";
 import {
@@ -12,12 +12,14 @@ import {
 import { Chapter } from "@/components/layout/Chapter";
 import { Contact } from "@/components/sections/Contact";
 import { ArrowLink } from "@/components/ui/ArrowLink";
+import { MediaFrame } from "@/components/ui/MediaFrame";
 import { Reveal } from "@/components/ui/Reveal";
 import { RevealLines } from "@/components/ui/RevealLines";
 import { CaseGrid } from "@/components/work/CaseGrid";
 import { fit } from "@/lib/cn";
 import { monthYear, monthYearShort } from "@/lib/dates";
 import { routes } from "@/lib/routes";
+import { mediaSrc } from "@/lib/media";
 import { caseTitle } from "@/lib/work";
 
 /**
@@ -32,7 +34,8 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
   const figure = dict.caseStudy.figure;
   const tool = findCase(virtronStory.firstTool);
   const toolCopy = tool ? dict.cases[tool.slug] : undefined;
-  const built = casesAt(entry.company);
+  // A primeira ferramenta já tem faixa própria (com a imagem): fora do grid.
+  const built = casesAt(entry.company).filter((item) => item.slug !== tool?.slug);
   const promotion = virtronStory.promotion;
 
   return (
@@ -40,35 +43,37 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
       <main id="content">
         <ExperienceHero entry={entry} dict={dict} locale={locale} />
 
-        {/* Trajetória: a frase, os cargos formais e como o trabalho mudou */}
+        {/* Trajetória: a frase é a protagonista. Embaixo de um filete, uma
+            linha de fatos no mesmo peso — os dois cargos formais e, ao lado,
+            como o trabalho foi mudando, num fluxo curto. Nada disputa com a
+            frase. */}
         <Band tone="paper" after="stone" labelledBy="virtron-intro">
-          <Chapter id="virtron-intro" title={story.intro.title}>
+          <Chapter id="virtron-intro" title={story.intro.title} stacked>
             <Reveal>
-              <p className="voice text-voice text-pretty">{story.intro.lead}</p>
+              <p className="voice text-voice text-balance md:text-center">{story.intro.lead}</p>
             </Reveal>
-            <Reveal delay={140} className="mt-14">
+          </Chapter>
+
+          <div className="mt-[10vh] grid grid-cols-12 gap-x-6 gap-y-12 border-t border-rule pt-8">
+            <Reveal className="col-span-12 lg:col-span-4">
               <p className="label text-ash">{story.intro.rolesLabel}</p>
-              <ol className="mt-5">
+              <ol className="mt-5 flex flex-col gap-3">
                 {virtronStory.roles.map((role) => (
-                  <li
-                    key={role.key}
-                    className="flex flex-wrap items-baseline gap-x-8 gap-y-2 border-t border-rule py-4 md:py-5"
-                  >
-                    <span className="label w-[7rem] shrink-0 text-ash">
+                  <li key={role.key} className="flex items-baseline gap-4">
+                    <span className="label w-[4.75rem] shrink-0 text-ash">
                       {monthYearShort(role.date, locale)}
                     </span>
-                    <span className="display text-[clamp(1.75rem,3vw,3rem)]">
+                    <span className="display text-[clamp(1.4rem,2vw,2rem)] leading-[0.95]">
                       {story.intro.roles[role.key]}
                     </span>
                   </li>
                 ))}
               </ol>
             </Reveal>
-          </Chapter>
-
-          <div className="mt-[14vh]">
-            <p className="label text-ash">{story.intro.evolutionLabel}</p>
-            <Progression steps={story.intro.evolution} className="mt-8" />
+            <div className="col-span-12 lg:col-span-8">
+              <p className="label text-ash">{story.intro.evolutionLabel}</p>
+              <InlineFlow steps={story.intro.evolution} size="xs" className="mt-5" />
+            </div>
           </div>
         </Band>
 
@@ -119,20 +124,39 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
         {/* Primeira ferramenta: o mini-case contado aqui, com link */}
         {tool && toolCopy ? (
           <Band tone="stone" after="void" labelledBy="virtron-first-tool">
-            <p className="label text-ash">{story.firstTool.label}</p>
-            <RevealLines
-              as="h2"
-              id="virtron-first-tool"
-              lines={[caseTitle(tool, dict)]}
-              className="display mt-5 text-[clamp(3rem,8vw,8rem)] leading-[0.96]"
-            />
-            {toolCopy.headline ? (
-              <Reveal delay={120}>
-                <p className="voice mt-8 max-w-[30ch] text-voice text-pretty">
-                  {toolCopy.headline}
-                </p>
-              </Reveal>
-            ) : null}
+            {/* A ferramenta em uso ao lado do título e da pergunta que a criou. */}
+            <div className="grid grid-cols-12 gap-x-6 gap-y-10">
+              <div className="col-span-12 lg:col-span-8">
+                <p className="label text-ash">{story.firstTool.label}</p>
+                <RevealLines
+                  as="h2"
+                  id="virtron-first-tool"
+                  lines={[caseTitle(tool, dict)]}
+                  className="display mt-5 text-[clamp(3rem,7.4vw,8rem)] leading-[0.96]"
+                />
+                {toolCopy.headline ? (
+                  <Reveal delay={120}>
+                    <p className="voice mt-8 max-w-[30ch] text-voice text-pretty">
+                      {toolCopy.headline}
+                    </p>
+                  </Reveal>
+                ) : null}
+              </div>
+              {mediaSrc(tool.media) ? (
+                <Reveal
+                  variant="clip"
+                  className="col-span-10 sm:col-span-7 lg:col-span-4 lg:col-start-9 lg:self-end"
+                >
+                  {/* 4:3 com o foco no alto: a janela e os ícones, sem o preto de baixo. */}
+                  <MediaFrame
+                    media={{ ...tool.media, ratio: "4 / 3", position: "50% 16%" }}
+                    alt={caseTitle(tool, dict)}
+                    sizes="(max-width: 1024px) 80vw, 30vw"
+                    className="bg-black"
+                  />
+                </Reveal>
+              ) : null}
+            </div>
             {toolCopy.metrics?.length ? (
               <Metrics
                 size="lg"
@@ -175,22 +199,30 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
             />
           </div>
 
-          <div className="mt-[16vh]">
-            <Chapter id="virtron-scope" title={story.broaderScope.title}>
-              <p className="label text-ash">{monthYear(virtronStory.broaderScope, locale)}</p>
+          {/* Título e data em cima, centralizados; a frase e o "hoje" num bloco
+              central — sem coluna lateral vazia. */}
+          <section aria-labelledby="virtron-scope" className="mt-[16vh] md:text-center">
+            <RevealLines
+              as="h2"
+              id="virtron-scope"
+              lines={[story.broaderScope.title]}
+              className="display text-[clamp(1.6rem,2.6vw,2.4rem)]"
+            />
+            <p className="label mt-4 text-ash">{monthYear(virtronStory.broaderScope, locale)}</p>
+            <div className="mx-auto mt-[5vh] max-w-[58rem]">
               <Reveal>
-                <p className="voice mt-5 text-[clamp(1.6rem,2.4vw,2.35rem)] leading-[1.1] text-pretty">
+                <p className="voice text-[clamp(1.75rem,2.9vw,2.85rem)] leading-[1.06] text-balance">
                   {story.broaderScope.text}
                 </p>
               </Reveal>
-              <Reveal delay={120} className="mt-12 border-t border-rule pt-6">
+              <Reveal delay={120} className="mt-10 border-t border-rule pt-6">
                 <p className="label text-ash">{story.broaderScope.todayLabel}</p>
-                <p className="mt-4 max-w-[48ch] text-lead leading-snug">
+                <p className="mt-3 max-w-[46ch] text-lead leading-snug md:mx-auto">
                   {story.broaderScope.today}
                 </p>
               </Reveal>
-            </Chapter>
-          </div>
+            </div>
+          </section>
         </Band>
 
         {/* Do código à infraestrutura */}
@@ -212,35 +244,33 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
             />
           </div>
 
-          <div className="mt-[10vh] grid grid-cols-12 gap-x-6 gap-y-14">
-            <div className="col-span-12 md:col-span-5">
-              <Reveal>
-                <p className="max-w-[40ch] text-lead leading-snug text-paper/80">
-                  {story.infrastructure.text}
-                </p>
-              </Reveal>
-              <Reveal delay={120} className="mt-10">
-                <p className="label text-fog">{story.infrastructure.stackLabel}</p>
-                <p className="display mt-4 flex flex-wrap gap-x-[0.5em] text-[clamp(1.6rem,2.6vw,2.5rem)] leading-[0.95]">
-                  {story.infrastructure.stack.map((tech, i) => (
-                    // Item inteiro pula de linha; só quebra por dentro se for
-                    // mais largo que a coluna (tablet: "Administração de serviços").
-                    <span key={tech} className="max-w-full">
-                      {i > 0 ? (
-                        <span aria-hidden="true" className="mr-[0.5em] opacity-30">
-                          /
-                        </span>
-                      ) : null}
-                      {tech}
-                    </span>
-                  ))}
-                </p>
-              </Reveal>
-            </div>
-            <StepList
-              steps={story.infrastructure.steps.map((label) => ({ label }))}
-              className="col-span-12 md:col-span-6 md:col-start-7"
-            />
+          {/* Três leituras separadas: o que foi (texto), onde atua (frentes)
+              e em que ordem (etapas, na mesma linha do tempo da trajetória). */}
+          <div className="mt-[10vh] grid grid-cols-12 gap-x-6 gap-y-12">
+            <Reveal className="col-span-12 md:col-span-6 lg:col-span-5">
+              <p className="max-w-[40ch] text-[clamp(1.2rem,1.6vw,1.5rem)] leading-snug text-paper/85">
+                {story.infrastructure.text}
+              </p>
+            </Reveal>
+            <Reveal delay={120} className="col-span-12 md:col-span-6 lg:col-span-6 lg:col-start-7">
+              <p className="label text-fog">{story.infrastructure.stackLabel}</p>
+              <ul className="mt-5 grid grid-cols-1 gap-x-6 sm:grid-cols-2">
+                {story.infrastructure.stack.map((item, i) => (
+                  <li
+                    key={item}
+                    className="flex items-baseline gap-4 border-t border-rule-dark py-4 text-[clamp(1.1rem,1.45vw,1.35rem)] leading-snug"
+                  >
+                    <span className="meta w-[1.35rem] shrink-0 text-fog">{pad(i + 1)}</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
+
+          <div className="mt-[12vh]">
+            <p className="label text-fog">{story.infrastructure.stepsLabel}</p>
+            <Progression steps={story.infrastructure.steps} size="sm" className="mt-8" />
           </div>
         </Band>
 

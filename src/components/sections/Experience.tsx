@@ -3,15 +3,19 @@ import { experiences } from "@/data/portfolio";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionary";
 import { ArrowDisc } from "@/components/ui/ArrowDisc";
+import { Logo } from "@/components/ui/Logo";
 import { Reveal } from "@/components/ui/Reveal";
 import { RevealLines } from "@/components/ui/RevealLines";
 import { yearOf } from "@/lib/dates";
 import { routes } from "@/lib/routes";
 
 /**
- * Linhas tipográficas, não currículo: empresa, período, papel e uma frase.
- * A linha inteira é o link — no hover o nome avança, a seta se preenche e
- * as outras linhas recuam. Os filetes se desenham ao entrar.
+ * Linhas tipográficas, não currículo. O título em cima, centralizado; as
+ * linhas na largura toda. Cada linha lê da esquerda para a direita, numa
+ * altura só: o símbolo da empresa, o nome e o papel, o período com a frase,
+ * a seta. A linha inteira é o link — no hover o nome avança, a
+ * seta se preenche e as outras linhas recuam. Os filetes se desenham ao
+ * entrar.
  */
 export function Experience({
   dict,
@@ -24,39 +28,50 @@ export function Experience({
     <section
       id="experience"
       aria-labelledby="experience-heading"
-      className="gutter-x bg-paper pt-[4vh] pb-[18vh]"
+      className="gutter-x bg-paper pt-[4vh] pb-[14vh]"
     >
-      <div className="grid grid-cols-12 gap-x-6">
+      <div>
         <RevealLines
           as="h2"
           id="experience-heading"
           lines={[dict.experience.title]}
-          className="display col-span-12 mb-[6vh] text-[clamp(1.6rem,2.6vw,2.4rem)] lg:col-span-4 lg:mb-0 lg:pt-[3.1rem]"
+          className="display mb-[5vh] text-[clamp(1.6rem,2.6vw,2.4rem)] md:text-center"
         />
-
-        <ul className="row-list col-span-12 lg:col-span-8">
+        <ul className="row-list">
           {experiences.map((item, i) => {
             const copy = dict.experiences[item.key];
-
             return (
               <li key={item.key}>
                 <Reveal variant="draw" delay={i * 90} className="h-px w-full bg-rule" />
                 <Reveal delay={i * 90 + 60}>
                   <Link
                     href={routes.experience(locale, item.key)}
-                    className="row-link group grid grid-cols-[1fr_auto] items-baseline gap-x-6 py-8 md:py-10"
+                    className="row-link group grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-5 gap-y-5 py-7 md:grid-cols-[auto_minmax(0,1fr)_minmax(0,1fr)_auto] md:gap-x-10 md:py-9"
                   >
-                    <h3 className="display text-[clamp(2.4rem,5.4vw,5rem)] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:group-hover:translate-x-2">
-                      {item.company}
-                    </h3>
-                    <span className="meta text-ash">
-                      {yearOf(item.from)} — {item.to ? yearOf(item.to) : dict.experience.now}
+                    <span className="flex w-[clamp(2.25rem,3.4vw,3.25rem)] justify-center">
+                      {item.symbol ? (
+                        <Logo
+                          logo={item.symbol}
+                          className="[--logo-h:clamp(2.25rem,3.4vw,3.25rem)]"
+                        />
+                      ) : null}
                     </span>
-                    <p className="label col-span-2 mt-4 text-ash">{copy.role}</p>
-                    <p className="mt-4 max-w-[44ch] self-end text-[0.9375rem] leading-snug">
-                      {copy.summary}
-                    </p>
-                    <ArrowDisc className="self-end justify-self-end" />
+                    <div className="min-w-0">
+                      <h3 className="display text-[clamp(2.4rem,4.6vw,4.5rem)] leading-[0.9] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:group-hover:translate-x-2">
+                        {item.company}
+                      </h3>
+                      <p className="label mt-3 text-ash">{copy.role}</p>
+                    </div>
+                    <div className="col-span-3 md:col-span-1">
+                      <p className="meta text-ash">
+                        {yearOf(item.from)} — {item.to ? yearOf(item.to) : dict.experience.now}
+                      </p>
+                      <p className="mt-2 max-w-[36ch] text-[0.9375rem] leading-snug">
+                        {copy.summary}
+                      </p>
+                    </div>
+                    {/* No celular a seta fica na linha do nome. */}
+                    <ArrowDisc className="col-start-3 row-start-1 md:col-start-auto md:row-start-auto" />
                   </Link>
                 </Reveal>
               </li>

@@ -196,19 +196,20 @@
 
 /* ==========================================================================
    HERO
-   O nome, de margem a margem, é a grade da hero: medido em cqw, ele define
-   as colunas onde o papel e a frase assentam. Sem retrato por enquanto — a
-   fotografia volta com a interação foto/tipografia, não como placeholder.
+   O nome, de margem a margem, e o papel sob SERGIO — só o essencial. O
+   conjunto fica no meio da dobra: o espaço em volta é respiro, não vazio a
+   preencher. Sem retrato por enquanto — a fotografia volta com a interação
+   foto/tipografia, não como placeholder.
    ========================================================================== */
 
 @layer components {
   .hero {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     min-height: calc(100svh - var(--curve));
     padding-top: var(--bar);
-    padding-bottom: clamp(2.5rem, 9vh, 6.5rem);
+    padding-bottom: clamp(1.5rem, 4vh, 3rem);
   }
 
   .hero-frame {
@@ -232,29 +233,15 @@
     flex-shrink: 0;
   }
 
-  .hero-meta {
-    display: grid;
-    gap: 1.5rem;
-    margin-top: 8cqw;
-  }
-
   .hero-role {
+    margin-top: 7cqw;
     font-size: 9.2cqw;
   }
 
-  .hero-tagline {
-    max-width: 34ch;
-  }
-
   @media (min-width: 640px) {
-    .hero-meta {
-      grid-template-columns: 1fr 1fr;
-      align-items: end;
-      margin-top: 5cqw;
-    }
-
     .hero-role {
-      font-size: 6cqw;
+      margin-top: 4.5cqw;
+      font-size: 6.6cqw;
     }
   }
 
@@ -269,32 +256,9 @@
       gap: 0.19em;
     }
 
-    .hero-meta {
-      grid-template-columns: 1fr auto;
-      margin-top: 3cqw;
-    }
-
     .hero-role {
-      font-size: 3.7cqw;
-    }
-  }
-
-  /* Com subgrid, as duas palavras do nome são as colunas: o papel assenta
-     sob SERGIO e a frase começa exatamente sob o B de BARBOSA. */
-  @supports (grid-template-columns: subgrid) {
-    @media (min-width: 1024px) {
-      .hero-stage {
-        display: grid;
-        grid-template-columns: max-content max-content;
-      }
-
-      .hero-name,
-      .hero-meta {
-        grid-column: 1 / -1;
-        display: grid;
-        grid-template-columns: subgrid;
-        column-gap: calc(var(--name-size) * 0.19);
-      }
+      margin-top: 2.4cqw;
+      font-size: 4.2cqw;
     }
   }
 }
