@@ -101,7 +101,8 @@ export function InlineFlow({
 }: {
   steps: readonly string[];
   focus?: number;
-  size?: "md" | "sm";
+  /** `xs`: fluxo secundário, no peso de uma legenda em display. */
+  size?: "md" | "sm" | "xs";
   className?: string;
 }) {
   return (
@@ -109,9 +110,9 @@ export function InlineFlow({
       <ol
         className={cn(
           "display leading-[1.1]",
-          size === "sm"
-            ? "text-[clamp(1.75rem,3.6vw,3.6rem)]"
-            : "text-[clamp(2rem,5.1vw,5.5rem)]",
+          size === "xs" && "text-[clamp(1.4rem,2vw,2rem)] leading-[1.2]",
+          size === "sm" && "text-[clamp(1.75rem,3.6vw,3.6rem)]",
+          size === "md" && "text-[clamp(2rem,5.1vw,5.5rem)]",
         )}
       >
         {steps.map((step, i) => (
@@ -147,9 +148,12 @@ export function InlineFlow({
  */
 export function Progression({
   steps,
+  size = "md",
   className,
 }: {
   steps: readonly string[];
+  /** `sm`: etapas de nome longo ("Provisionamento inicial") em seis colunas. */
+  size?: "md" | "sm";
   className?: string;
 }) {
   return (
@@ -158,7 +162,14 @@ export function Progression({
         {steps.map((step, i) => (
           <li key={step}>
             <span className="meta block opacity-55">{pad(i + 1)}</span>
-            <span className="display mt-3 block text-[clamp(1.5rem,2.1vw,2.25rem)] leading-[0.95]">
+            <span
+              className={cn(
+                "display mt-3 block leading-[0.95]",
+                size === "sm"
+                  ? "text-[clamp(1.05rem,1.65vw,1.8rem)]"
+                  : "text-[clamp(1.5rem,2.1vw,2.25rem)]",
+              )}
+            >
               {step}
             </span>
           </li>

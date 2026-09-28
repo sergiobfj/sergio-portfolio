@@ -22,7 +22,6 @@ const en: Dictionary = {
   },
   hero: {
     role: ["Creator,", "Developer."],
-    tagline: ["Products, systems and automations", "between code, product and business."],
   },
   work: {
     title: "Work",
@@ -52,8 +51,7 @@ const en: Dictionary = {
     },
     tools: {
       title: ["Experiments &", "Tools"],
-      description: "Personal tools, scripts and smaller technical projects.",
-      outline: ["Personal tools", "Scripts", "Technical projects"],
+      description: "Internal tools, scripts and technical experiments: small solutions to specific problems.",
     },
   },
   cases: {
@@ -86,8 +84,8 @@ const en: Dictionary = {
       kicker: "System in development",
       tags: ["System in development"],
     },
-    "jornada-cliente": {
-      title: "Customer Journey",
+    "bot-de-vendas": {
+      title: "Sales Bot",
       summary:
         "From a monthly manual export to a commercial BI with notifications and natural-language questions.",
       kicker: "Commercial BI · Automation · Ploomes API",
@@ -130,8 +128,9 @@ const en: Dictionary = {
     },
     "automacoes-operacionais": {
       title: "Everyday automations",
-      summary: "Web scraping, browser automation, scripts and data collection.",
-      kicker: "Web scraping · Scripts",
+      summary:
+        "Real operational scripts: dashboards that refresh themselves, data collection and browser automation.",
+      kicker: "Scripts · Browser automation",
       tags: ["Automation", "Scripts"],
     },
   },
@@ -269,7 +268,7 @@ const en: Dictionary = {
         access: "Environment with managed access control.",
       },
     },
-    "jornada-cliente": {
+    "bot-de-vendas": {
       headline: [
         "From a spreadsheet exported every month",
         "to a commercial BI that answers questions.",
@@ -446,8 +445,20 @@ const en: Dictionary = {
     },
     "automacoes-operacionais": {
       headline: ["Not every problem needs", "to become a big system."],
-      lead: "Small scripts and automations, built to get repetitive work out of the way.",
-      blocksLabel: "What goes here",
+      lead: "Small scripts and automations, built to get repetitive work out of the operation’s way.",
+      featured: {
+        label: "Published example",
+        title: "Internal TV dashboards",
+        steps: [
+          { label: "Before", text: "The dashboards shown on the internal TVs — with indicators such as sales and appointments — were refreshed by hand." },
+          { label: "How", text: "A Python script with Selenium and PyAutoGUI finds the buttons via XPath and updates the data on its own." },
+          { label: "Result", text: "Less manual effort, and the screens always show current information." },
+        ],
+        note: "Numbers are censored in the demo; the published code is a sanitized version.",
+        post: "See the post",
+        code: "Code (sanitized version)",
+      },
+      blocksLabel: "What else goes here",
       blocks: [
         "Web scraping",
         "Browser automation",
@@ -526,6 +537,7 @@ const en: Dictionary = {
       captions: {
         "team-01": "The SECCO team",
         "talk-room": "The talk at UniFavip Wyden",
+        poster: "Poster for the talk at UniFavip Wyden’s IT Week",
       },
     },
   },
@@ -586,7 +598,8 @@ const en: Dictionary = {
           "Ongoing maintenance",
           "Support for hosted systems",
         ],
-        stackLabel: "Infrastructure",
+        stackLabel: "Areas of work",
+        stepsLabel: "Steps, from provisioning to maintenance",
         stack: ["Linux VPS", "Deploy", "Service administration", "Maintenance"],
       },
       closing: {
@@ -675,7 +688,8 @@ const en: Dictionary = {
     headline: ["Building things", "that work."],
     statement:
       "From the first commit to day-to-day operation: interface, system, automation and the business around it.",
-    portraitAlt: "Sergio Barbosa at work",
+    portraitAlt: "Sergio Barbosa leading a workshop at REC'n'Play Caruaru",
+    portraitCaption: "Workshop at REC'n'Play Caruaru",
   },
   contact: {
     label: "Contact",

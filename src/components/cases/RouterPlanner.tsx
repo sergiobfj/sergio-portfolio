@@ -109,7 +109,9 @@ export function RouterPlanner({ item, dict, locale }: StoryProps) {
             alt={item.title}
             tone="void"
             priority
+            maxHeight="70svh"
             sizes="(max-width: 768px) 100vw, 92vw"
+            className="mx-auto"
           />
         </div>
 

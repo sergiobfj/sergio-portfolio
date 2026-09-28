@@ -1,9 +1,10 @@
-import { pad } from "@/data/portfolio";
+import { automationsFeatured, pad } from "@/data/portfolio";
 import { Band } from "@/components/case/Band";
 import { CaseLinks, CaseTags } from "@/components/case/CaseMeta";
 import { CaseNext } from "@/components/case/CaseNext";
 import { PageHero } from "@/components/layout/PageHero";
 import { Contact } from "@/components/sections/Contact";
+import { ArrowLink } from "@/components/ui/ArrowLink";
 import { BackLink } from "@/components/ui/BackLink";
 import { Reveal } from "@/components/ui/Reveal";
 import { caseTitle, titleLines } from "@/lib/work";
@@ -12,11 +13,13 @@ import type { StoryProps } from "./index";
 
 /**
  * Agrupador, não case: a hero é curta e o corpo são blocos pequenos — um por
- * tipo de automação. Nenhum script vira projeto inventado; quando um deles
- * crescer, ganha case próprio.
+ * tipo de automação. Um exemplo real e publicado (os painéis das TVs
+ * internas) mostra o tipo de trabalho; nenhum script vira projeto inventado,
+ * e quando um deles crescer, ganha case próprio.
  */
 export function AutomacoesOperacionais({ item, dict, locale }: StoryProps) {
   const story = dict.stories["automacoes-operacionais"];
+  const featured = story.featured;
   const title = caseTitle(item, dict);
 
   return (
@@ -52,7 +55,42 @@ export function AutomacoesOperacionais({ item, dict, locale }: StoryProps) {
             <p className="voice max-w-[28ch] text-voice text-pretty">{story.lead}</p>
           </Reveal>
 
-          <p className="label mt-[10vh] text-ash">{story.blocksLabel}</p>
+          {/* O exemplo publicado: antes, como e resultado, com o post e o código */}
+          <section
+            aria-labelledby="automations-featured"
+            className="mt-[10vh] grid grid-cols-12 gap-x-6 gap-y-10"
+          >
+            <Reveal className="col-span-12 lg:col-span-4">
+              <p className="label text-ash">{featured.label}</p>
+              <h2
+                id="automations-featured"
+                className="display mt-4 text-[clamp(2.1rem,3.6vw,3.5rem)] leading-[0.95]"
+              >
+                {featured.title}
+              </h2>
+              <p className="meta mt-5 text-ash">{automationsFeatured.stack.join(" · ")}</p>
+              <div className="mt-8 flex flex-col gap-4">
+                <ArrowLink href={automationsFeatured.linkedinPost} label={featured.post} external />
+                <ArrowLink href={automationsFeatured.repository} label={featured.code} external />
+              </div>
+            </Reveal>
+            <ol className="col-span-12 grid grid-cols-1 gap-x-6 sm:grid-cols-3 lg:col-span-8">
+              {featured.steps.map((step, i) => (
+                <li key={step.label}>
+                  <Reveal variant="draw" delay={i * 70} className="h-px w-full bg-rule" />
+                  <Reveal delay={i * 70 + 50} className="pt-5 pb-8">
+                    <p className="label text-ash">{step.label}</p>
+                    <p className="mt-3 text-lead leading-snug">{step.text}</p>
+                  </Reveal>
+                </li>
+              ))}
+              <li className="sm:col-span-3">
+                <p className="label text-ash">{featured.note}</p>
+              </li>
+            </ol>
+          </section>
+
+          <p className="label mt-[12vh] text-ash">{story.blocksLabel}</p>
           <ul className="mt-6 grid grid-cols-1 gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
             {story.blocks.map((block, i) => (
               <li key={block}>

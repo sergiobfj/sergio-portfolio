@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import { pad, type MediaSlot, type SurfaceTone } from "@/data/portfolio";
 import { Surface } from "@/components/ui/Surface";
 import { Reveal } from "@/components/ui/Reveal";
+import { ratioOf } from "@/lib/spreads";
 
 /**
  * Uma prancha numerada. Com o arquivo em /public, é o screenshot; sem ele,
@@ -19,6 +20,7 @@ export function Figure({
   priority = false,
   className,
   style,
+  maxHeight,
 }: {
   media: MediaSlot;
   number: number;
@@ -32,11 +34,19 @@ export function Figure({
   priority?: boolean;
   className?: string;
   style?: CSSProperties;
+  /**
+   * Teto de altura (ex.: "76svh"): a figura fica mais estreita, na mesma
+   * proporção, em vez de passar da tela. Screenshot não se corta.
+   */
+  maxHeight?: string;
 }) {
   const index = pad(number);
+  const capped = maxHeight
+    ? { ...style, maxWidth: `calc(${maxHeight} * ${ratioOf(media.ratio).toFixed(4)})` }
+    : style;
 
   return (
-    <figure className={className} style={style}>
+    <figure className={className} style={capped}>
       <Surface
         tone={tone}
         media={media}

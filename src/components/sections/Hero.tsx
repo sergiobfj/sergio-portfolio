@@ -4,14 +4,15 @@ import { delay } from "@/lib/cn";
 
 /**
  * A hero é uma composição, não uma landing: o nome atravessa a tela de
- * margem a margem e é a própria grade — no desktop, o papel assenta sob
- * SERGIO e a frase sob BARBOSA. Todo o resto é espaço.
+ * margem a margem e o papel assenta sob SERGIO. Só isso — o conjunto fica
+ * no meio da dobra, e o espaço em volta é o respiro, não um vazio a
+ * preencher.
  *
  * Sem retrato por enquanto: a fotografia real volta com a interação
  * foto/tipografia, não como placeholder.
  *
  * O nome é nome próprio: a composição é idêntica nos três idiomas. Só o
- * papel e a frase de apoio mudam.
+ * papel muda.
  */
 export function Hero({ dict }: { dict: Dictionary }) {
   return (
@@ -27,26 +28,13 @@ export function Hero({ dict }: { dict: Dictionary }) {
             </span>
           </h1>
 
-          <div className="hero-meta">
-            <p className="hero-role voice">
-              {dict.hero.role.map((line, i) => (
-                <span key={line} className="mask-line hero-mask">
-                  <span style={delay(420 + i * 80)}>{line}</span>
-                </span>
-              ))}
-            </p>
-
-            <p
-              className="hero-tagline hero-fade text-lead leading-snug text-ash"
-              style={delay(640)}
-            >
-              {dict.hero.tagline.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </p>
-          </div>
+          <p className="hero-role voice">
+            {dict.hero.role.map((line, i) => (
+              <span key={line} className="mask-line hero-mask">
+                <span style={delay(420 + i * 80)}>{line}</span>
+              </span>
+            ))}
+          </p>
         </div>
       </div>
     </section>

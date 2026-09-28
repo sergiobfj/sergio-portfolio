@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
-import { pad, type CategoryPreview as Preview, type PreviewShot } from "@/data/portfolio";
+import type { CategoryPreview as Preview, PreviewShot } from "@/data/portfolio";
 import { cn } from "@/lib/cn";
 import { mediaSrc } from "@/lib/media";
 
@@ -42,25 +42,5 @@ export function CategoryPreview({ preview }: { preview: Preview }) {
         <Shot shot={preview.inset} main={false} sizes="(max-width: 768px) 60vw, 30vw" />
       ) : null}
     </div>
-  );
-}
-
-/**
- * Categoria ainda sem trabalho publicado: em vez do número sozinho, o
- * índice do que vai morar ali, tom sobre tom — tipografia, sem fingir print.
- */
-export function CategoryOutline({ items }: { items: readonly string[] }) {
-  return (
-    <ol aria-hidden="true" className="absolute inset-x-[5cqw] bottom-[6cqw]">
-      {items.map((item, i) => (
-        <li
-          key={item}
-          className="flex items-baseline gap-[2.4cqw] border-t border-current/15 py-[1.6cqw]"
-        >
-          <span className="meta w-[4cqw] shrink-0 opacity-45">{pad(i + 1)}</span>
-          <span className="display text-[6.4cqw] leading-[0.95] opacity-30">{item}</span>
-        </li>
-      ))}
-    </ol>
   );
 }

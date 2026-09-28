@@ -15,7 +15,7 @@ import { RevealLines } from "@/components/ui/RevealLines";
 import { SectionCurve } from "@/components/ui/SectionCurve";
 import { Surface } from "@/components/ui/Surface";
 import { WorkCursor } from "@/components/ui/WorkCursor";
-import { CategoryOutline, CategoryPreview } from "@/components/work/CategoryPreview";
+import { CategoryPreview } from "@/components/work/CategoryPreview";
 import { caseTitle, countLabel } from "@/lib/work";
 import { routes } from "@/lib/routes";
 import { pairSpans } from "@/lib/spreads";
@@ -23,8 +23,7 @@ import { pairSpans } from "@/lib/spreads";
 /**
  * Um bloco por categoria: a superfície é a prévia (os prints dos próprios
  * projetos, compostos na prancha) e a legenda diz o que há dentro — o nome
- * da categoria e os trabalhos que ela reúne. Categoria sem prints lista, tom
- * sobre tom, o que vai morar ali; sem nem isso, fica o número.
+ * da categoria e os trabalhos que ela reúne. Sem prints, fica o número.
  */
 function CategoryBlock({
   category,
@@ -53,13 +52,7 @@ function CategoryBlock({
           media={category.media}
           cover={number}
           coverSize="74cqw"
-          art={
-            category.preview ? (
-              <CategoryPreview preview={category.preview} />
-            ) : copy.outline ? (
-              <CategoryOutline items={copy.outline} />
-            ) : undefined
-          }
+          art={category.preview ? <CategoryPreview preview={category.preview} /> : undefined}
           lead={
             <span aria-hidden="true" className="meta">
               {number}
@@ -67,7 +60,7 @@ function CategoryBlock({
           }
           trail={<span className="label">{countLabel(items.length, dict)}</span>}
           sizes="(max-width: 768px) 100vw, 58vw"
-          className="aspect-(--ratio) md:aspect-auto md:h-[clamp(24rem,40vw,46rem)]"
+          className="aspect-(--ratio) md:aspect-auto md:h-[clamp(20rem,31vw,36rem)]"
         />
 
         <Reveal delay={90} className="mt-5 flex items-start justify-between gap-6 md:mt-6">

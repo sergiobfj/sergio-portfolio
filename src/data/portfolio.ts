@@ -140,7 +140,22 @@ export const workCategories: WorkCategory[] = [
       },
     },
   },
-  { key: "tools", tone: "mist", media: { src: null, ratio: "4 / 3" } },
+  {
+    key: "tools",
+    tone: "mist",
+    media: { src: null, ratio: "4 / 3" },
+    // A ferramenta em uso: a janela do Merger e os arquivos que ela cruza.
+    preview: {
+      main: {
+        src: "/projects/relatorio-merger/quadro-demonstracao.png",
+        ratio: "680 / 652",
+        position: "50% 14%",
+        x: 30,
+        y: 19,
+        w: 62,
+      },
+    },
+  },
 ];
 
 /**
@@ -153,7 +168,7 @@ export type CaseKey =
   | "sentavos"
   | "geocarbo"
   | "crm-textil"
-  | "jornada-cliente"
+  | "bot-de-vendas"
   | "arena-sustentabilidade"
   | "relatorio-merger"
   | "automacoes-operacionais";
@@ -279,20 +294,11 @@ export const cases: WorkCase[] = [
     ],
   },
   {
-    // [placeholder] sistema em desenvolvimento na SECCO.
-    slug: "crm-textil",
-    title: "CRM Têxtil",
-    category: "products",
-    weight: "placeholder",
-    company: "SECCO",
-    tone: "void",
-    media: { src: null, ratio: "16 / 9" },
-  },
-  {
-    // Bot de vendas e Jornada do Cliente são o mesmo ecossistema: um case.
-    // Título provisório — renomear aqui (e em `cases.<slug>.title`).
-    slug: "jornada-cliente",
-    title: "Jornada do Cliente",
+    // O bot de vendas e o BI comercial são o mesmo ecossistema: um case.
+    // Antes "Jornada do Cliente" (o nome da planilha de origem); a URL antiga
+    // redireciona (next.config.ts). As imagens seguem em /projects/jornada-cliente/.
+    slug: "bot-de-vendas",
+    title: "Bot de Vendas",
     category: "automations",
     weight: "full",
     company: "Virtron",
@@ -336,7 +342,7 @@ export const cases: WorkCase[] = [
   {
     slug: "relatorio-merger",
     title: "Relatório Merger",
-    category: "automations",
+    category: "tools",
     weight: "mini",
     company: "Virtron",
     repositoryVisibility: "private",
@@ -358,6 +364,32 @@ export const cases: WorkCase[] = [
     media: { src: null, ratio: "16 / 9" },
   },
 ];
+
+/**
+ * O exemplo concreto do agrupador "Automações do dia a dia": a atualização
+ * dos painéis das TVs internas, publicada no LinkedIn com o código
+ * sanitizado no GitHub. Os textos estão em `stories["automacoes-operacionais"].featured`.
+ */
+export const automationsFeatured = {
+  stack: ["Python", "Selenium", "PyAutoGUI"],
+  linkedinPost:
+    "https://www.linkedin.com/posts/sergio-barbosa-03195133b_automatizei-a-atualiza%C3%A7%C3%A3o-de-pain%C3%A9is-exibidos-activity-7421956485372477441-Kld3",
+  repository: "https://github.com/sergiobfj/automacaoTV",
+};
+
+/**
+ * Trabalho ainda não divulgado: só o nome, discreto, com "Em breve" — sem
+ * página, sem prancha, fora das contagens. Vira case quando for publicado.
+ */
+export type UpcomingWork = { key: CaseKey; title: string; company: string };
+
+export const upcoming: UpcomingWork[] = [
+  { key: "crm-textil", title: "CRM Têxtil", company: "SECCO" },
+];
+
+export function upcomingAt(company: string) {
+  return upcoming.filter((item) => item.company === company);
+}
 
 /** Número editorial derivado da posição — nunca precisa ser mantido à mão. */
 export function categoryNumber(key: WorkCategoryKey) {
@@ -419,6 +451,8 @@ export type ExperienceEntry = {
   /** Razão social ou nome completo, quando difere. */
   legalName?: string;
   logo?: BrandLogo;
+  /** Só o símbolo (sem o letreiro): marca a linha da experiência na home. */
+  symbol?: BrandLogo;
   /** Site oficial da empresa. */
   website?: string;
   from: string;
@@ -436,8 +470,16 @@ export const experiences: ExperienceEntry[] = [
     logo: {
       onLight: "/logos/virtron-escura.png",
       onDark: "/logos/virtron-branca.png",
-      width: 225,
-      height: 68,
+      // 4× a partir do original (225 px): borda reconstruída, forma intacta.
+      width: 900,
+      height: 272,
+    },
+    // O hexágono, recortado do próprio logo.
+    symbol: {
+      onLight: "/logos/virtron-simbolo-escura.png",
+      onDark: "/logos/virtron-simbolo-branca.png",
+      width: 242,
+      height: 262,
     },
     from: "2025-03",
     to: null,
@@ -456,12 +498,19 @@ export const experiences: ExperienceEntry[] = [
       height: 223,
       scale: 1.3,
     },
+    symbol: {
+      onLight: "/logos/secco-escura.svg",
+      onDark: "/logos/secco-branca.svg",
+      width: 183,
+      height: 223,
+    },
     website: "https://www.seccolab.com.br",
     from: "2025-12",
     to: null,
+    // A foto da equipe abre a página (ao lado da frase); a galeria fica com o evento.
     gallery: [
-      { id: "team-01", src: "/experience/secco/equipe-secco-01.jpg", ratio: "1667 / 1111" },
       { id: "talk-room", src: "/experience/secco/unifavip-talk-sala.jpg", ratio: "1600 / 1066" },
+      { id: "poster", src: "/experience/secco/cartaz-semana-de-ti.jpg", ratio: "1080 / 1350" },
     ],
   },
 ];
@@ -514,6 +563,13 @@ export type Talk = {
   with?: string[];
 };
 
+/** A equipe, na abertura da página da SECCO. */
+export const seccoTeam = {
+  id: "team-01",
+  src: "/experience/secco/equipe-secco-01.jpg",
+  ratio: "1667 / 1111",
+} satisfies GalleryImage;
+
 export const talks: Talk[] = [
   {
     key: "recnplay-python",
@@ -521,7 +577,8 @@ export const talks: Talk[] = [
     event: "REC'n'Play Caruaru",
     kind: "workshop",
     status: "done",
-    media: { src: "/experience/secco/recnplay-oficina-python.jpg", ratio: "3 / 4" },
+    // 5:4 com o foco em quem fala: a foto inteira em pé tomava a tela.
+    media: { src: "/experience/secco/recnplay-oficina-python.jpg", ratio: "5 / 4", position: "50% 86%" },
   },
   {
     key: "recnplay-terminal",
@@ -529,7 +586,7 @@ export const talks: Talk[] = [
     event: "REC'n'Play Caruaru",
     kind: "workshop",
     status: "done",
-    media: { src: "/experience/secco/recnplay-oficina-terminal.jpg", ratio: "3 / 4" },
+    media: { src: "/experience/secco/recnplay-oficina-terminal.jpg", ratio: "5 / 4", position: "50% 74%" },
   },
   {
     key: "unifavip-empreendedorismo",
@@ -538,7 +595,7 @@ export const talks: Talk[] = [
     kind: "talk",
     status: "done",
     with: ["Igor", "Gabriel", "Luan", "Juan"],
-    media: { src: "/experience/secco/unifavip-talk-empreendedorismo.jpg", ratio: "4 / 3" },
+    media: { src: "/experience/secco/unifavip-talk-empreendedorismo.jpg", ratio: "16 / 10", position: "50% 40%" },
   },
   {
     key: "bug-hunt",

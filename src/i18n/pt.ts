@@ -19,8 +19,6 @@ type CategoryCopy = {
   /** Em linhas: o título é composto, não quebra ao acaso. */
   title: string[];
   description: string;
-  /** Categoria sem trabalho publicado: o que vai morar ali, na prancha da home. */
-  outline?: string[];
 };
 
 /**
@@ -81,8 +79,8 @@ const categories: Record<WorkCategoryKey, CategoryCopy> = {
   },
   tools: {
     title: ["Experimentos &", "Tools"],
-    description: "Ferramentas pessoais, scripts e projetos técnicos menores.",
-    outline: ["Ferramentas pessoais", "Scripts", "Projetos técnicos"],
+    description:
+      "Ferramentas internas, scripts e experimentos técnicos: soluções pequenas para problemas específicos.",
   },
 };
 
@@ -116,7 +114,7 @@ const cases: Record<CaseKey, CaseCopy> = {
     kicker: "Sistema em desenvolvimento",
     tags: ["Sistema em desenvolvimento"],
   },
-  "jornada-cliente": {
+  "bot-de-vendas": {
     summary:
       "Do export manual de todo mês a um BI comercial com notificações e perguntas em linguagem natural.",
     kicker: "BI comercial · Automação · Ploomes API",
@@ -158,8 +156,9 @@ const cases: Record<CaseKey, CaseCopy> = {
     metricsNote: "Números aproximados.",
   },
   "automacoes-operacionais": {
-    summary: "Web scraping, automação de navegador, scripts e coleta de dados.",
-    kicker: "Web scraping · Scripts",
+    summary:
+      "Scripts da operação real: painéis que se atualizam sozinhos, coleta de dados e automação de navegador.",
+    kicker: "Scripts · Automação de navegador",
     tags: ["Automação", "Scripts"],
   },
 };
@@ -186,6 +185,7 @@ const experiences: Record<ExperienceKey, ExperienceCopy> = {
     captions: {
       "team-01": "Equipe SECCO",
       "talk-room": "Talk na UniFavip Wyden",
+      poster: "Cartaz da talk na Semana de TI da UniFavip Wyden",
     },
   },
 };
@@ -329,7 +329,7 @@ const stories = {
       access: "Ambiente com controle de acesso gerenciado.",
     },
   },
-  "jornada-cliente": {
+  "bot-de-vendas": {
     headline: [
       "De uma planilha exportada todo mês",
       "a um BI comercial que responde perguntas.",
@@ -507,8 +507,20 @@ const stories = {
   },
   "automacoes-operacionais": {
     headline: ["Nem todo problema precisa", "virar um grande sistema."],
-    lead: "Scripts e automações pequenas, feitas para tirar trabalho repetitivo do caminho.",
-    blocksLabel: "O que entra aqui",
+    lead: "Scripts e automações pequenas, feitas para tirar trabalho repetitivo do caminho da operação.",
+    featured: {
+      label: "Exemplo publicado",
+      title: "Painéis das TVs internas",
+      steps: [
+        { label: "Antes", text: "Os painéis exibidos nas TVs internas — com indicadores como vendas e agendamentos — eram atualizados à mão." },
+        { label: "Como", text: "Um script em Python com Selenium e PyAutoGUI identifica os botões via XPath e atualiza os dados sozinho." },
+        { label: "Resultado", text: "Menos esforço manual e informação sempre atualizada nas telas." },
+      ],
+      note: "Números censurados na demonstração; o código publicado é uma versão sanitizada.",
+      post: "Ver o post",
+      code: "Código (versão sanitizada)",
+    },
+    blocksLabel: "O que mais entra aqui",
     blocks: [
       "Web scraping",
       "Automação de navegador",
@@ -610,7 +622,8 @@ const experienceStories = {
         "Manutenção contínua",
         "Suporte aos sistemas hospedados",
       ],
-      stackLabel: "Infraestrutura",
+      stackLabel: "Frentes de trabalho",
+      stepsLabel: "Etapas, da contratação à manutenção",
       // Versão pública: sem provedor nem painel.
       stack: ["VPS Linux", "Deploy", "Administração de serviços", "Manutenção"],
     },
@@ -691,7 +704,6 @@ const pt = {
   },
   hero: {
     role: ["Criador,", "Desenvolvedor."],
-    tagline: ["Produtos, sistemas e automações", "entre código, produto e negócio."],
   },
   work: {
     title: "Trabalhos",
@@ -768,7 +780,8 @@ const pt = {
     headline: ["Construo coisas", "que funcionam."],
     statement:
       "Do primeiro commit até a operação: interface, sistema, automação e o negócio em volta.",
-    portraitAlt: "Sergio Barbosa trabalhando",
+    portraitAlt: "Sergio Barbosa conduzindo uma oficina na REC'n'Play Caruaru",
+    portraitCaption: "Oficina na REC'n'Play Caruaru",
   },
   contact: {
     label: "Contato",

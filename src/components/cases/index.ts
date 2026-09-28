@@ -4,7 +4,7 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionary";
 import { Arena } from "./Arena";
 import { AutomacoesOperacionais } from "./AutomacoesOperacionais";
-import { JornadaCliente } from "./JornadaCliente";
+import { BotDeVendas } from "./BotDeVendas";
 import { RouterPlanner } from "./RouterPlanner";
 
 export type StoryProps = {
@@ -24,7 +24,7 @@ export type StoryProps = {
  */
 export const stories: Partial<Record<CaseKey, ComponentType<StoryProps>>> = {
   "router-planner": RouterPlanner,
-  "jornada-cliente": JornadaCliente,
+  "bot-de-vendas": BotDeVendas,
   "arena-sustentabilidade": Arena,
   "automacoes-operacionais": AutomacoesOperacionais,
 };

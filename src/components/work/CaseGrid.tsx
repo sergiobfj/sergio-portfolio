@@ -101,8 +101,8 @@ function CaseLink({
   );
 }
 
-const TALL = "md:h-[clamp(22rem,37vw,44rem)]";
-const LOW = "md:h-[clamp(16rem,24vw,28rem)]";
+const TALL = "md:h-[clamp(19rem,30vw,35rem)]";
+const LOW = "md:h-[clamp(15rem,21vw,25rem)]";
 
 /**
  * Par: duas superfícies coladas, mesma altura. O peso decide a largura — o
@@ -138,9 +138,9 @@ function Pair({
 }
 
 /** Um leve sozinho não vira destaque: meia largura, altura baixa. */
-function Single(props: ItemProps) {
+function Single({ trailing, ...props }: ItemProps & { trailing?: React.ReactNode }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12">
+    <div className="grid grid-cols-1 gap-x-(--seam) gap-y-12 md:grid-cols-12">
       <CaseLink {...props} className="md:col-span-6">
         <CaseSurface
           {...props}
@@ -149,6 +149,9 @@ function Single(props: ItemProps) {
         />
         <Caption item={props.item} dict={props.dict} className="mt-5 md:mt-6" />
       </CaseLink>
+      {trailing ? (
+        <div className="md:col-span-5 md:col-start-8 md:self-end md:pb-[4.5rem]">{trailing}</div>
+      ) : null}
     </div>
   );
 }
@@ -165,7 +168,7 @@ function Feature({ side, ...props }: ItemProps & { side: "left" | "right" }) {
           {...props}
           sizes="(max-width: 768px) 100vw, 66vw"
           className={cn(
-            "aspect-(--ratio) lg:col-span-8 lg:aspect-auto lg:h-[clamp(20rem,31vw,38rem)]",
+            "aspect-(--ratio) lg:col-span-8 lg:aspect-auto lg:h-[clamp(18rem,27vw,32rem)]",
             right ? "lg:order-2" : "lg:order-1",
           )}
         />
@@ -189,21 +192,28 @@ function Feature({ side, ...props }: ItemProps & { side: "left" | "right" }) {
  *
  * `context` escolhe o rótulo impresso na superfície: a empresa (dentro de
  * uma categoria) ou o `kicker` do case (dentro de uma empresa).
+ *
+ * `trailing` (opcional) ocupa a metade livre quando a última linha é um
+ * case leve sozinho — ex.: o "em breve" da SECCO. Senão, vem embaixo.
  */
 export function CaseGrid({
   items,
   dict,
   locale,
   context,
+  trailing,
 }: {
   items: WorkCase[];
   dict: Dictionary;
   locale: Locale;
   context: Context;
+  trailing?: React.ReactNode;
 }) {
   const rows: WorkCase[][] = [];
   for (let i = 0; i < items.length; i += 2) rows.push(items.slice(i, i + 2));
   const shared = { dict, locale, context };
+  const last = rows.at(-1);
+  const trailingInRow = Boolean(trailing && last?.length === 1 && !isHeavy(last[0].weight));
 
   return (
     <WorkCursor label={dict.work.cursor}>
@@ -221,9 +231,15 @@ export function CaseGrid({
               {...shared}
             />
           ) : (
-            <Single key={first.slug} item={first} {...shared} />
+            <Single
+              key={first.slug}
+              item={first}
+              trailing={trailingInRow && i === rows.length - 1 ? trailing : undefined}
+              {...shared}
+            />
           );
         })}
+        {trailing && !trailingInRow ? trailing : null}
       </div>
     </WorkCursor>
   );

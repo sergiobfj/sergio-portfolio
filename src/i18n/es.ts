@@ -22,10 +22,6 @@ const es: Dictionary = {
   },
   hero: {
     role: ["Creador,", "Desarrollador."],
-    tagline: [
-      "Productos, sistemas y automatizaciones",
-      "entre código, producto y negocio.",
-    ],
   },
   work: {
     title: "Trabajos",
@@ -55,8 +51,8 @@ const es: Dictionary = {
     },
     tools: {
       title: ["Experimentos &", "Herramientas"],
-      description: "Herramientas personales, scripts y proyectos técnicos menores.",
-      outline: ["Herramientas personales", "Scripts", "Proyectos técnicos"],
+      description:
+        "Herramientas internas, scripts y experimentos técnicos: soluciones pequeñas para problemas específicos.",
     },
   },
   cases: {
@@ -89,8 +85,8 @@ const es: Dictionary = {
       kicker: "Sistema en desarrollo",
       tags: ["Sistema en desarrollo"],
     },
-    "jornada-cliente": {
-      title: "Jornada del Cliente",
+    "bot-de-vendas": {
+      title: "Bot de Ventas",
       summary:
         "De una exportación manual cada mes a un BI comercial con notificaciones y preguntas en lenguaje natural.",
       kicker: "BI comercial · Automatización · Ploomes API",
@@ -134,8 +130,8 @@ const es: Dictionary = {
     "automacoes-operacionais": {
       title: "Automatizaciones del día a día",
       summary:
-        "Web scraping, automatización de navegador, scripts y recolección de datos.",
-      kicker: "Web scraping · Scripts",
+        "Scripts de la operación real: paneles que se actualizan solos, recolección de datos y automatización de navegador.",
+      kicker: "Scripts · Automatización de navegador",
       tags: ["Automatización", "Scripts"],
     },
   },
@@ -273,7 +269,7 @@ const es: Dictionary = {
         access: "Entorno con control de acceso gestionado.",
       },
     },
-    "jornada-cliente": {
+    "bot-de-vendas": {
       headline: [
         "De una hoja exportada cada mes",
         "a un BI comercial que responde preguntas.",
@@ -450,8 +446,20 @@ const es: Dictionary = {
     },
     "automacoes-operacionais": {
       headline: ["No todo problema tiene", "que volverse un gran sistema."],
-      lead: "Scripts y automatizaciones pequeñas, hechas para sacar el trabajo repetitivo del camino.",
-      blocksLabel: "Qué entra aquí",
+      lead: "Scripts y automatizaciones pequeñas, hechas para sacar el trabajo repetitivo del camino de la operación.",
+      featured: {
+        label: "Ejemplo publicado",
+        title: "Paneles de las TVs internas",
+        steps: [
+          { label: "Antes", text: "Los paneles que se muestran en las TVs internas — con indicadores como ventas y citas — se actualizaban a mano." },
+          { label: "Cómo", text: "Un script en Python con Selenium y PyAutoGUI identifica los botones vía XPath y actualiza los datos solo." },
+          { label: "Resultado", text: "Menos esfuerzo manual e información siempre actualizada en las pantallas." },
+        ],
+        note: "Números censurados en la demostración; el código publicado es una versión sanitizada.",
+        post: "Ver el post",
+        code: "Código (versión sanitizada)",
+      },
+      blocksLabel: "Qué más entra aquí",
       blocks: [
         "Web scraping",
         "Automatización de navegador",
@@ -530,6 +538,7 @@ const es: Dictionary = {
       captions: {
         "team-01": "El equipo SECCO",
         "talk-room": "La charla en UniFavip Wyden",
+        poster: "Cartel de la charla en la Semana de TI de UniFavip Wyden",
       },
     },
   },
@@ -590,7 +599,8 @@ const es: Dictionary = {
           "Mantenimiento continuo",
           "Soporte a los sistemas alojados",
         ],
-        stackLabel: "Infraestructura",
+        stackLabel: "Frentes de trabajo",
+        stepsLabel: "Etapas, de la contratación al mantenimiento",
         stack: ["VPS Linux", "Deploy", "Administración de servicios", "Mantenimiento"],
       },
       closing: {
@@ -679,7 +689,8 @@ const es: Dictionary = {
     headline: ["Construyo cosas", "que funcionan."],
     statement:
       "Del primer commit a la operación diaria: interfaz, sistema, automatización y el negocio alrededor.",
-    portraitAlt: "Sergio Barbosa trabajando",
+    portraitAlt: "Sergio Barbosa dando un taller en REC'n'Play Caruaru",
+    portraitCaption: "Taller en REC'n'Play Caruaru",
   },
   contact: {
     label: "Contacto",

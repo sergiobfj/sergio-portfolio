@@ -44,14 +44,17 @@ export function ExperienceHero({ entry, dict, locale }: ExperienceStoryProps) {
           ))}
         </p>
       }
+      mark={
+        entry.logo ? (
+          <Logo logo={entry.logo} className="[--logo-h:clamp(2.75rem,4.2vw,4rem)]" />
+        ) : undefined
+      }
       aside={
         <>
+          {/* No celular a marca vem aqui, pequena; do tablet em diante, na linha do título. */}
           {entry.logo ? (
             // self-start: numa coluna flex, sem ele a imagem estica na largura.
-            <Logo
-              logo={entry.logo}
-              className="mb-4 self-start [--logo-h:1.75rem] md:mb-6 md:self-end md:[--logo-h:2.125rem]"
-            />
+            <Logo logo={entry.logo} className="mb-4 self-start [--logo-h:1.75rem] md:hidden" />
           ) : null}
           <p className="label text-ash">{copy.pageRole ?? copy.role}</p>
           {entry.website ? (

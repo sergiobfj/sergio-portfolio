@@ -9,6 +9,11 @@ type Props = {
   voice?: ReactNode;
   /** Coluna da direita: papel, links, voltar. */
   aside?: ReactNode;
+  /**
+   * Marca na linha do título, à direita, assentada na base das letras
+   * (a partir do tablet). No celular, quem quiser mostrá-la põe no `aside`.
+   */
+  mark?: ReactNode;
   /** Teto do título; abaixo dele, vale o que couber na largura. */
   size?: string;
   /** Hero curta, para o que não é case completo (mini-case, agrupador). */
@@ -31,6 +36,7 @@ export function PageHero({
   title,
   voice,
   aside,
+  mark,
   size = "min(19rem, 17vw)",
   compact = false,
 }: Props) {
@@ -48,16 +54,23 @@ export function PageHero({
         {meta ? <p className="meta">{meta}</p> : null}
       </div>
 
-      <h1
-        className="fit-display display mt-6 leading-[0.96]"
-        style={fit(title, size, 86, MOBILE_MAX)}
-      >
-        {title.map((line, i) => (
-          <span key={line} className="mask-line hero-mask">
-            <span style={delay(120 + i * 90)}>{line}</span>
-          </span>
-        ))}
-      </h1>
+      <div className={cn(Boolean(mark) && "md:flex md:items-end md:justify-between md:gap-10")}>
+        <h1
+          className="fit-display display mt-6 leading-[0.96]"
+          style={fit(title, size, 86, MOBILE_MAX)}
+        >
+          {title.map((line, i) => (
+            <span key={line} className="mask-line hero-mask">
+              <span style={delay(120 + i * 90)}>{line}</span>
+            </span>
+          ))}
+        </h1>
+        {mark ? (
+          <div className="hero-fade hidden shrink-0 pb-[1.2vw] md:block" style={delay(360)}>
+            {mark}
+          </div>
+        ) : null}
+      </div>
 
       {voice || aside ? (
         <div

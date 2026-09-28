@@ -87,7 +87,9 @@ export function Arena({ item, dict, locale }: StoryProps) {
             alt={title}
             tone="void"
             priority
+            maxHeight="70svh"
             sizes="(max-width: 768px) 100vw, 92vw"
+            className="mx-auto"
           />
         </div>
 
@@ -135,8 +137,9 @@ export function Arena({ item, dict, locale }: StoryProps) {
               label={figure}
               caption={copy.captions?.[calculator.id]}
               tone="mist"
-              sizes="(max-width: 768px) 100vw, 92vw"
-              className="mt-[12vh]"
+              sizes="(max-width: 768px) 100vw, 70vw"
+              maxHeight="70svh"
+              className="mx-auto mt-[12vh]"
             />
           ) : null}
         </Band>

@@ -38,7 +38,7 @@ identidade e vivem em `portfolio.ts`.
 | --- | --- |
 | `/<idioma>` | home |
 | `/<idioma>/work/<categoria>` | categoria: `products` · `automations` · `web` · `tools` |
-| `/<idioma>/work/<case>` | case (`router-planner`, `jornada-cliente`, `arena-sustentabilidade`, `relatorio-merger`, `automacoes-operacionais`, …) — divide o segmento com as categorias |
+| `/<idioma>/work/<case>` | case (`router-planner`, `bot-de-vendas`, `arena-sustentabilidade`, `relatorio-merger`, `automacoes-operacionais`, …) — divide o segmento com as categorias |
 | `/<idioma>/experience/<empresa>` | `virtron` · `secco` |
 
 Categoria e case moram na mesma rota (`app/[locale]/work/[slug]`); o tipo de
@@ -53,10 +53,15 @@ categoria, que lista seus `cases` em grid editorial.
 
 | Categoria | Cases (ordem do dado) |
 | --- | --- |
-| Produtos & Sistemas | Router Planner · Sentavos · GeoCarbo · CRM Têxtil |
-| Automações & Integrações | Jornada do Cliente · Relatório Merger · Automações do dia a dia |
+| Produtos & Sistemas | Router Planner · Sentavos · GeoCarbo |
+| Automações & Integrações | Bot de Vendas · Automações do dia a dia |
 | Web & Experiências digitais | Arena da Sustentabilidade |
-| Experimentos & Tools | — (preparada, vazia) |
+| Experimentos & Tools | Relatório Merger |
+
+Trabalho ainda não divulgado não é case: vai em `upcoming` (só o nome, com
+"Em breve", na página da empresa — hoje, o CRM Têxtil na SECCO), sem página,
+sem prancha e fora das contagens. "Bot de Vendas" era "Jornada do Cliente";
+o link antigo redireciona (`next.config.ts`).
 
 Um case novo:
 
@@ -87,7 +92,8 @@ texto em `stories.<slug>` nos dicionários. Não há template: a história comp�
 as peças de `src/components/case/` — `Band` (faixa de tom com a base curva),
 `Metrics`, `StepList`/`InlineFlow`, `SheetTabs`, `Figure`/`Gallery`,
 `StackSheet`, `CaseTags`/`CaseLinks`, `CaseNext`. Hoje: Router Planner,
-Jornada do Cliente, Arena da Sustentabilidade e Automações do dia a dia.
+Bot de Vendas, Arena da Sustentabilidade e Automações do dia a dia (com o
+exemplo publicado dos painéis das TVs, em `automationsFeatured`).
 
 ### Experiências
 
@@ -121,19 +127,18 @@ focal quando o bloco corta a imagem).
 | --- | --- | --- |
 | `public/images/` | `foto-principal-sergio.jpg` | |
 | `public/projects/router-planner/` | `tela-principal` `selecao-de-rotas` `validacoes` (tarjados) | `planilha-antiga` `exportacao-final` |
-| `public/projects/jornada-cliente/` | `bancada-desenvolvimento` `telegram-nova-venda` (+ `-card`, recorte) `telegram-pergunta` | `dashboard-looker` `arquitetura` |
+| `public/projects/jornada-cliente/` (case Bot de Vendas) | `bancada-desenvolvimento` `telegram-nova-venda` (+ `-card`, recorte) `telegram-pergunta` | `dashboard-looker` `arquitetura` |
 | `public/projects/arena-sustentabilidade/` | `tela-principal` `calculadora-co2` (+ `-recorte`) `experiencias` | `versao-mobile` |
 | `public/projects/relatorio-merger/` | `quadro-demonstracao` (quadro do vídeo de demonstração) | |
 | `public/projects/sentavos/` | `tela-principal` `dashboard` | |
 | `public/projects/geocarbo/` | `tela-principal` `dashboard` `cadastro-propriedade` `relatorios` (tarjados) | |
 | `public/experience/virtron/` | `estacao-de-trabalho` `promocao-assistente-ti` `foto-com-antigo-gestor` `trabalhando-virtron-01` `trabalhando-virtron-02` | |
-| `public/experience/secco/` | `recnplay-oficina-python` `recnplay-oficina-terminal` `unifavip-talk-empreendedorismo` `unifavip-talk-sala` `equipe-secco-01` | `bug-hunt` (só depois do evento) |
+| `public/experience/secco/` | `recnplay-oficina-python` `recnplay-oficina-terminal` `unifavip-talk-empreendedorismo` `unifavip-talk-sala` `cartaz-semana-de-ti` `equipe-secco-01` | `bug-hunt` (só depois do evento) |
 
 Prévias das categorias na home: `workCategories[].preview` — uma imagem
 principal que sangra pela borda e um recorte na frente, em % da prancha
 (`work/CategoryPreview`). Os arquivos `-card`/`-recorte` são enquadramentos
-dos prints originais, não montagens. Categoria sem prints usa
-`categories.<chave>.outline` (o índice do que vai morar ali).
+dos prints originais, não montagens. Categoria sem prints mostra o número.
 
 Marcas em `public/logos/` (`virtron-*.png`, `secco-*.svg`): monocromáticas nos
 tons do site — `-escura` (ink) para fundo claro, `-branca` (paper) para fundo
@@ -243,7 +248,7 @@ src/
     work/            CategoryView, CaseView (genérico), CaseGrid
     case/            peças dos cases: Band, Metrics, Flow, SheetTabs, Figure,
                      Gallery, StackSheet, CaseMeta, CaseNext
-    cases/           histórias próprias (RouterPlanner, JornadaCliente,
+    cases/           histórias próprias (RouterPlanner, BotDeVendas,
                      Arena, AutomacoesOperacionais) + registro
     experience/      ExperienceHero, ExperienceView (genérico)
     experiences/     narrativas (Virtron, Secco) + registro

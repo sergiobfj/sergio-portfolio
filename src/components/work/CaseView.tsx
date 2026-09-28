@@ -69,12 +69,13 @@ function GenericCase({ item, dict, locale }: Props) {
               alt={title}
               tone={item.tone}
               priority
+              maxHeight="70svh"
               sizes={
                 item.weight === "mini"
                   ? "(max-width: 1024px) 100vw, 46vw"
                   : "(max-width: 768px) 100vw, 92vw"
               }
-              className={item.weight === "mini" ? "lg:w-1/2" : undefined}
+              className={item.weight === "mini" ? "lg:w-1/2" : "mx-auto"}
             />
           </div>
         ) : null}

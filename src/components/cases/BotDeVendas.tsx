@@ -20,7 +20,7 @@ import type { StoryProps } from "./index";
 
 /*
  * Estrutura desta história (igual nos três idiomas); o texto fica em
- * `stories["jornada-cliente"]`. Nenhum ID interno, token, chat ou nome de
+ * `stories["bot-de-vendas"]`. Nenhum ID interno, token, chat ou nome de
  * pessoa — nem aqui, nem no texto.
  */
 /** "Fallback LLM": o único passo que não é determinístico. */
@@ -31,12 +31,12 @@ const ANSWER_STEP = 6;
 const INLINE = ["telegram-sale", "telegram-question"];
 
 /**
- * Jornada do Cliente — o bot de vendas e o BI comercial como um ecossistema
+ * Bot de Vendas — o bot e o BI comercial como um ecossistema
  * só. Do problema original (export mensal) aos três pilares, com o BI
  * conversacional no centro: a IA interpreta, o código calcula.
  */
-export function JornadaCliente({ item, dict, locale }: StoryProps) {
-  const story = dict.stories["jornada-cliente"];
+export function BotDeVendas({ item, dict, locale }: StoryProps) {
+  const story = dict.stories["bot-de-vendas"];
   const copy = dict.cases[item.slug];
   const figure = dict.caseStudy.figure;
   const title = caseTitle(item, dict);
@@ -88,7 +88,9 @@ export function JornadaCliente({ item, dict, locale }: StoryProps) {
             alt={title}
             tone="void"
             priority
+            maxHeight="70svh"
             sizes="(max-width: 768px) 100vw, 92vw"
+            className="mx-auto"
           />
         </div>
 
