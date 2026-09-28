@@ -37,6 +37,7 @@ export function Chapter({
         className={cn(
           "display col-span-12 mb-[5vh] text-[clamp(1.6rem,2.6vw,2.4rem)]",
           side && "lg:col-span-4 lg:mb-0",
+          wide && "md:text-center",
           inset && "lg:col-span-8 lg:col-start-5",
           stacked && "md:text-center",
         )}

@@ -87,14 +87,11 @@ const en: Dictionary = {
     "bot-de-vendas": {
       title: "Sales Bot",
       summary:
-        "From a monthly manual export to a commercial BI with notifications and natural-language questions.",
-      kicker: "Commercial BI · Automation · Ploomes API",
-      tags: ["Commercial BI & automation", "In production"],
+        "Conversational BI with notifications and natural-language questions, straight from the CRM.",
+      kicker: "Conversational BI · Virtron",
+      tags: ["Conversational BI", "In production"],
       captions: {
         "telegram-sale": "New-sale notification on Telegram",
-        "telegram-question": "A natural-language question to the bot",
-        looker: "Looker Studio dashboard",
-        architecture: "Pipeline architecture",
       },
     },
     "arena-sustentabilidade": {
@@ -270,20 +267,14 @@ const en: Dictionary = {
     },
     "bot-de-vendas": {
       headline: [
-        "From a spreadsheet exported every month",
-        "to a commercial BI that answers questions.",
+        "Ask about the operation.",
+        "Get the answer straight from the CRM.",
       ],
       origin: {
-        title: "The original problem",
-        lead: "It started as a manual process.",
-        body: "Every month I exported a spreadsheet called “Jornada do Cliente” (customer journey) from Ploomes, with three tabs — one per SDR. Then came the rest: organizing, merging and delivering the data for the board’s analysis.",
-        steps: ["Export", "Organize", "Merge", "Deliver"],
-        goalLabel: "The initial goal was simple",
-        goal: [
-          "One link.",
-          "Always up-to-date data.",
-          "No downloads, no merging, no manual clicks.",
-        ],
+        title: "The problem",
+        lead: "The sales data already lived in Ploomes, but quick lookups still required opening the CRM, setting filters and interpreting the information manually.",
+        body: "The Sales Bot turned that access into a Telegram conversation.",
+        note: "This project started as a customer-journey automation and evolved into a full commercial intelligence ecosystem.",
       },
       pillars: {
         title: ["The project grew", "beyond the first automation."],
@@ -309,20 +300,21 @@ const en: Dictionary = {
         ],
       },
       pipeline: {
-        title: "Data pipeline",
-        lead: "Always-current information, without manual exports.",
+        title: "Dashboard & ETL",
+        lead: "The data layer that feeds the executive dashboard and historical analysis.",
         body: "The pipeline queries Ploomes, transforms and organizes the records, removes relevant duplicates and writes the result into four structures in Google Sheets — which feed the Looker Studio dashboard.",
+        note: "The conversational BI and the notifications query the CRM directly.",
         sheetsLabel: "In Google Sheets",
         sheets: ["SDR", "Vendas", "Cohort", "Cohort Long"],
       },
       notifications: {
-        title: "Notifications",
-        lead: "The team and the board stay up to date without opening the dashboard all the time.",
+        title: "Another one!!",
+        lead: "The team and the board stay up to date without opening the dashboard.",
         items: [
-          "Detects new sales",
-          "Queries the data at the source",
-          "Sends the notification automatically",
-          "Sends a daily summary",
+          "Polls for new sales periodically",
+          "Detection within ~5 minutes",
+          "Avoids duplicate notifications",
+          "Consolidated daily close",
         ],
       },
       conversational: {
@@ -330,9 +322,11 @@ const en: Dictionary = {
         lead: "Questions in Portuguese, by text or by voice.",
         questions: [
           "How many sales did we have today?",
-          "Which salespeople sold today?",
+          "What about yesterday?",
+          "And by salesperson?",
           "What was this month’s average ticket?",
-          "Compare this month with the last three.",
+          "Top 5 salespeople by revenue.",
+          "And in these cities?",
         ],
         flowLabel: "From question to answer",
         flow: [
@@ -355,21 +349,16 @@ const en: Dictionary = {
           "Rules normalize ambiguous cases, and the conversation context can be reused.",
           "The API provides the data, Python does the math, and the answer is assembled deterministically.",
         ],
-        gainsLabel: "What this enables",
-        gains: [
-          "Lower cost",
-          "More predictability",
-          "Less hallucination",
-          "More accurate answers",
-          "Conversational follow-ups",
+        highlights: [
+          { value: "0 tokens", caption: "Simple questions are interpreted by the deterministic parser." },
+          { value: "6 metrics", caption: "Sales, revenue, average ticket, R$/kWp, leads and losses." },
+          { value: "15 min", caption: "Conversational context for follow-ups." },
         ],
-        followUpsLabel: "Follow-ups",
-        followUps: ["What about yesterday?", "And by salesperson?", "And in these cities?"],
       },
       audio: {
-        title: "Voice",
+        title: "Voice works too",
         value: "~60 s",
-        text: "Voice messages of up to about 60 seconds are transcribed locally with Whisper and go through the same BI pipeline.",
+        text: "Voice messages sent via Telegram are transcribed locally with Whisper and go through the same pipeline as text questions.",
       },
       coverage: {
         title: "What you can ask",

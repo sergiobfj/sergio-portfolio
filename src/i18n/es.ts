@@ -88,14 +88,11 @@ const es: Dictionary = {
     "bot-de-vendas": {
       title: "Bot de Ventas",
       summary:
-        "De una exportación manual cada mes a un BI comercial con notificaciones y preguntas en lenguaje natural.",
-      kicker: "BI comercial · Automatización · Ploomes API",
-      tags: ["BI comercial & automatización", "En producción"],
+        "BI conversacional con notificaciones y preguntas en lenguaje natural, directo del CRM.",
+      kicker: "BI Conversacional · Virtron",
+      tags: ["BI Conversacional", "En producción"],
       captions: {
         "telegram-sale": "Notificación de nueva venta en Telegram",
-        "telegram-question": "Una pregunta en lenguaje natural al bot",
-        looker: "Panel en Looker Studio",
-        architecture: "Arquitectura del pipeline",
       },
     },
     "arena-sustentabilidade": {
@@ -271,20 +268,14 @@ const es: Dictionary = {
     },
     "bot-de-vendas": {
       headline: [
-        "De una hoja exportada cada mes",
-        "a un BI comercial que responde preguntas.",
+        "Pregunta sobre la operación.",
+        "Recibe la respuesta directo del CRM.",
       ],
       origin: {
-        title: "El problema original",
-        lead: "Empezó como un proceso manual.",
-        body: "Cada mes, exportaba de Ploomes una hoja llamada “Jornada do Cliente”, con tres pestañas — una por SDR. Después venía el resto: organizar, combinar y entregar los datos para el análisis de la dirección.",
-        steps: ["Exportar", "Organizar", "Combinar", "Entregar"],
-        goalLabel: "El objetivo inicial era simple",
-        goal: [
-          "Un enlace.",
-          "Datos siempre actualizados.",
-          "Sin descargas, sin merge, sin clics manuales.",
-        ],
+        title: "El problema",
+        lead: "Los datos comerciales ya existían en Ploomes, pero las consultas rápidas seguían requiriendo abrir el CRM, configurar filtros e interpretar la información manualmente.",
+        body: "El Bot de Ventas convirtió ese acceso en una conversación en Telegram.",
+        note: "Este proyecto nació de la automatización de la Jornada do Cliente y evolucionó hasta convertirse en un ecosistema de inteligencia comercial.",
       },
       pillars: {
         title: ["El proyecto creció", "más allá de la primera automatización."],
@@ -310,20 +301,21 @@ const es: Dictionary = {
         ],
       },
       pipeline: {
-        title: "Pipeline de datos",
-        lead: "Información siempre actualizada, sin depender de exportaciones manuales.",
+        title: "Dashboard & ETL",
+        lead: "La capa de datos que alimenta el dashboard ejecutivo y los análisis históricos.",
         body: "El pipeline consulta Ploomes, transforma y organiza los registros, elimina duplicados relevantes y escribe el resultado en cuatro estructuras en Google Sheets — que alimentan el dashboard en Looker Studio.",
+        note: "El BI conversacional y las notificaciones consultan el CRM directamente.",
         sheetsLabel: "En Google Sheets",
         sheets: ["SDR", "Vendas", "Cohort", "Cohort Long"],
       },
       notifications: {
-        title: "Notificaciones",
-        lead: "El equipo y la dirección, al día sin tener que abrir el dashboard a cada rato.",
+        title: "¡Otra más!!",
+        lead: "El equipo y la dirección, al día sin tener que abrir el dashboard.",
         items: [
-          "Detecta nuevas ventas",
-          "Consulta los datos en la fuente",
-          "Envía la notificación automáticamente",
-          "Manda un resumen diario",
+          "Consulta nuevas ventas periódicamente",
+          "Detección en hasta ~5 minutos",
+          "Evita notificaciones duplicadas",
+          "Cierre diario consolidado",
         ],
       },
       conversational: {
@@ -331,9 +323,11 @@ const es: Dictionary = {
         lead: "Preguntas en portugués, por texto o por audio.",
         questions: [
           "¿Cuántas ventas tuvimos hoy?",
-          "¿Qué vendedores vendieron hoy?",
+          "¿Y ayer?",
+          "¿Y por vendedor?",
           "¿Cuál fue el ticket promedio de este mes?",
-          "Compara este mes con los últimos tres.",
+          "Top 5 vendedores por valor.",
+          "¿Y en estas ciudades?",
         ],
         flowLabel: "De la pregunta a la respuesta",
         flow: [
@@ -356,21 +350,16 @@ const es: Dictionary = {
           "Unas reglas normalizan los casos ambiguos, y el contexto de la conversación puede reutilizarse.",
           "La API entrega los datos, Python calcula y la respuesta se arma de forma determinista.",
         ],
-        gainsLabel: "Lo que esto permite",
-        gains: [
-          "Menor costo",
-          "Más previsibilidad",
-          "Menos alucinación",
-          "Respuestas más exactas",
-          "Follow-ups en la conversación",
+        highlights: [
+          { value: "0 tokens", caption: "Las preguntas simples las interpreta el parser determinista." },
+          { value: "6 métricas", caption: "Ventas, valor vendido, ticket promedio, R$/kWp, leads y pérdidas." },
+          { value: "15 min", caption: "Contexto conversacional para follow-ups." },
         ],
-        followUpsLabel: "Follow-ups",
-        followUps: ["¿Y ayer?", "¿Y por vendedor?", "¿Y en estas ciudades?"],
       },
       audio: {
-        title: "Audio",
+        title: "La voz también funciona",
         value: "~60 s",
-        text: "Los audios de hasta unos 60 segundos se transcriben localmente con Whisper y entran en el mismo pipeline de BI.",
+        text: "Los audios enviados por Telegram se transcriben localmente con Whisper y entran en el mismo pipeline de las preguntas en texto.",
       },
       coverage: {
         title: "Qué se puede preguntar",

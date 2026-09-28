@@ -116,14 +116,11 @@ const cases: Record<CaseKey, CaseCopy> = {
   },
   "bot-de-vendas": {
     summary:
-      "Do export manual de todo mês a um BI comercial com notificações e perguntas em linguagem natural.",
-    kicker: "BI comercial · Automação · Ploomes API",
-    tags: ["BI comercial & automação", "Em produção"],
+      "BI conversacional com notificações e perguntas em linguagem natural, direto do CRM.",
+    kicker: "BI Conversacional · Virtron",
+    tags: ["BI Conversacional", "Em produção"],
     captions: {
       "telegram-sale": "Notificação de nova venda no Telegram",
-      "telegram-question": "Pergunta em linguagem natural ao bot",
-      looker: "Painel no Looker Studio",
-      architecture: "Arquitetura do pipeline",
     },
   },
   "arena-sustentabilidade": {
@@ -331,20 +328,14 @@ const stories = {
   },
   "bot-de-vendas": {
     headline: [
-      "De uma planilha exportada todo mês",
-      "a um BI comercial que responde perguntas.",
+      "Pergunte sobre a operação.",
+      "Receba a resposta direto do CRM.",
     ],
     origin: {
-      title: "O problema original",
-      lead: "Começou com um processo manual.",
-      body: "Todo mês, eu exportava do Ploomes uma planilha chamada “Jornada do Cliente”, com três abas — uma para cada SDR. Depois vinha o resto: organizar, mesclar e entregar os dados para a análise da diretoria.",
-      steps: ["Exportar", "Organizar", "Mesclar", "Entregar"],
-      goalLabel: "O objetivo inicial era simples",
-      goal: [
-        "Um link.",
-        "Dados sempre atualizados.",
-        "Sem download, sem merge, sem clique manual.",
-      ],
+      title: "O problema",
+      lead: "Os dados comerciais já existiam no Ploomes, mas consultas rápidas ainda exigiam abrir o CRM, configurar filtros e interpretar as informações manualmente.",
+      body: "O Bot de Vendas transformou esse acesso em uma conversa no Telegram.",
+      note: "Este projeto nasceu a partir da automação da Jornada do Cliente e evoluiu para um ecossistema de inteligência comercial.",
     },
     pillars: {
       title: ["O projeto cresceu", "além da automação inicial."],
@@ -370,21 +361,22 @@ const stories = {
       ],
     },
     pipeline: {
-      title: "Pipeline de dados",
-      lead: "Informação sempre atualizada, sem depender de exportação manual.",
+      title: "Dashboard & ETL",
+      lead: "A camada de dados que alimenta o dashboard executivo e as análises históricas.",
       body: "O pipeline consulta o Ploomes, transforma e organiza os registros, remove duplicações relevantes e escreve o resultado em quatro estruturas no Google Sheets — que alimentam o dashboard no Looker Studio.",
+      note: "O BI conversacional e as notificações consultam o CRM diretamente.",
       sheetsLabel: "No Google Sheets",
       // Nomes das estruturas: iguais nos três idiomas.
       sheets: ["SDR", "Vendas", "Cohort", "Cohort Long"],
     },
     notifications: {
-      title: "Notificações",
-      lead: "Time e diretoria atualizados sem precisar abrir o dashboard a toda hora.",
+      title: "Mais uma!!",
+      lead: "Time e diretoria atualizados sem precisar abrir o dashboard.",
       items: [
-        "Detecta novas vendas",
-        "Consulta os dados direto na fonte",
-        "Envia a notificação automaticamente",
-        "Manda um resumo diário",
+        "Consulta novas vendas periodicamente",
+        "Detecção em até ~5 minutos",
+        "Evita notificações duplicadas",
+        "Fechamento diário consolidado",
       ],
     },
     conversational: {
@@ -392,9 +384,11 @@ const stories = {
       lead: "Perguntas em português, por texto ou por áudio.",
       questions: [
         "Quantas vendas tivemos hoje?",
-        "Quais vendedores venderam hoje?",
+        "E ontem?",
+        "E por vendedor?",
         "Qual foi o ticket médio deste mês?",
-        "Compare este mês com os últimos três.",
+        "Top 5 vendedores por valor.",
+        "E nessas cidades?",
       ],
       flowLabel: "Da pergunta à resposta",
       flow: [
@@ -417,21 +411,16 @@ const stories = {
         "Regras normalizam os casos ambíguos, e o contexto da conversa pode ser reaproveitado.",
         "A API fornece os dados, o Python calcula, e a resposta é montada de forma determinística.",
       ],
-      gainsLabel: "O que isso permite",
-      gains: [
-        "Menor custo",
-        "Mais previsibilidade",
-        "Menos alucinação",
-        "Respostas mais exatas",
-        "Follow-ups na conversa",
+      highlights: [
+        { value: "0 tokens", caption: "Perguntas simples são interpretadas pelo parser determinístico." },
+        { value: "6 métricas", caption: "Vendas, valor vendido, ticket médio, R$/kWp, leads e perdas." },
+        { value: "15 min", caption: "Contexto conversacional para follow-ups." },
       ],
-      followUpsLabel: "Follow-ups",
-      followUps: ["E ontem?", "E por vendedor?", "E nessas cidades?"],
     },
     audio: {
-      title: "Áudio",
+      title: "Fala também funciona",
       value: "~60 s",
-      text: "Áudios de até cerca de 60 segundos são transcritos localmente com Whisper e entram no mesmo pipeline de BI.",
+      text: "Áudios enviados pelo Telegram são transcritos localmente com Whisper e entram no mesmo pipeline das perguntas em texto.",
     },
     coverage: {
       title: "O que dá para perguntar",

@@ -1,7 +1,7 @@
 import { casesAt, findCase, pad, virtronStory } from "@/data/portfolio";
 import { Band } from "@/components/case/Band";
 import { Figure } from "@/components/case/Figure";
-import { InlineFlow, Progression } from "@/components/case/Flow";
+import { InlineFlow } from "@/components/case/Flow";
 import { Gallery } from "@/components/case/Gallery";
 import { Metrics } from "@/components/case/Metrics";
 import {
@@ -225,73 +225,12 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
           </section>
         </Band>
 
-        {/* Do código à infraestrutura */}
-        <Band tone="void" after="paper" labelledBy="virtron-infra">
-          <RevealLines
-            as="h2"
-            id="virtron-infra"
-            lines={[story.infrastructure.title]}
-            className="display text-[clamp(1.6rem,2.6vw,2.4rem)]"
-          />
-          <div
-            className="fit-display mt-[6vh]"
-            style={fit(story.infrastructure.statement, "min(10rem, 8vw)", 86, "12vw")}
-          >
-            <RevealLines
-              as="p"
-              lines={story.infrastructure.statement}
-              className="display leading-[0.96]"
-            />
-          </div>
-
-          {/* Três leituras separadas: o que foi (texto), onde atua (frentes)
-              e em que ordem (etapas, na mesma linha do tempo da trajetória). */}
-          <div className="mt-[10vh] grid grid-cols-12 gap-x-6 gap-y-12">
-            <Reveal className="col-span-12 md:col-span-6 lg:col-span-5">
-              <p className="max-w-[40ch] text-[clamp(1.2rem,1.6vw,1.5rem)] leading-snug text-paper/85">
-                {story.infrastructure.text}
-              </p>
-            </Reveal>
-            <Reveal delay={120} className="col-span-12 md:col-span-6 lg:col-span-6 lg:col-start-7">
-              <p className="label text-fog">{story.infrastructure.stackLabel}</p>
-              <ul className="mt-5 grid grid-cols-1 gap-x-6 sm:grid-cols-2">
-                {story.infrastructure.stack.map((item, i) => (
-                  <li
-                    key={item}
-                    className="flex items-baseline gap-4 border-t border-rule-dark py-4 text-[clamp(1.1rem,1.45vw,1.35rem)] leading-snug"
-                  >
-                    <span className="meta w-[1.35rem] shrink-0 text-fog">{pad(i + 1)}</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          </div>
-
-          <div className="mt-[12vh]">
-            <p className="label text-fog">{story.infrastructure.stepsLabel}</p>
-            <Progression steps={story.infrastructure.steps} size="sm" className="mt-8" />
-          </div>
-        </Band>
-
-        {/* O que foi construído aqui, e as fotos */}
-        <Band tone="paper" after="void" labelledBy="virtron-built">
+        {/* O que foi construído aqui */}
+        <Band tone="paper" after="paper" labelledBy="virtron-built">
           <Chapter id="virtron-built" title={dict.experience.built} wide>
             <CaseGrid items={built} dict={dict} locale={locale} context="category" />
           </Chapter>
 
-          {entry.gallery.length > 0 ? (
-            <div className="mt-[16vh]">
-              <Chapter id="virtron-gallery" title={dict.experience.gallery} wide>
-                <Gallery
-                  images={entry.gallery}
-                  captions={copy.captions}
-                  label={figure}
-                  start={promotion.images.length + 2}
-                />
-              </Chapter>
-            </div>
-          ) : null}
         </Band>
 
         {/* Fechamento */}

@@ -11,7 +11,6 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionary";
 import { Band } from "@/components/case/Band";
 import { Figure } from "@/components/case/Figure";
-import { Gallery } from "@/components/case/Gallery";
 import {
   ExperienceHero,
   ExperienceNext,
@@ -159,7 +158,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
             as="h2"
             id="secco-role"
             lines={[story.role.title]}
-            className="display mb-[7vh] text-[clamp(1.6rem,2.6vw,2.4rem)]"
+            className="display mb-[7vh] text-[clamp(1.6rem,2.6vw,2.4rem)] md:text-center"
           />
           <ol className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 sm:gap-y-12 lg:grid-cols-4">
             {story.role.dimensions.map((dimension, i) => (
@@ -275,7 +274,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
               as="h2"
               id="secco-milestones"
               lines={[story.milestones.title]}
-              className="display mb-[7vh] text-[clamp(1.6rem,2.6vw,2.4rem)]"
+              className="display mb-[7vh] text-[clamp(1.6rem,2.6vw,2.4rem)] md:text-center"
             />
             <ol
               className={cn(
@@ -306,19 +305,9 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
           </Band>
         ) : null}
 
-        {/* Galeria e fecho */}
-        <Band tone="paper" after={shown.length > 0 ? "void" : "stone"} labelledBy="secco-gallery">
-          {entry.gallery.length > 0 ? (
-            <Chapter id="secco-gallery" title={dict.experience.gallery} wide>
-              <Gallery
-                images={entry.gallery}
-                captions={copy.captions}
-                label={dict.caseStudy.figure}
-                start={figureCount + 1}
-              />
-            </Chapter>
-          ) : null}
-          <ExperienceNext entry={entry} dict={dict} locale={locale} className="mt-[16vh]" />
+        {/* Fecho */}
+        <Band tone="paper" after={shown.length > 0 ? "void" : "stone"} labelledBy="secco-next">
+          <ExperienceNext entry={entry} dict={dict} locale={locale} />
         </Band>
       </main>
       <Contact dict={dict} locale={locale} curve="paper" />

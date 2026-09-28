@@ -3,8 +3,7 @@ import { Band } from "@/components/case/Band";
 import { CaseLinks, CaseTags } from "@/components/case/CaseMeta";
 import { CaseNext } from "@/components/case/CaseNext";
 import { Figure } from "@/components/case/Figure";
-import { InlineFlow, StepList, type Step } from "@/components/case/Flow";
-import { Gallery } from "@/components/case/Gallery";
+import { StepList, type Step } from "@/components/case/Flow";
 import { SheetTabs } from "@/components/case/SheetTabs";
 import { StackSheet } from "@/components/case/StackSheet";
 import { Chapter } from "@/components/layout/Chapter";
@@ -27,12 +26,10 @@ import type { StoryProps } from "./index";
 const FALLBACK_STEP = 2;
 /** "Resposta determinística": onde a história se decide. */
 const ANSWER_STEP = 6;
-/** Figuras que aparecem no meio da história; o resto vai para a galeria. */
-const INLINE = ["telegram-sale", "telegram-question"];
 
 /**
  * Bot de Vendas — o bot e o BI comercial como um ecossistema
- * só. Do problema original (export mensal) aos três pilares, com o BI
+ * só. Três pilares (pipeline, notificações, BI conversacional), com o BI
  * conversacional no centro: a IA interpreta, o código calcula.
  */
 export function BotDeVendas({ item, dict, locale }: StoryProps) {
@@ -41,10 +38,7 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
   const figure = dict.caseStudy.figure;
   const title = caseTitle(item, dict);
   const images = item.images ?? [];
-  const inline = (id: string) => images.find((image) => image.id === id);
-  const sale = inline("telegram-sale");
-  const question = inline("telegram-question");
-  const gallery = images.filter((image) => !INLINE.includes(image.id));
+  const sale = images.find((image) => image.id === "telegram-sale");
   const privateLabel = [dict.caseStudy.internal, dict.caseStudy.privateCode];
 
   const flow: Step[] = story.conversational.flow.map((label, i) => ({
@@ -94,7 +88,7 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
           />
         </div>
 
-        {/* O problema original */}
+        {/* O problema */}
         <Band tone="paper" after="stone" labelledBy="jc-origin">
           <Chapter id="jc-origin" title={story.origin.title}>
             <RevealLines as="p" lines={[story.origin.lead]} className="voice text-voice" />
@@ -103,17 +97,11 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
                 {story.origin.body}
               </p>
             </Reveal>
-            <InlineFlow steps={story.origin.steps} size="sm" className="mt-12" />
           </Chapter>
 
-          <Reveal className="mt-[14vh] border-t border-rule pt-10 md:pt-14">
-            <p className="label text-ash">{story.origin.goalLabel}</p>
-            <p className="voice mt-6 text-[clamp(2.4rem,5.6vw,6rem)] leading-[1] italic">
-              {story.origin.goal.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
+          <Reveal className="mt-[10vh]">
+            <p className="max-w-[52ch] text-[clamp(0.95rem,1.15vw,1.1rem)] leading-snug text-ash/70">
+              {story.origin.note}
             </p>
           </Reveal>
         </Band>
@@ -160,6 +148,9 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
             tabs={story.pipeline.sheets}
             className="mt-[9vh]"
           />
+          <Reveal>
+            <p className="label mt-10 text-ash">{story.pipeline.note}</p>
+          </Reveal>
         </Band>
 
         {/* Notificações */}
@@ -230,22 +221,9 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
             </ul>
           </Reveal>
 
-          <div className="mt-[12vh] grid grid-cols-12 gap-x-6 gap-y-14">
-            <div className="col-span-12 md:col-span-7">
-              <p className="label mb-6 text-fog">{story.conversational.flowLabel}</p>
-              <StepList steps={flow} />
-            </div>
-            {question ? (
-              <Figure
-                media={question}
-                number={3}
-                label={figure}
-                caption={copy.captions?.[question.id]}
-                tone="mist"
-                sizes="(max-width: 768px) 100vw, 40vw"
-                className="col-span-12 md:col-span-5 md:col-start-8"
-              />
-            ) : null}
+          <div className="mt-[12vh]">
+            <p className="label mb-6 text-fog">{story.conversational.flowLabel}</p>
+            <StepList steps={flow} />
           </div>
 
           <div
@@ -288,27 +266,15 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
                 </ol>
               </Reveal>
             </div>
-            <div className="col-span-12 flex flex-col gap-12 lg:col-span-4 lg:col-start-9">
-              <Reveal>
-                <p className="label text-fog">{story.conversational.gainsLabel}</p>
-                <ul className="mt-5 flex flex-col gap-2">
-                  {story.conversational.gains.map((gain) => (
-                    <li key={gain} className="display text-[clamp(1.5rem,2.4vw,2.25rem)] leading-[0.95]">
-                      {gain}
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-              <Reveal delay={120}>
-                <p className="label text-fog">{story.conversational.followUpsLabel}</p>
-                <ul className="mt-5 flex flex-col gap-2">
-                  {story.conversational.followUps.map((q) => (
-                    <li key={q} className="voice text-[clamp(1.5rem,2.2vw,2.1rem)] italic">
-                      “{q}”
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
+            <div className="col-span-12 flex flex-col gap-10 lg:col-span-4 lg:col-start-9">
+              {story.conversational.highlights.map((h, i) => (
+                <Reveal key={h.value} delay={i * 100} className="border-t border-rule-dark pt-6">
+                  <p className="display text-[clamp(2rem,3vw,3rem)]">{h.value}</p>
+                  <p className="mt-2 max-w-[24ch] text-[clamp(0.95rem,1.15vw,1.1rem)] leading-snug text-paper/80">
+                    {h.caption}
+                  </p>
+                </Reveal>
+              ))}
             </div>
           </div>
 
@@ -323,7 +289,7 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
           </Reveal>
         </Band>
 
-        {/* Cobertura, impacto, ficha técnica, galeria */}
+        {/* Cobertura, impacto, ficha técnica */}
         <Band tone="paper" after="void" label={title}>
           <div className="flex flex-col gap-y-[16vh]">
             <Chapter id="jc-coverage" title={story.coverage.title}>
@@ -376,17 +342,6 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
                   groups={item.technologies}
                   labels={dict.caseStudy.stackGroups}
                   notes={[privateLabel.join(" · "), story.stack.status]}
-                />
-              </Chapter>
-            ) : null}
-
-            {gallery.length > 0 ? (
-              <Chapter id="jc-gallery" title={dict.caseStudy.gallery} wide>
-                <Gallery
-                  images={gallery}
-                  captions={copy.captions}
-                  label={figure}
-                  start={4}
                 />
               </Chapter>
             ) : null}
