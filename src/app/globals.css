@@ -233,19 +233,107 @@
     flex-shrink: 0;
   }
 
-  .hero-role {
-    margin-top: 7cqw;
-    font-size: 9.2cqw;
+  /* As três palavras (sections/HeroWords): a régua numa coluna, as palavras
+     na outra. Celular e tablet: palavras encostadas à direita, régua vindo
+     da margem. O vão entre as colunas é maior que a folga da cápsula — a
+     régua termina antes dela. */
+  .hero-sub {
+    --words-size: 13cqw;
+
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    column-gap: 8cqw;
+    margin-top: 9cqw;
+  }
+
+  .hero-sub__strut {
+    display: none;
+  }
+
+  .hero-words {
+    position: relative;
+    grid-area: 1 / 2;
+    font-size: var(--words-size);
+    line-height: 1.04;
+    white-space: nowrap;
+  }
+
+  /* A lente: as mesmas palavras em papel sobre tinta, recortadas pela
+     cápsula. Maior que o bloco (a folga da cápsula cabe dentro do recorte)
+     e com o mesmo recuo por dentro, para as palavras coincidirem. */
+  .hero-lens {
+    position: absolute;
+    inset: -0.3em calc(var(--lens-pad) * -1);
+    padding: 0.3em var(--lens-pad);
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    pointer-events: none;
+    clip-path: var(--clip, inset(50% 100% 50% 0 round 999px));
+    transition: clip-path 1.1s var(--ease-in-out-quart);
+  }
+
+  .hero-lens[data-phase="dot"] {
+    transition-duration: 0.55s;
+    transition-timing-function: var(--ease-out-expo);
+  }
+
+  .hero-lens[data-phase="off"],
+  [data-instant] .hero-lens,
+  [data-instant] .hero-lead__row {
+    transition: none;
+  }
+
+  /* A régua: o número da palavra e um filete até a cápsula; desce junto. */
+  .hero-lead {
+    position: relative;
+    grid-area: 1 / 1;
+  }
+
+  .hero-lead__row {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    gap: clamp(0.6rem, 1.2vw, 1.1rem);
+    transform: translateY(calc(var(--cy, 0px) - 50%));
+    transition: transform 1.1s var(--ease-in-out-quart);
+  }
+
+  .hero-lead__index {
+    opacity: 0;
+  }
+
+  .hero-sub[data-on] .hero-lead__index {
+    animation: hero-index-in 0.7s var(--ease-out-quart) both;
+  }
+
+  .hero-lead__rule {
+    flex: 1;
+    height: 1px;
+    background-color: currentColor;
+    opacity: 0.28;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.4s var(--ease-out-expo);
+  }
+
+  .hero-sub[data-on] .hero-lead__rule {
+    transform: scaleX(1);
   }
 
   @media (min-width: 640px) {
-    .hero-role {
-      margin-top: 4.5cqw;
-      font-size: 6.6cqw;
+    .hero-sub {
+      --words-size: 9.5cqw;
+      column-gap: 5.5cqw;
+      margin-top: 5cqw;
     }
   }
 
-  /* Desktop: o nome vira uma linha só. */
+  /* Desktop: o nome vira uma linha só, e as palavras começam sob a segunda
+     palavra dele. A régua invisível (a primeira palavra do nome, no corpo do
+     nome) dá à coluna da esquerda a largura exata; o vão é o do nome. */
   @media (min-width: 1024px) {
     .hero-stage {
       --name-size: 16.05cqw;
@@ -256,10 +344,34 @@
       gap: 0.19em;
     }
 
-    .hero-role {
-      margin-top: 2.4cqw;
-      font-size: 4.2cqw;
+    .hero-sub {
+      --words-size: 7cqw;
+      grid-template-columns: max-content minmax(0, 1fr);
+      column-gap: calc(var(--name-size) * 0.19);
+      margin-top: 3cqw;
     }
+
+    .hero-sub__strut {
+      display: block;
+      grid-area: 1 / 1;
+      height: 0;
+      overflow: hidden;
+      visibility: hidden;
+      font-size: var(--name-size);
+      line-height: 0;
+      white-space: nowrap;
+    }
+  }
+}
+
+@keyframes hero-index-in {
+  from {
+    opacity: 0;
+    transform: translateY(45%);
+  }
+  to {
+    opacity: 0.6;
+    transform: none;
   }
 }
 
@@ -1088,6 +1200,11 @@
   .hero-mask > *,
   .hero-fade {
     animation: none !important;
+  }
+
+  .hero-sub[data-on] .hero-lead__index {
+    animation: none !important;
+    opacity: 0.6;
   }
 
   .menu-item {

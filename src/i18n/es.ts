@@ -21,7 +21,7 @@ const es: Dictionary = {
     home: "Sergio Barbosa — inicio",
   },
   hero: {
-    role: ["Creador,", "Desarrollador."],
+    role: ["Innovador,", "Creador,", "Desarrollador."],
   },
   work: {
     title: "Trabajos",

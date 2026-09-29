@@ -819,7 +819,7 @@ const pt = {
     home: "Sergio Barbosa — início",
   },
   hero: {
-    role: ["Criador,", "Desenvolvedor."],
+    role: ["Inovador,", "Criador,", "Desenvolvedor."],
   },
   work: {
     title: "Trabalhos",
