@@ -19,6 +19,15 @@ export function monthYear(value: string, locale: Locale) {
   return text.charAt(0).toLocaleUpperCase(htmlLang[locale]) + text.slice(1);
 }
 
+/** "setembro de 2026", "September 2026": para o meio de uma frase ("Desde …"). */
+export function monthYearInline(value: string, locale: Locale) {
+  return new Intl.DateTimeFormat(htmlLang[locale], {
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(toDate(value));
+}
+
 /** "Mar 2025": o mês curto, sem ponto e sem "de", para rótulos em caixa alta. */
 export function monthYearShort(value: string, locale: Locale) {
   const month = new Intl.DateTimeFormat(htmlLang[locale], {

@@ -38,7 +38,7 @@ identidade e vivem em `portfolio.ts`.
 | --- | --- |
 | `/<idioma>` | home |
 | `/<idioma>/work/<categoria>` | categoria: `products` · `automations` · `web` · `tools` |
-| `/<idioma>/work/<case>` | case (`router-planner`, `bot-de-vendas`, `arena-sustentabilidade`, `relatorio-merger`, `automacoes-operacionais`, …) — divide o segmento com as categorias |
+| `/<idioma>/work/<case>` | case (`router-planner`, `sentavos`, `geocarbo`, `bot-de-vendas`, `arena-sustentabilidade`, `relatorio-merger`, `automacoes-operacionais`) — divide o segmento com as categorias |
 | `/<idioma>/experience/<empresa>` | `virtron` · `secco` |
 
 Categoria e case moram na mesma rota (`app/[locale]/work/[slug]`); o tipo de
@@ -59,8 +59,8 @@ categoria, que lista seus `cases` em grid editorial.
 | Experimentos & Tools | Relatório Merger |
 
 Trabalho ainda não divulgado não é case: vai em `upcoming` (só o nome, com
-"Em breve", na página da empresa — hoje, o CRM Têxtil na SECCO), sem página,
-sem prancha e fora das contagens. "Bot de Vendas" era "Jornada do Cliente";
+"Em breve", numa linha de largura toda embaixo do grid da empresa — hoje, o
+CRM Têxtil na SECCO), sem página, sem prancha e fora das contagens. "Bot de Vendas" era "Jornada do Cliente";
 o link antigo redireciona (`next.config.ts`).
 
 Um case novo:
@@ -84,20 +84,31 @@ experiência aparece na página dela.
 No dicionário, além de `summary`: `kicker` (rótulo na superfície nos grids de
 experiência), `tags` (metadata do topo), `headline`, `context`/`problem`/
 `solution`/`impact`, `metrics` (+ `metricsNote`) e `captions`. O case
-genérico usa o que existir — é o formato do mini-case (Relatório Merger).
+genérico usa o que existir — é o formato do mini-case (Relatório Merger): a
+figura ao lado de uma grade 2 × 2 com os quatro trechos.
 
 **Cases com história própria.** Um case que precisa contar do seu jeito ganha
 um componente em `src/components/cases/` (registrado em `cases/index.ts`) e o
 texto em `stories.<slug>` nos dicionários. Não há template: a história compõe
 as peças de `src/components/case/` — `Band` (faixa de tom com a base curva),
-`Metrics`, `StepList`/`InlineFlow`, `SheetTabs`, `Figure`/`Gallery`,
-`StackSheet`, `CaseTags`/`CaseLinks`, `CaseNext`. Hoje: Router Planner,
-Bot de Vendas, Arena da Sustentabilidade e Automações do dia a dia (com o
-exemplo publicado dos painéis das TVs, em `automationsFeatured`).
+`Metrics`, `StepList`/`InlineFlow`/`Progression` (estações de um fluxo, com
+foco e marcas), `SheetTabs`, `Figure`/`FigureSpread`, `StackSheet` (ficha
+técnica em colunas), `CaseTags`/`CaseLinks`, `CaseNext`. Hoje: Router
+Planner, Sentavos, GeoCarbo, Bot de Vendas, Arena da Sustentabilidade e
+Automações do dia a dia (com o exemplo publicado dos painéis das TVs, em
+`automationsFeatured`).
+
+**Critérios de página.** Não existe seção "Galeria": cada imagem entra na
+seção que fala dela (`imageOf` em `lib/media.ts`), e um print que ainda não
+existe não vira prancha no meio da história — a seção se compõe sem ele e a
+numeração das figuras só conta o que aparece (`figureCounter`). Título pequeno
+de seção fica em cima, centralizado (`Chapter`); título numa coluna lateral
+vazia não existe mais. Título integrado ao bloco (cabeça de uma coluna, rótulo
+sobre um número grande) e frases em display na largura toda continuam.
 
 ### Experiências
 
-`experiences` (dado: empresa, razão social, datas em `AAAA-MM`, galeria) +
+`experiences` (dado: empresa, razão social, marca, site, datas em `AAAA-MM`) +
 `experiences.<chave>` nos dicionários (papel e teaser da home, frase e papel
 da página, legendas). Virtron e SECCO têm narrativa própria
 (`src/components/experiences/`, texto em `experienceStories.<chave>`); uma
@@ -117,23 +128,25 @@ conjunção do idioma.
 ### Publicar imagens
 
 Imagem planejada já pode estar no dado apontando para um arquivo que ainda
-não existe: sem o arquivo em `/public`, entra a prancha (tom, grão e número da
-figura); com ele, a imagem (`lib/media.ts`, checado no build). Publicar é
+não existe: nas seções narrativas, sem o arquivo em `/public` a seção se
+compõe sem ela; com ele, a imagem entra no lugar certo (`lib/media.ts`,
+checado no build). A capa do case sem arquivo ainda vira prancha (tom, grão e
+número da figura). Publicar é
 salvar o arquivo no caminho e rodar o build de novo. `ratio` é o recorte:
 ajuste ao formato real de cada foto ou screenshot (`position` escolhe o ponto
 focal quando o bloco corta a imagem).
 
-| Pasta | No ar | Ainda prancha |
+| Pasta | No ar | Planejado (entra quando o arquivo existir) |
 | --- | --- | --- |
 | `public/images/` | `foto-principal-sergio.jpg` | |
 | `public/projects/router-planner/` | `tela-principal` `selecao-de-rotas` `validacoes` (tarjados) | `planilha-antiga` `exportacao-final` |
-| `public/projects/jornada-cliente/` (case Bot de Vendas) | `bancada-desenvolvimento` `telegram-nova-venda` (+ `-card`, recorte) `telegram-pergunta` | `dashboard-looker` `arquitetura` |
+| `public/projects/jornada-cliente/` (case Bot de Vendas) | `telegram-pergunta` `telegram-nova-venda` (+ `-card`, recorte) · sem uso: `bancada-desenvolvimento` | |
 | `public/projects/arena-sustentabilidade/` | `tela-principal` `calculadora-co2` (+ `-recorte`) `experiencias` | `versao-mobile` |
 | `public/projects/relatorio-merger/` | `quadro-demonstracao` (quadro do vídeo de demonstração) | |
-| `public/projects/sentavos/` | `tela-principal` `dashboard` | |
-| `public/projects/geocarbo/` | `tela-principal` `dashboard` `cadastro-propriedade` `relatorios` (tarjados) | |
-| `public/experience/virtron/` | `estacao-de-trabalho` `promocao-assistente-ti` `foto-com-antigo-gestor` `trabalhando-virtron-01` `trabalhando-virtron-02` | |
-| `public/experience/secco/` | `recnplay-oficina-python` `recnplay-oficina-terminal` `unifavip-talk-empreendedorismo` `unifavip-talk-sala` `cartaz-semana-de-ti` `equipe-secco-01` | `bug-hunt` (só depois do evento) |
+| `public/projects/sentavos/` | `tela-principal` `dashboard` (conta demo) | `lancamento-cartao` `fatura` `revisao` `patrimonio` (prints de celular) |
+| `public/projects/geocarbo/` | `tela-principal` `cadastro-recorte` `relatorios-recorte` (recortes sem o menu lateral) · sem uso: `dashboard` (números fixos), `cadastro-propriedade`, `relatorios` | `mapa-propriedade` `analise` `relatorio-pdf` |
+| `public/experience/virtron/` | `estacao-de-trabalho` `promocao-assistente-ti` `foto-com-antigo-gestor` · sem uso: `trabalhando-virtron-01` `trabalhando-virtron-02` | |
+| `public/experience/secco/` | `recnplay-oficina-python` `recnplay-oficina-terminal` `unifavip-talk-empreendedorismo` `equipe-secco-01` · sem uso: `unifavip-talk-sala` `cartaz-semana-de-ti` | `bug-hunt` (só depois do evento) |
 
 Prévias das categorias na home: `workCategories[].preview` — uma imagem
 principal que sangra pela borda e um recorte na frente, em % da prancha
@@ -247,9 +260,9 @@ src/
     sections/        Hero, Work, Experience, Background, Secco, About, Contact
     work/            CategoryView, CaseView (genérico), CaseGrid
     case/            peças dos cases: Band, Metrics, Flow, SheetTabs, Figure,
-                     Gallery, StackSheet, CaseMeta, CaseNext
-    cases/           histórias próprias (RouterPlanner, BotDeVendas,
-                     Arena, AutomacoesOperacionais) + registro
+                     FigureSpread, StackSheet, CaseMeta, CaseNext
+    cases/           histórias próprias (RouterPlanner, Sentavos, GeoCarbo,
+                     BotDeVendas, Arena, AutomacoesOperacionais) + registro
     experience/      ExperienceHero, ExperienceView (genérico)
     experiences/     narrativas (Virtron, Secco) + registro
     ui/              SectionCurve, Signature, Reveal, RevealLines, Surface,

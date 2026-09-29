@@ -196,11 +196,19 @@ export type StackGroupKey =
   | "ai"
   | "frontend"
   | "interface"
+  | "database"
+  | "processing"
+  | "satellite"
+  | "reports"
   | "infrastructure"
+  | "quality"
   | "stack";
 
-/** Uma imagem de galeria (case ou experiência). A legenda é traduzida pelo `id`. */
-export type GalleryImage = MediaSlot & { id: string };
+/**
+ * Uma imagem de case ou experiência. A legenda é traduzida pelo `id`. Cada
+ * uma entra na seção que fala dela — não existe galeria no fim da página.
+ */
+export type CaseImage = MediaSlot & { id: string };
 
 /**
  * Um case existe só com descrição, contexto e imagens — repositório é
@@ -224,8 +232,12 @@ export type WorkCase = {
   technologies?: { group: StackGroupKey; items: string[] }[];
   /** Capa: a superfície nos grids e a figura principal do case. */
   media: MediaSlot;
-  /** Screenshots e fotos de processo — a galeria do case. */
-  images?: GalleryImage[];
+  /**
+   * Screenshots e fotos de processo, na ordem da narrativa. A história de
+   * cada case decide em que seção cada uma entra (pelo `id`); sem o arquivo,
+   * a seção se compõe sem a imagem.
+   */
+  images?: CaseImage[];
   linkedinPost?: string;
   liveUrl?: string;
   repository?: string;
@@ -257,40 +269,81 @@ export const cases: WorkCase[] = [
     ],
     // Prints com nomes, códigos, cidades e observações tarjados.
     media: { src: "/projects/router-planner/tela-principal.png", ratio: "1274 / 636", position: "left top" },
-    // Par de abertura: a planilha de antes e o arquivo que o sistema gera.
+    // Na ordem da história: a planilha de antes (processo anterior), a
+    // escolha da rota (antes × depois), o arquivo gerado (Excel como saída)
+    // e as verificações (dados certos). Planilha e arquivo ainda não têm
+    // print: entram sozinhos quando o arquivo for salvo no caminho.
     images: [
       { id: "legacy-excel", src: "/projects/router-planner/planilha-antiga.png", ratio: "4 / 3" },
-      { id: "export", src: "/projects/router-planner/exportacao-final.png", ratio: "4 / 3" },
       { id: "route-selection", src: "/projects/router-planner/selecao-de-rotas.png", ratio: "1246 / 632" },
+      { id: "export", src: "/projects/router-planner/exportacao-final.png", ratio: "4 / 3" },
       { id: "validation", src: "/projects/router-planner/validacoes.png", ratio: "1284 / 626" },
     ],
   },
   {
-    // Vira case completo quando o conteúdo entrar.
+    // Produto próprio, em produção. Prints só da conta demo, nunca da real.
     slug: "sentavos",
     title: "Sentavos",
     category: "products",
-    weight: "placeholder",
+    weight: "full",
     year: "2026",
     tone: "mist",
-    // Dados de demonstração, sem conta real.
+    technologies: [
+      { group: "frontend", items: ["React", "TypeScript"] },
+      { group: "backend", items: ["Python", "FastAPI", "SQLModel"] },
+      { group: "database", items: ["PostgreSQL", "Alembic"] },
+      { group: "infrastructure", items: ["Vercel", "Render", "Neon"] },
+      { group: "quality", items: ["pytest", "285 testes"] },
+    ],
     media: { src: "/projects/sentavos/tela-principal.png", ratio: "1339 / 646", position: "left top" },
-    images: [{ id: "dashboard", src: "/projects/sentavos/dashboard.png", ratio: "1218 / 632" }],
+    // Na ordem da história. Hoje só o orçamento existe; os outros são prints
+    // de celular planejados (ajustar a proporção ao arquivo real) e entram
+    // sozinhos na seção certa quando salvos no caminho — sem prancha vazia.
+    images: [
+      // A decisão central: o formulário com cartão e parcelamento.
+      { id: "card-purchase", src: "/projects/sentavos/lancamento-cartao.png", ratio: "9 / 19.5" },
+      // Como funciona: o orçamento do mês e o detalhe de uma fatura.
+      { id: "budget", src: "/projects/sentavos/dashboard.png", ratio: "1218 / 632" },
+      { id: "invoice", src: "/projects/sentavos/fatura.png", ratio: "9 / 19.5" },
+      // Regras que protegem o dado: a tela de revisão.
+      { id: "review", src: "/projects/sentavos/revisao.png", ratio: "9 / 19.5" },
+      // Resultado: patrimônio ou investimentos.
+      { id: "wealth", src: "/projects/sentavos/patrimonio.png", ratio: "9 / 19.5" },
+    ],
   },
   {
-    // [placeholder] case futuro da SECCO: ano, stack, links e imagens.
+    // Produto da SECCO em fase de MVP: protótipo funcional, não produto
+    // final. Nada de IA, dMRV completo ou certificação no texto.
     slug: "geocarbo",
     title: "GeoCarbo",
     category: "products",
-    weight: "placeholder",
+    weight: "medium",
     company: "SECCO",
     tone: "stone",
-    // Nome da fazenda e município tarjados; o mapa de satélite ficou de fora.
+    technologies: [
+      { group: "frontend", items: ["React", "Vite", "Leaflet"] },
+      { group: "backend", items: ["Python", "FastAPI"] },
+      { group: "processing", items: ["Celery", "Redis", "rasterio", "numpy"] },
+      { group: "satellite", items: ["Sentinel-2", "Copernicus"] },
+      { group: "database", items: ["Supabase", "PostgreSQL"] },
+      { group: "reports", items: ["ReportLab"] },
+      { group: "infrastructure", items: ["VPS Linux", "Nginx"] },
+    ],
+    // A landing pública. O mapa de satélite ficou de fora.
     media: { src: "/projects/geocarbo/tela-principal.png", ratio: "1343 / 643", position: "left center" },
+    // Na ordem da história. Cadastro e relatórios são recortes sem o menu
+    // lateral (que lista módulos fora do MVP) e só com dados de exemplo. O
+    // painel com números fixos (dashboard.png) não entra. Mapa, análise e
+    // PDF ainda não têm print: entram sozinhos quando salvos no caminho.
     images: [
-      { id: "dashboard", src: "/projects/geocarbo/dashboard.png", ratio: "1334 / 575" },
-      { id: "cadastro-propriedade", src: "/projects/geocarbo/cadastro-propriedade.png", ratio: "1302 / 764" },
-      { id: "relatorios", src: "/projects/geocarbo/relatorios.png", ratio: "1342 / 756" },
+      // Como funciona: o polígono da propriedade no mapa.
+      { id: "map", src: "/projects/geocarbo/mapa-propriedade.png", ratio: "16 / 10" },
+      // A ciência: o detalhe de uma análise.
+      { id: "analysis", src: "/projects/geocarbo/analise.png", ratio: "16 / 10" },
+      // Estágio atual: o que o pipeline já faz de ponta a ponta.
+      { id: "registration", src: "/projects/geocarbo/cadastro-recorte.png", ratio: "848 / 456" },
+      { id: "reports", src: "/projects/geocarbo/relatorios-recorte.png", ratio: "1090 / 416" },
+      { id: "pdf", src: "/projects/geocarbo/relatorio-pdf.png", ratio: "210 / 297" },
     ],
   },
   {
@@ -329,9 +382,11 @@ export const cases: WorkCase[] = [
       { group: "stack", items: ["HTML5", "CSS3", "JavaScript Vanilla", "Pillow"] },
     ],
     media: { src: "/projects/arena-sustentabilidade/tela-principal.png", ratio: "1342 / 767" },
+    // Na ordem da história: o que o visitante encontra (contexto), a
+    // calculadora e, quando houver print, a versão mobile (destaques).
     images: [
-      { id: "calculator", src: "/projects/arena-sustentabilidade/calculadora-co2.png", ratio: "1020 / 758" },
       { id: "experiences", src: "/projects/arena-sustentabilidade/experiencias.png", ratio: "1017 / 763" },
+      { id: "calculator", src: "/projects/arena-sustentabilidade/calculadora-co2.png", ratio: "1020 / 758" },
       { id: "mobile", src: "/projects/arena-sustentabilidade/versao-mobile.png", ratio: "4 / 5" },
     ],
   },
@@ -454,8 +509,6 @@ export type ExperienceEntry = {
   from: string;
   /** `null` significa "até hoje" — o rótulo vem do dicionário. */
   to: string | null;
-  /** Fotos da galeria. Imagens usadas em outro ponto da página ficam fora. */
-  gallery: GalleryImage[];
 };
 
 export const experiences: ExperienceEntry[] = [
@@ -479,10 +532,6 @@ export const experiences: ExperienceEntry[] = [
     },
     from: "2025-03",
     to: null,
-    gallery: [
-      { id: "workstation-01", src: "/experience/virtron/trabalhando-virtron-01.jpg", ratio: "1288 / 966" },
-      { id: "workstation-02", src: "/experience/virtron/trabalhando-virtron-02.jpg", ratio: "3 / 4" },
-    ],
   },
   {
     key: "secco",
@@ -503,13 +552,11 @@ export const experiences: ExperienceEntry[] = [
     website: "https://www.seccolab.com.br",
     from: "2025-12",
     to: null,
-    // A foto da equipe abre a página (ao lado da frase); a galeria fica com o evento.
-    gallery: [
-      { id: "talk-room", src: "/experience/secco/unifavip-talk-sala.jpg", ratio: "1600 / 1066" },
-      { id: "poster", src: "/experience/secco/cartaz-semana-de-ti.jpg", ratio: "1080 / 1350" },
-    ],
   },
 ];
+
+/** Sentavos: em produção desde este mês ("AAAA-MM", formatado por idioma). */
+export const sentavosStory = { liveSince: "2026-09" };
 
 /** Trajetória formal e marcos datados da Virtron (os textos estão nos dicionários). */
 export const virtronStory = {
@@ -523,7 +570,7 @@ export const virtronStory = {
     images: [
       { id: "promotion", src: "/experience/virtron/promocao-assistente-ti.jpg", ratio: "738 / 554" },
       { id: "former-manager", src: "/experience/virtron/foto-com-antigo-gestor.jpg", ratio: "4 / 3" },
-    ] satisfies GalleryImage[],
+    ] satisfies CaseImage[],
   },
   /** Saída do gestor do setor: responsabilidades ampliadas, sem cargo novo. */
   broaderScope: "2026-02",
@@ -564,7 +611,7 @@ export const seccoTeam = {
   id: "team-01",
   src: "/experience/secco/equipe-secco-01.jpg",
   ratio: "1667 / 1111",
-} satisfies GalleryImage;
+} satisfies CaseImage;
 
 export const talks: Talk[] = [
   {

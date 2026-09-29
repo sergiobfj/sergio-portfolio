@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { pad } from "@/data/portfolio";
 import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/cn";
@@ -21,6 +21,7 @@ export function StepList({
   steps,
   eyebrow,
   size = "md",
+  start = 1,
   className,
 }: {
   title?: string;
@@ -28,6 +29,8 @@ export function StepList({
   /** Linha pequena acima do título (ex.: o número do pilar). */
   eyebrow?: ReactNode;
   size?: "md" | "sm";
+  /** Número do primeiro passo: um fluxo partido em duas colunas continua a contagem. */
+  start?: number;
   className?: string;
 }) {
   const small = size === "sm";
@@ -58,7 +61,7 @@ export function StepList({
             ) : null}
             <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
               <span className="meta w-[1.35rem] shrink-0 opacity-45">
-                {pad(i + 1)}
+                {pad(start + i)}
               </span>
               {/* Largura máxima = o que sobra ao lado do número: um passo
                   longo quebra por dentro em vez de descer inteiro. */}
@@ -141,37 +144,72 @@ export function InlineFlow({
   );
 }
 
+export type Station = {
+  label: string;
+  /** Uma linha pequena embaixo do nome: o que acontece ali. */
+  note?: string;
+  /** Anotação em pílula vazada sob a etapa (ex.: "Gasto"). */
+  mark?: string;
+  /** A etapa onde a história se decide: nome em pílula e ponto maior. */
+  focus?: boolean;
+};
+
+/** Colunas do tablet: 4 etapas em 2 × 2, 5 ou 6 em linhas de 3, 7 ou 8 em linhas de 4. */
+function tabletColumns(count: number) {
+  if (count <= 3) return count;
+  if (count === 4) return 2;
+  return count <= 6 ? 3 : 4;
+}
+
 /**
- * Progressão de fases: um filete contínuo com um ponto em cada etapa, número
- * em cima e nome em display. Uma linha no desktop, duas no tablet, vertical
- * no celular — a ordem se lê de relance e nenhuma etapa pesa mais que outra.
+ * Estações de um fluxo: um filete contínuo com um ponto em cada etapa,
+ * número em cima, nome em display e, se houver, uma nota curta embaixo. Uma
+ * linha no desktop, linhas de duas ou três no tablet, vertical no celular —
+ * a ordem se lê de relance, e só a etapa em foco pesa mais que as outras.
+ * `columns` fixa a grade do desktop (fluxos de tamanhos diferentes alinhados
+ * na mesma régua).
  */
 export function Progression({
   steps,
   size = "md",
+  columns,
   className,
 }: {
-  steps: readonly string[];
-  /** `sm`: etapas de nome longo ("Provisionamento inicial") em seis colunas. */
+  steps: readonly (string | Station)[];
+  /** `sm`: nomes longos ou coluna estreita. */
   size?: "md" | "sm";
+  columns?: number;
   className?: string;
 }) {
+  const stations = steps.map((step) => (typeof step === "string" ? { label: step } : step));
+  const style = {
+    "--steps": columns ?? stations.length,
+    // Com a régua fixa, o tablet mantém as mesmas colunas: as linhas alinham.
+    "--steps-md": columns ?? tabletColumns(stations.length),
+  } as CSSProperties;
+
   return (
     <Reveal className={className}>
-      <ol className="progression">
-        {steps.map((step, i) => (
-          <li key={step}>
+      <ol className="progression" style={style}>
+        {stations.map((station, i) => (
+          <li key={station.label} data-focus={station.focus ? "" : undefined}>
             <span className="meta block opacity-55">{pad(i + 1)}</span>
             <span
               className={cn(
                 "display mt-3 block leading-[0.95]",
                 size === "sm"
-                  ? "text-[clamp(1.05rem,1.65vw,1.8rem)]"
+                  ? "text-[clamp(1.2rem,1.6vw,1.65rem)]"
                   : "text-[clamp(1.5rem,2.1vw,2.25rem)]",
               )}
             >
-              {step}
+              <span className={cn(station.focus && "pill")}>{station.label}</span>
             </span>
+            {station.note ? (
+              <span className="mt-3 block max-w-[24ch] text-[0.875rem] leading-snug opacity-65">
+                {station.note}
+              </span>
+            ) : null}
+            {station.mark ? <span className="progression__mark label mt-4">{station.mark}</span> : null}
           </li>
         ))}
       </ol>

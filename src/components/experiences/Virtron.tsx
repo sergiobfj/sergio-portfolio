@@ -2,7 +2,7 @@ import { casesAt, findCase, pad, virtronStory } from "@/data/portfolio";
 import { Band } from "@/components/case/Band";
 import { Figure } from "@/components/case/Figure";
 import { InlineFlow } from "@/components/case/Flow";
-import { Gallery } from "@/components/case/Gallery";
+import { FigureSpread } from "@/components/case/FigureSpread";
 import { Metrics } from "@/components/case/Metrics";
 import {
   ExperienceHero,
@@ -48,7 +48,7 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
             como o trabalho foi mudando, num fluxo curto. Nada disputa com a
             frase. */}
         <Band tone="paper" after="stone" labelledBy="virtron-intro">
-          <Chapter id="virtron-intro" title={story.intro.title} stacked>
+          <Chapter id="virtron-intro" title={story.intro.title}>
             <Reveal>
               <p className="voice text-voice text-balance md:text-center">{story.intro.lead}</p>
             </Reveal>
@@ -191,7 +191,7 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
             />
           </div>
           <div className="mt-[8vh]">
-            <Gallery
+            <FigureSpread
               images={promotion.images}
               captions={copy.captions}
               label={figure}

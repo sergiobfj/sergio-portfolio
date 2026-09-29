@@ -52,7 +52,9 @@ export function AutomacoesOperacionais({ item, dict, locale }: StoryProps) {
 
         <Band tone="paper" after="stone" label={title}>
           <Reveal>
-            <p className="voice max-w-[28ch] text-voice text-pretty">{story.lead}</p>
+            <p className="voice mx-auto max-w-[28ch] text-voice text-balance md:text-center">
+              {story.lead}
+            </p>
           </Reveal>
 
           {/* O exemplo publicado: antes, como e resultado, com o post e o código */}
@@ -90,14 +92,14 @@ export function AutomacoesOperacionais({ item, dict, locale }: StoryProps) {
             </ol>
           </section>
 
-          <p className="label mt-[12vh] text-ash">{story.blocksLabel}</p>
-          <ul className="mt-6 grid grid-cols-1 gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
+          <p className="label mt-[12vh] text-ash md:text-center">{story.blocksLabel}</p>
+          <ul className="mt-6 grid grid-cols-1 gap-x-6 sm:grid-cols-2 lg:grid-cols-4">
             {story.blocks.map((block, i) => (
               <li key={block}>
                 <Reveal variant="draw" delay={i * 70} className="h-px w-full bg-rule" />
                 <Reveal delay={i * 70 + 50} className="pt-5 pb-10">
                   <span className="meta text-ash">{pad(i + 1)}</span>
-                  <p className="display mt-4 text-[clamp(1.75rem,2.8vw,2.75rem)] leading-[0.96]">
+                  <p className="display mt-4 text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
                     {block}
                   </p>
                 </Reveal>

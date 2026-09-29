@@ -111,7 +111,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
     if (group) group.items.push(talk);
     else events.push({ event: talk.event, items: [talk] });
   }
-  // Fig. 01 é a equipe, na abertura; talks e galeria seguem a numeração.
+  // Fig. 01 é a equipe, na abertura; as talks seguem a numeração.
   let figureCount = 1;
   const numbered = events.map((group) => ({
     ...group,
@@ -128,7 +128,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
 
         {/* O que é a SECCO: a definição, e a frase ao lado da equipe */}
         <Band tone="paper" after="stone" labelledBy="secco-about">
-          <Chapter id="secco-about" title={story.about.title} stacked>
+          <Chapter id="secco-about" title={story.about.title}>
             <Reveal>
               <p className="voice text-voice text-balance md:text-center">{story.about.text}</p>
             </Reveal>
@@ -192,15 +192,20 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
               context="category"
               trailing={
                 soon.length > 0 ? (
-                  <ul aria-label={dict.work.soon}>
+                  // O que ainda não foi divulgado: uma linha na largura toda,
+                  // como as da Experiência na home — sem prancha, sem página.
+                  <ul aria-label={dict.work.soon} className="border-b border-rule">
                     {soon.map((item) => (
-                      <li key={item.key} className="border-t border-rule pt-5">
-                        <p className="label text-ash">{dict.work.soon}</p>
-                        <p className="display mt-4 text-[clamp(1.75rem,2.6vw,2.5rem)] leading-[0.95] opacity-45">
+                      <li
+                        key={item.key}
+                        className="grid grid-cols-12 items-baseline gap-x-6 gap-y-3 border-t border-rule py-7 md:py-9"
+                      >
+                        <p className="label col-span-12 text-ash md:col-span-3">{dict.work.soon}</p>
+                        <p className="display col-span-12 text-[clamp(2.2rem,4vw,4rem)] leading-[0.95] opacity-45 md:col-span-5">
                           {item.title}
                         </p>
                         {dict.cases[item.key].kicker ? (
-                          <p className="mt-3 text-[0.9375rem] leading-snug text-ash">
+                          <p className="col-span-12 text-[0.9375rem] leading-snug text-ash md:col-span-4 md:text-right">
                             {dict.cases[item.key].kicker}
                           </p>
                         ) : null}
@@ -228,7 +233,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
             {numbered.map((group) => {
               const spans = pairSpans(false);
               // Todas com foto: larguras pela proporção, fotos na mesma altura
-              // (como na galeria). Com um item só de texto, fica o grid 7/5.
+              // (como no FigureSpread). Com um item só de texto, fica o grid 7/5.
               const matched =
                 group.items.length > 1 && group.items.every(({ number }) => number > 0);
               return (

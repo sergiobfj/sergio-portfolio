@@ -1,6 +1,5 @@
 import { casesAt, pad } from "@/data/portfolio";
 import { Band } from "@/components/case/Band";
-import { Gallery } from "@/components/case/Gallery";
 import { experienceStories } from "@/components/experiences";
 import {
   ExperienceHero,
@@ -14,8 +13,9 @@ import { RevealLines } from "@/components/ui/RevealLines";
 import { CaseGrid } from "@/components/work/CaseGrid";
 
 /**
- * Experiência sem narrativa própria: resumo, trajetória, áreas, o que foi
- * construído e as fotos. Trecho sem texto aparece como "em escrita".
+ * Experiência sem narrativa própria: resumo, trajetória, áreas e o que foi
+ * construído — títulos em cima, centralizados. Trecho sem texto aparece como
+ * "em escrita". Foto entra numa narrativa própria, nunca numa galeria.
  */
 function GenericExperience({ entry, dict, locale }: ExperienceStoryProps) {
   const copy = dict.experiences[entry.key];
@@ -30,16 +30,22 @@ function GenericExperience({ entry, dict, locale }: ExperienceStoryProps) {
 
         <Band tone="paper" after="stone" labelledBy="experience-journey">
           <Chapter id="experience-journey" title={dict.experience.journey}>
-            <RevealLines as="p" lines={[copy.summary]} className="voice text-voice" />
+            <RevealLines
+              as="p"
+              lines={[copy.summary]}
+              className="voice text-voice text-balance md:text-center"
+            />
             {journey.length > 0 ? (
               journey.map((paragraph, i) => (
                 <Reveal key={paragraph} delay={120 + i * 60}>
-                  <p className="mt-8 max-w-[52ch] text-lead leading-relaxed">{paragraph}</p>
+                  <p className="mt-8 max-w-[52ch] text-lead leading-relaxed md:mx-auto md:text-center">
+                    {paragraph}
+                  </p>
                 </Reveal>
               ))
             ) : (
               <Reveal delay={160}>
-                <p className="label mt-10 text-ash">{dict.experience.writing}</p>
+                <p className="label mt-10 text-ash md:text-center">{dict.experience.writing}</p>
               </Reveal>
             )}
           </Chapter>
@@ -68,27 +74,9 @@ function GenericExperience({ entry, dict, locale }: ExperienceStoryProps) {
                 <CaseGrid items={built} dict={dict} locale={locale} context="category" />
               ) : (
                 <Reveal>
-                  <p className="voice max-w-[20ch] text-voice text-ash">
+                  <p className="voice mx-auto max-w-[20ch] text-voice text-ash md:text-center">
                     {dict.experience.builtEmpty}
                   </p>
-                </Reveal>
-              )}
-            </Chapter>
-
-            <Chapter
-              id="experience-gallery"
-              title={dict.experience.gallery}
-              wide={entry.gallery.length > 0}
-            >
-              {entry.gallery.length > 0 ? (
-                <Gallery
-                  images={entry.gallery}
-                  captions={copy.captions}
-                  label={dict.caseStudy.figure}
-                />
-              ) : (
-                <Reveal>
-                  <p className="label text-ash lg:pt-[0.9rem]">{dict.experience.galleryEmpty}</p>
                 </Reveal>
               )}
             </Chapter>

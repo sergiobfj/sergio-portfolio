@@ -667,15 +667,28 @@
     background-color: var(--band-ink);
   }
 
-  /* Progressão de fases (case/Flow): um filete contínuo com um ponto por
+  /* Estações de um fluxo (case/Flow): um filete contínuo com um ponto por
      etapa. Vertical no celular; do tablet em diante, o filete corre por
-     cima, e o último segue até a margem — "manter" não termina. */
+     cima, numa coluna por etapa (--steps, --steps-md vêm do componente). */
   .progression {
     --dot: 0.4375rem;
     --line: color-mix(in srgb, var(--band-ink) 20%, transparent);
 
     display: grid;
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* A etapa em foco: o ponto cresce e vira anel — o nome já está em pílula. */
+  .progression > li[data-focus]::before {
+    --dot: 0.8125rem;
+    box-shadow: 0 0 0 0.25rem var(--band-bg);
+  }
+
+  .progression__mark {
+    display: inline-block;
+    padding: 0.45rem 0.7rem 0.4rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
   }
 
   .progression > li {
@@ -702,7 +715,7 @@
 
   @media (min-width: 640px) {
     .progression {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(var(--steps-md, 3), minmax(0, 1fr));
       row-gap: 2.75rem;
     }
 
@@ -721,7 +734,31 @@
 
   @media (min-width: 1024px) {
     .progression {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(var(--steps, 6), minmax(0, 1fr));
+    }
+  }
+
+  /* Filete de linha no tom da faixa: funciona no claro, no cinza e no preto. */
+  .rule-top {
+    border-top: 1px solid color-mix(in srgb, var(--band-ink) 18%, transparent);
+  }
+
+  /* Ficha técnica em colunas (case/StackSheet): duas no celular, até três no
+     tablet, uma por grupo no desktop (--cols, --cols-md vêm do componente). */
+  .stack-sheet {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 768px) {
+    .stack-sheet {
+      grid-template-columns: repeat(var(--cols-md, 3), minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .stack-sheet {
+      grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
     }
   }
 }

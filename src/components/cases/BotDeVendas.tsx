@@ -3,7 +3,8 @@ import { Band } from "@/components/case/Band";
 import { CaseLinks, CaseTags } from "@/components/case/CaseMeta";
 import { CaseNext } from "@/components/case/CaseNext";
 import { Figure } from "@/components/case/Figure";
-import { StepList, type Step } from "@/components/case/Flow";
+import { Progression, StepList, type Step } from "@/components/case/Flow";
+import { Metrics } from "@/components/case/Metrics";
 import { SheetTabs } from "@/components/case/SheetTabs";
 import { StackSheet } from "@/components/case/StackSheet";
 import { Chapter } from "@/components/layout/Chapter";
@@ -13,6 +14,7 @@ import { BackLink } from "@/components/ui/BackLink";
 import { Reveal } from "@/components/ui/Reveal";
 import { RevealLines } from "@/components/ui/RevealLines";
 import { delay, fit } from "@/lib/cn";
+import { imageOf } from "@/lib/media";
 import { routes } from "@/lib/routes";
 import { caseTitle, titleLines } from "@/lib/work";
 import type { StoryProps } from "./index";
@@ -25,25 +27,31 @@ import type { StoryProps } from "./index";
 /** "Fallback LLM": o único passo que não é determinístico. */
 const FALLBACK_STEP = 2;
 /** "Resposta determinística": onde a história se decide. */
-const ANSWER_STEP = 6;
+const ANSWER_STEP = 2;
+/** As duas camadas na mesma régua: quatro colunas, a mais longa. */
+const LAYER_COLUMNS = 4;
 
 /**
- * Bot de Vendas — o bot e o BI comercial como um ecossistema
- * só. Três pilares (pipeline, notificações, BI conversacional), com o BI
- * conversacional no centro: a IA interpreta, o código calcula.
+ * Bot de Vendas — o bot e o BI comercial como um ecossistema só, com uma
+ * separação que precisa ficar clara: notificações e BI conversacional
+ * consultam o Ploomes direto; o ETL (Google Sheets e Looker) é uma camada
+ * paralela. No centro, o BI conversacional: a IA interpreta, o código calcula.
  */
 export function BotDeVendas({ item, dict, locale }: StoryProps) {
   const story = dict.stories["bot-de-vendas"];
   const copy = dict.cases[item.slug];
   const figure = dict.caseStudy.figure;
   const title = caseTitle(item, dict);
-  const images = item.images ?? [];
-  const sale = images.find((image) => image.id === "telegram-sale");
+  const sale = imageOf(item.images, "telegram-sale");
   const privateLabel = [dict.caseStudy.internal, dict.caseStudy.privateCode];
+  const conversational = story.conversational;
 
-  const flow: Step[] = story.conversational.flow.map((label, i) => ({
+  const interpret: Step[] = conversational.interpret.steps.map((label, i) => ({
     label,
-    mark: i === FALLBACK_STEP ? story.conversational.fallbackMark : undefined,
+    mark: i === FALLBACK_STEP ? conversational.fallbackMark : undefined,
+  }));
+  const compute: Step[] = conversational.compute.steps.map((label, i) => ({
+    label,
     focus: i === ANSWER_STEP,
   }));
 
@@ -89,82 +97,72 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
         </div>
 
         {/* O problema */}
-        <Band tone="paper" after="stone" labelledBy="jc-origin">
-          <Chapter id="jc-origin" title={story.origin.title}>
-            <RevealLines as="p" lines={[story.origin.lead]} className="voice text-voice" />
-            <Reveal delay={140}>
-              <p className="mt-8 max-w-[48ch] text-lead leading-snug text-ash">
-                {story.origin.body}
-              </p>
-            </Reveal>
-          </Chapter>
-
-          <Reveal className="mt-[10vh]">
-            <p className="max-w-[52ch] text-[clamp(0.95rem,1.15vw,1.1rem)] leading-snug text-ash/70">
-              {story.origin.note}
-            </p>
-          </Reveal>
-        </Band>
-
-        {/* Três pilares */}
-        <Band tone="void" after="paper" labelledBy="jc-pillars">
-          <div className="fit-display" style={fit(story.pillars.title, "min(10rem, 8vw)", 86, "12vw")}>
+        <Band tone="paper" after="stone" labelledBy="jc-problem">
+          <Chapter id="jc-problem" title={story.problem.title}>
             <RevealLines
-              as="h2"
-              id="jc-pillars"
-              lines={story.pillars.title}
-              className="display leading-[0.96]"
+              as="p"
+              lines={[story.problem.lead]}
+              className="voice text-voice text-balance md:text-center"
             />
-          </div>
-
-          <div className="mt-[10vh] grid grid-cols-1 gap-x-[4vw] gap-y-16 md:grid-cols-3">
-            {story.pillars.items.map((pillar, i) => (
-              <StepList
-                key={pillar.title}
-                eyebrow={pad(i + 1)}
-                title={pillar.title}
-                steps={pillar.steps.map((label) => ({ label }))}
-                size="sm"
-                className="border-t border-rule-dark pt-6"
-              />
-            ))}
-          </div>
-        </Band>
-
-        {/* Pipeline */}
-        <Band tone="paper" after="void" labelledBy="jc-pipeline">
-          <Chapter id="jc-pipeline" title={story.pipeline.title}>
-            <Reveal>
-              <p className="voice text-voice text-pretty">{story.pipeline.lead}</p>
-            </Reveal>
-            <Reveal delay={120}>
-              <p className="mt-8 max-w-[48ch] text-lead leading-snug text-ash">
-                {story.pipeline.body}
+            <Reveal delay={140}>
+              <p className="mt-6 max-w-[48ch] text-lead leading-snug text-ash md:mx-auto md:text-center">
+                {story.problem.body}
               </p>
             </Reveal>
           </Chapter>
-          <SheetTabs
-            label={story.pipeline.sheetsLabel}
-            tabs={story.pipeline.sheets}
-            className="mt-[9vh]"
-          />
-          <Reveal>
-            <p className="label mt-10 text-ash">{story.pipeline.note}</p>
-          </Reveal>
         </Band>
 
-        {/* Notificações */}
-        <Band tone="stone" after="paper" labelledBy="jc-notifications">
-          <div className="grid grid-cols-12 gap-x-6 gap-y-14">
+        {/* Como funciona: uma fonte, duas camadas — cada uma na sua linha */}
+        <Band tone="void" after="paper" labelledBy="jc-layers">
+          <Chapter id="jc-layers" title={story.layers.title} wide>
+            <Reveal>
+              <p className="voice text-voice md:text-center">{story.layers.lead}</p>
+            </Reveal>
+
+            <ol className="mt-[8vh]">
+              {story.layers.items.map((layer, i) => (
+                <li key={layer.title}>
+                  <Reveal variant="draw" delay={i * 90} className="h-px w-full bg-rule-dark" />
+                  <div className="grid grid-cols-12 gap-x-6 gap-y-8 py-10 md:py-12">
+                    <Reveal delay={i * 90 + 60} className="col-span-12 lg:col-span-3">
+                      <span className="meta text-fog">{pad(i + 1)}</span>
+                      <h3 className="display mt-4 text-[clamp(1.9rem,2.8vw,2.9rem)] leading-[0.95]">
+                        {layer.title}
+                      </h3>
+                      <p className="mt-4 max-w-[30ch] text-[0.9375rem] leading-snug text-paper/75">
+                        {layer.text}
+                      </p>
+                    </Reveal>
+                    <div className="col-span-12 lg:col-span-9 lg:pt-[2.1rem]">
+                      <Progression steps={layer.steps} size="sm" columns={LAYER_COLUMNS} />
+                      {i === story.layers.items.length - 1 ? (
+                        <SheetTabs
+                          label={story.layers.sheetsLabel}
+                          tabs={story.layers.sheets}
+                          className="mt-10"
+                        />
+                      ) : null}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <Reveal variant="draw" className="h-px w-full bg-rule-dark" />
+          </Chapter>
+        </Band>
+
+        {/* Notificações: a lista ao lado da notificação de verdade */}
+        <Band tone="stone" after="void" labelledBy="jc-notifications">
+          <div className="grid grid-cols-12 gap-x-6 gap-y-14 md:items-center">
             <div className="col-span-12 md:col-span-6">
               <RevealLines
                 as="h2"
                 id="jc-notifications"
                 lines={[story.notifications.title]}
-                className="display text-[clamp(1.6rem,2.6vw,2.4rem)]"
+                className="display text-[clamp(2.4rem,4.4vw,4.6rem)]"
               />
               <Reveal delay={100}>
-                <p className="voice mt-8 max-w-[22ch] text-voice text-pretty">
+                <p className="voice mt-6 max-w-[22ch] text-voice text-pretty">
                   {story.notifications.lead}
                 </p>
               </Reveal>
@@ -196,104 +194,78 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
           </div>
         </Band>
 
-        {/* BI conversacional */}
+        {/* BI conversacional: as perguntas, a ideia central e o caminho da resposta */}
         <Band tone="void" after="stone" labelledBy="jc-conversational">
-          <RevealLines
-            as="h2"
-            id="jc-conversational"
-            lines={[story.conversational.title]}
-            className="display text-[clamp(1.6rem,2.6vw,2.4rem)]"
-          />
-          <Reveal delay={100}>
-            <p className="voice mt-8 max-w-[24ch] text-voice">{story.conversational.lead}</p>
-          </Reveal>
-
-          <Reveal delay={140}>
-            <ul className="mt-[8vh] flex flex-col gap-3">
-              {story.conversational.questions.map((q) => (
-                <li
-                  key={q}
-                  className="voice text-[clamp(1.9rem,4vw,4.25rem)] leading-[1.02] italic"
-                >
-                  “{q}”
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-
-          <div className="mt-[12vh]">
-            <p className="label mb-6 text-fog">{story.conversational.flowLabel}</p>
-            <StepList steps={flow} />
-          </div>
+          <Chapter id="jc-conversational" title={conversational.title} wide>
+            <Reveal>
+              <p className="voice text-voice md:text-center">{conversational.lead}</p>
+            </Reveal>
+            <Reveal delay={120}>
+              <ul className="mx-auto mt-[7vh] flex max-w-[64rem] flex-wrap gap-x-[0.6em] gap-y-2 md:justify-center">
+                {conversational.questions.map((q) => (
+                  <li
+                    key={q}
+                    className="voice text-[clamp(1.6rem,3vw,3.1rem)] leading-[1.05] italic opacity-85"
+                  >
+                    “{q}”
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </Chapter>
 
           <div
             className="fit-display mt-[14vh]"
-            style={fit(story.conversational.statement, "min(14rem, 13vw)", 86, "16vw")}
+            style={fit(conversational.statement, "min(14rem, 13vw)", 86, "16vw")}
           >
             <RevealLines
               as="p"
-              aria-label={story.conversational.statement.join(" ")}
+              aria-label={conversational.statement.join(" ")}
               className="display leading-[0.96]"
             >
               <span className="mask-line">
-                <span className="type-outline">{story.conversational.statement[0]}</span>
+                <span className="type-outline">{conversational.statement[0]}</span>
               </span>
               <span className="mask-line">
-                <span style={delay(110)}>{story.conversational.statement[1]}</span>
+                <span style={delay(110)}>{conversational.statement[1]}</span>
               </span>
             </RevealLines>
           </div>
           <Reveal>
-            <p className="mt-10 max-w-[52ch] text-lead leading-snug text-paper/80">
-              {story.conversational.explain}
+            <p className="mt-8 max-w-[52ch] text-lead leading-snug text-paper/80">
+              {conversational.explain}
             </p>
           </Reveal>
 
-          <div className="mt-[12vh] grid grid-cols-12 gap-x-6 gap-y-14">
-            <div className="col-span-12 lg:col-span-7">
-              <p className="label text-fog">{story.conversational.strategyLabel}</p>
-              <Reveal>
-                <ol className="mt-5">
-                  {story.conversational.strategy.map((line, i) => (
-                    <li
-                      key={line}
-                      className="flex items-baseline gap-5 border-t border-rule-dark py-5 text-[clamp(1.05rem,1.45vw,1.35rem)] leading-snug"
-                    >
-                      <span className="meta w-[1.35rem] shrink-0 text-fog">{pad(i + 1)}</span>
-                      {line}
-                    </li>
-                  ))}
-                </ol>
-              </Reveal>
-            </div>
-            <div className="col-span-12 flex flex-col gap-10 lg:col-span-4 lg:col-start-9">
-              {story.conversational.highlights.map((h, i) => (
-                <Reveal key={h.value} delay={i * 100} className="border-t border-rule-dark pt-6">
-                  <p className="display text-[clamp(2rem,3vw,3rem)]">{h.value}</p>
-                  <p className="mt-2 max-w-[24ch] text-[clamp(0.95rem,1.15vw,1.1rem)] leading-snug text-paper/80">
-                    {h.caption}
-                  </p>
-                </Reveal>
-              ))}
-            </div>
+          {/* O caminho partido em dois: o que interpreta e o que calcula */}
+          <div className="mt-[10vh] grid grid-cols-1 gap-x-[4vw] gap-y-16 md:grid-cols-2">
+            <StepList
+              title={conversational.interpret.title}
+              steps={interpret}
+              size="sm"
+              className="border-t border-rule-dark pt-6"
+            />
+            <StepList
+              title={conversational.compute.title}
+              steps={compute}
+              size="sm"
+              start={interpret.length + 1}
+              className="border-t border-rule-dark pt-6"
+            />
           </div>
 
-          <Reveal className="mt-[12vh] grid grid-cols-12 items-end gap-x-6 gap-y-6 border-t border-rule-dark pt-10">
-            <p className="label col-span-12 text-fog md:col-span-3">{story.audio.title}</p>
-            <p className="display col-span-12 text-[clamp(3.5rem,8vw,8rem)] md:col-span-4">
-              {story.audio.value}
-            </p>
-            <p className="col-span-12 max-w-[40ch] text-lead leading-snug text-paper/80 md:col-span-5">
-              {story.audio.text}
-            </p>
-          </Reveal>
+          <Metrics
+            size="md"
+            className="mt-[12vh]"
+            items={conversational.highlights.map((h) => ({ value: h.value, lines: [h.caption] }))}
+          />
         </Band>
 
-        {/* Cobertura, impacto, ficha técnica */}
+        {/* O que dá para perguntar, impacto, ficha técnica */}
         <Band tone="paper" after="void" label={title}>
           <div className="flex flex-col gap-y-[16vh]">
             <Chapter id="jc-coverage" title={story.coverage.title}>
-              <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2">
                 {[
                   { label: story.coverage.metricsLabel, items: story.coverage.metrics },
                   { label: story.coverage.filtersLabel, items: story.coverage.filters },
@@ -304,7 +276,7 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
                       {list.items.map((entry) => (
                         <li
                           key={entry}
-                          className="display border-t border-rule py-3 text-[clamp(1.5rem,2.4vw,2.25rem)]"
+                          className="display border-t border-rule py-3 text-[clamp(1.5rem,2.2vw,2.1rem)]"
                         >
                           {entry}
                         </li>
@@ -314,34 +286,32 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
                 ))}
               </div>
               <Reveal>
-                <p className="label mt-8 text-ash">{story.coverage.note}</p>
+                <p className="label mt-8 text-ash md:text-center">{story.coverage.note}</p>
               </Reveal>
             </Chapter>
 
-            <Chapter id="jc-impact" title={story.impact.title}>
-              <ul>
+            <Chapter id="jc-impact" title={story.impact.title} wide>
+              <ul className="grid grid-cols-1 gap-x-6 sm:grid-cols-2 lg:grid-cols-4">
                 {story.impact.items.map((entry, i) => (
                   <li key={entry}>
-                    <Reveal variant="draw" delay={i * 60} className="h-px w-full bg-rule" />
-                    <Reveal
-                      delay={i * 60 + 40}
-                      className="flex items-baseline gap-5 py-4 md:gap-8 md:py-5"
-                    >
-                      <span className="meta w-[1.35rem] shrink-0 text-ash">{pad(i + 1)}</span>
-                      <span className="display text-[clamp(1.5rem,2.8vw,2.75rem)]">{entry}</span>
+                    <Reveal variant="draw" delay={i * 80} className="h-px w-full bg-rule" />
+                    <Reveal delay={i * 80 + 50} className="pt-5 pb-8">
+                      <span className="meta text-ash">{pad(i + 1)}</span>
+                      <p className="display mt-4 text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
+                        {entry}
+                      </p>
                     </Reveal>
                   </li>
                 ))}
               </ul>
-              <Reveal variant="draw" className="h-px w-full bg-rule" />
             </Chapter>
 
             {item.technologies ? (
-              <Chapter id="jc-stack" title={story.stack.title}>
+              <Chapter id="jc-stack" title={story.stack.title} wide>
                 <StackSheet
                   groups={item.technologies}
                   labels={dict.caseStudy.stackGroups}
-                  notes={[privateLabel.join(" · "), story.stack.status]}
+                  notes={[...privateLabel, story.stack.status]}
                 />
               </Chapter>
             ) : null}

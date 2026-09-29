@@ -1,4 +1,4 @@
-import type { GalleryImage, SurfaceTone } from "@/data/portfolio";
+import type { CaseImage, SurfaceTone } from "@/data/portfolio";
 import { Figure } from "@/components/case/Figure";
 import { growStyle, ratioOf, toSpreads } from "@/lib/spreads";
 
@@ -6,18 +6,21 @@ import { growStyle, ratioOf, toSpreads } from "@/lib/spreads";
 const tones: SurfaceTone[] = ["mist", "void", "stone"];
 
 /**
- * Galeria em par · destaque · par. Cada figura mantém a própria proporção —
- * screenshot não se corta para caber numa altura —, e no par a largura segue
- * a proporção, então as duas pranchas têm sempre a mesma altura. A numeração
- * continua a partir de `start`.
+ * Figuras lado a lado DENTRO de uma seção narrativa (par · destaque · par) —
+ * ex.: as duas fotos da promoção, na faixa da promoção. Não existe seção
+ * "Galeria" no fim da página: a imagem entra onde a história fala dela.
+ *
+ * Cada figura mantém a própria proporção — screenshot não se corta para
+ * caber numa altura —, e no par a largura segue a proporção, então as duas
+ * pranchas têm sempre a mesma altura. A numeração continua a partir de `start`.
  */
-export function Gallery({
+export function FigureSpread({
   images,
   captions = {},
   label,
   start = 1,
 }: {
-  images: readonly GalleryImage[];
+  images: readonly CaseImage[];
   captions?: Record<string, string>;
   label: string;
   start?: number;

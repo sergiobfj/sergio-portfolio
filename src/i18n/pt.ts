@@ -43,7 +43,7 @@ type CaseCopy = {
   /** Números aproximados: sempre com "~" ou "cerca de". */
   metrics?: { value: string; caption: string }[];
   metricsNote?: string;
-  /** Legendas da galeria, pelo `id` da imagem em portfolio.ts. */
+  /** Legendas das figuras, pelo `id` da imagem em portfolio.ts. */
   captions?: Record<string, string>;
 };
 
@@ -98,16 +98,26 @@ const cases: Record<CaseKey, CaseCopy> = {
     },
   },
   sentavos: {
-    summary: "Produto próprio de finanças pessoais.",
-    captions: { dashboard: "Orçamento do mês" },
+    summary: "Finanças pessoais sem contar o mesmo dinheiro duas vezes.",
+    tags: ["Produto próprio", "Finanças pessoais"],
+    captions: {
+      "card-purchase": "Lançamento no cartão, com parcelamento",
+      budget: "Orçamento do mês: o gasto contra a meta de cada categoria",
+      invoice: "Detalhe de uma fatura",
+      review: "Tela de revisão",
+      wealth: "Patrimônio e investimentos",
+    },
   },
   geocarbo: {
-    kicker: "Climate tech · dMRV · Carbono",
-    tags: ["Climate tech", "dMRV", "Carbono"],
+    summary: "Estimativa de carbono da Caatinga por satélite, com método declarado.",
+    kicker: "Climate tech · Carbono · MVP",
+    tags: ["Climate tech", "Carbono"],
     captions: {
-      dashboard: "Visão geral do monitoramento",
-      "cadastro-propriedade": "Cadastro de propriedade para monitoramento",
-      relatorios: "Relatórios gerados",
+      map: "O polígono da propriedade",
+      analysis: "Detalhe de uma análise",
+      registration: "Cadastro da propriedade",
+      reports: "Relatórios concluídos, com o PDF para download",
+      pdf: "O relatório em PDF, com método, fontes e ressalvas",
     },
   },
   "crm-textil": {
@@ -129,8 +139,8 @@ const cases: Record<CaseKey, CaseCopy> = {
     kicker: "Experiência digital · São João de Caruaru 2026",
     tags: ["Experiência digital", "São João de Caruaru 2026"],
     captions: {
-      calculator: "Calculadora de impacto de CO₂",
       experiences: "O que o visitante encontra na Arena",
+      calculator: "Calculadora de impacto de CO₂",
       mobile: "Versão mobile",
     },
   },
@@ -170,8 +180,6 @@ const experiences: Record<ExperienceKey, ExperienceCopy> = {
       promotion: "Registro da promoção",
       start: "Estação de trabalho na Virtron",
       "former-manager": "Com o antigo gestor do setor",
-      "workstation-01": "Desenvolvimento no dia a dia",
-      "workstation-02": "Manutenção de hardware",
     },
   },
   secco: {
@@ -181,8 +189,6 @@ const experiences: Record<ExperienceKey, ExperienceCopy> = {
     headline: ["Ideias em produto.", "Tecnologia em solução."],
     captions: {
       "team-01": "Equipe SECCO",
-      "talk-room": "Talk na UniFavip Wyden",
-      poster: "Cartaz da talk na Semana de TI da UniFavip Wyden",
     },
   },
 };
@@ -202,14 +208,11 @@ const stories = {
     before: {
       title: "O processo anterior",
       lead: "Antes do Router Planner, as rotas eram organizadas à mão.",
-      body: "A equipe partia dos clientes registrados no Ploomes e copiava cada registro para a aba da sua rota numa planilha Excel — toda semana.",
+      body: "Toda semana, cada cliente do Ploomes era copiado para a aba da sua rota numa planilha Excel.",
       metrics: [
         { value: "~40", caption: "Clientes em uma semana típica" },
         { value: "8+", caption: "Rotas normalmente organizadas" },
-        {
-          value: "1+ dia",
-          caption: "Em cenários mais trabalhosos, da sexta ao sábado",
-        },
+        { value: "1+ dia", caption: "Nas semanas mais pesadas, da sexta ao sábado" },
       ],
       note: "Números aproximados.",
     },
@@ -221,7 +224,7 @@ const stories = {
         "Ploomes",
         "Planilha",
         "Copiar clientes",
-        "Separar manualmente por abas",
+        "Separar por abas",
         "Conferir",
         "Imprimir",
         "Operação",
@@ -243,87 +246,71 @@ const stories = {
     },
     output: {
       statement: ["Excel como saída,", "não como sistema."],
-      body: [
-        "O Router Planner não tirou o Excel da operação por tirar. Tirou o trabalho manual de construir a planilha.",
-        "O analista seleciona as rotas no sistema, e a aplicação gera o arquivo que a operação usa.",
-      ],
+      lead: "O Excel continua na operação. O que saiu foi o trabalho manual de montá-lo.",
       file: "O arquivo gerado",
       general: "Geral",
       route: "Rota",
       legend: [
-        "Uma aba geral com todos os clientes processados.",
-        "Uma aba por rota escolhida — cerca de oito ou mais, conforme as vendas e entregas da semana.",
+        "Uma aba geral, com todos os clientes.",
+        "Uma aba por rota — cerca de oito ou mais por semana.",
       ],
     },
     data: {
       title: ["Não era apenas sobre", "fazer mais rápido."],
       subtitle: "Era sobre trabalhar com a informação certa.",
-      body: "Na planilha antiga, o que mudava no CRM depois da preparação podia não chegar à logística: um endereço atualizado no Ploomes, por exemplo, ou um cliente que entrava no fluxo de cancelamento.",
       checks: [
         {
           title: "Alterações cadastrais",
-          text: "O endereço que vale é o que está no Ploomes agora, não o da planilha da semana.",
+          text: "Vale o endereço que está no Ploomes agora, não o da planilha.",
         },
         {
           title: "Cancelamentos",
-          text: "Clientes que entraram no fluxo de cancelamento são verificados antes da operação.",
+          text: "Quem entrou no fluxo de cancelamento é verificado antes da operação.",
         },
         {
           title: "Dados atualizados",
-          text: "A consulta vai direto ao CRM, pela API, no momento de organizar as rotas.",
+          text: "A consulta vai direto ao CRM, pela API, na hora de organizar.",
         },
       ],
     },
     flow: {
       title: "Fluxo do sistema",
       steps: [
-        "Ploomes CRM",
-        "API",
-        "FastAPI",
-        "Validações e regras",
-        "Router Planner",
-        "Organização das rotas",
-        "Exportação Excel",
-        "Logística",
+        { label: "Ploomes CRM", note: "A fonte dos clientes" },
+        { label: "API", note: "Consulta na hora de organizar" },
+        { label: "Router Planner", note: "FastAPI, validações e regras" },
+        { label: "Exportação Excel", note: "Aba geral e uma por rota" },
+        { label: "Logística", note: "A operação" },
       ],
     },
     result: {
       title: "Resultado",
       value: "~1–2h",
       caption:
-        "Tempo aproximado, hoje, para organizar uma operação típica — depende da quantidade de clientes.",
+        "Tempo aproximado, hoje, para organizar uma operação típica — depende da quantidade de clientes. Antes, podia ir da sexta ao sábado.",
       note: "Estimativa operacional, não benchmark.",
-      before: {
-        label: "Antes",
-        text: "O processo podia começar na sexta-feira e avançar pelo sábado.",
-      },
-      after: {
-        label: "Depois",
-        text: "A organização pode ser concluída em cerca de uma ou duas horas.",
-      },
       gains: [
         "Menos trabalho manual",
         "Dados conectados à fonte",
-        "Validação de cancelamentos",
+        "Validação antes da operação",
         "Exportação automática",
-        "Menos dependência de planilhas estáticas",
       ],
     },
     role: {
       title: "Minha atuação",
-      lead: "Concepção e desenvolvimento end-to-end da solução.",
+      lead: "Concepção e desenvolvimento end‑to‑end.",
       items: [
-        "Entendimento do fluxo operacional",
+        "Entendimento do fluxo",
         "Desenho da solução",
-        "Desenvolvimento da aplicação",
+        "Desenvolvimento",
         "Integração com o Ploomes",
-        "Implementação das regras de validação",
-        "Implantação da aplicação no ambiente da empresa",
+        "Regras de validação",
+        "Implantação",
       ],
     },
     stack: {
       title: "Ficha técnica",
-      access: "Ambiente com controle de acesso gerenciado.",
+      access: "Ambiente com controle de acesso gerenciado",
     },
   },
   "bot-de-vendas": {
@@ -331,51 +318,36 @@ const stories = {
       "Pergunte sobre a operação.",
       "Receba a resposta direto do CRM.",
     ],
-    origin: {
+    problem: {
       title: "O problema",
-      lead: "Os dados comerciais já existiam no Ploomes, mas consultas rápidas ainda exigiam abrir o CRM, configurar filtros e interpretar as informações manualmente.",
-      body: "O Bot de Vendas transformou esse acesso em uma conversa no Telegram.",
-      note: "Este projeto nasceu a partir da automação da Jornada do Cliente e evoluiu para um ecossistema de inteligência comercial.",
+      lead: "Os dados comerciais já estavam no Ploomes. Mas cada consulta rápida exigia abrir o CRM, filtrar e interpretar à mão.",
+      body: "Nascido da automação da Jornada do Cliente, o Bot de Vendas levou essa consulta para uma conversa no Telegram.",
     },
-    pillars: {
-      title: ["O projeto cresceu", "além da automação inicial."],
+    layers: {
+      title: "Como funciona",
+      lead: "Uma fonte, duas camadas.",
       items: [
         {
-          title: "Pipeline de dados",
-          steps: ["Ploomes", "Python", "Google Sheets", "Looker Studio"],
+          title: "Direto do CRM",
+          text: "Notificações e BI conversacional consultam o Ploomes diretamente.",
+          steps: ["Ploomes API", "Python", "Telegram"],
         },
         {
-          title: "Notificações",
-          steps: ["Bot no Telegram", "Novas vendas", "Resumo diário"],
-        },
-        {
-          title: "BI conversacional",
-          steps: [
-            "Pergunta em texto ou áudio",
-            "Interpretação",
-            "Consulta ao Ploomes",
-            "Agregação",
-            "Resposta",
-          ],
+          title: "Camada paralela",
+          text: "O ETL que alimenta o dashboard executivo e as análises históricas.",
+          steps: ["Ploomes", "ETL em Python", "Google Sheets", "Looker Studio"],
         },
       ],
-    },
-    pipeline: {
-      title: "Dashboard & ETL",
-      lead: "A camada de dados que alimenta o dashboard executivo e as análises históricas.",
-      body: "O pipeline consulta o Ploomes, transforma e organiza os registros, remove duplicações relevantes e escreve o resultado em quatro estruturas no Google Sheets — que alimentam o dashboard no Looker Studio.",
-      note: "O BI conversacional e as notificações consultam o CRM diretamente.",
       sheetsLabel: "No Google Sheets",
       // Nomes das estruturas: iguais nos três idiomas.
       sheets: ["SDR", "Vendas", "Cohort", "Cohort Long"],
     },
     notifications: {
       title: "Mais uma!!",
-      lead: "Time e diretoria atualizados sem precisar abrir o dashboard.",
+      lead: "Time e diretoria atualizados sem abrir o dashboard.",
       items: [
-        "Consulta novas vendas periodicamente",
         "Detecção em até ~5 minutos",
-        "Evita notificações duplicadas",
+        "Sem notificações duplicadas",
         "Fechamento diário consolidado",
       ],
     },
@@ -387,40 +359,24 @@ const stories = {
         "E ontem?",
         "E por vendedor?",
         "Qual foi o ticket médio deste mês?",
-        "Top 5 vendedores por valor.",
-        "E nessas cidades?",
       ],
-      flowLabel: "Da pergunta à resposta",
-      flow: [
-        "Pergunta",
-        "Parser determinístico",
-        "Fallback LLM",
-        "Intenção estruturada",
-        "API Ploomes",
-        "Filtros e agregação em Python",
-        "Resposta determinística",
-      ],
-      fallbackMark: "Só quando necessário",
       statement: ["A IA interpreta.", "O código calcula."],
       explain:
-        "O LLM só entra para entender a intenção quando o parser não resolve. Quem consulta, filtra, calcula e formata a resposta é o código — a arquitetura foi desenhada justamente para reduzir alucinação.",
-      strategyLabel: "A estratégia",
-      strategy: [
-        "Perguntas simples são resolvidas primeiro por um parser determinístico.",
-        "Só quando necessário, o Claude Haiku transforma a pergunta em uma intenção estruturada.",
-        "Regras normalizam os casos ambíguos, e o contexto da conversa pode ser reaproveitado.",
-        "A API fornece os dados, o Python calcula, e a resposta é montada de forma determinística.",
-      ],
+        "O LLM só entra quando o parser não resolve. Consultar, filtrar e calcular fica com o código — a arquitetura foi desenhada para reduzir alucinação.",
+      interpret: {
+        title: "Interpretar",
+        steps: ["Pergunta", "Parser determinístico", "Fallback LLM", "Intenção estruturada"],
+      },
+      compute: {
+        title: "Calcular",
+        steps: ["API Ploomes", "Filtros e agregação em Python", "Resposta determinística"],
+      },
+      fallbackMark: "Só quando necessário",
       highlights: [
-        { value: "0 tokens", caption: "Perguntas simples são interpretadas pelo parser determinístico." },
-        { value: "6 métricas", caption: "Vendas, valor vendido, ticket médio, R$/kWp, leads e perdas." },
-        { value: "15 min", caption: "Contexto conversacional para follow-ups." },
+        { value: "0 tokens", caption: "Perguntas simples resolvidas pelo parser determinístico" },
+        { value: "15 min", caption: "De contexto para follow-ups" },
+        { value: "~60 s", caption: "Áudios pelo Telegram, transcritos localmente com Whisper" },
       ],
-    },
-    audio: {
-      title: "Fala também funciona",
-      value: "~60 s",
-      text: "Áudios enviados pelo Telegram são transcritos localmente com Whisper e entram no mesmo pipeline das perguntas em texto.",
     },
     coverage: {
       title: "O que dá para perguntar",
@@ -447,30 +403,26 @@ const stories = {
     impact: {
       title: "Impacto",
       items: [
-        "Sem export manual recorrente",
-        "Sem merge manual das abas",
-        "Painel atualizado automaticamente",
-        "Uma fonte consolidada para análise",
-        "Notificações automáticas de vendas",
-        "Acesso rápido às informações comerciais",
-        "Perguntas em linguagem natural",
-        "Menos dashboards abertos para consultas simples",
+        "Sem export nem merge manual",
+        "Painel atualizado sozinho",
+        "Vendas notificadas no Telegram",
+        "Consultas sem abrir o CRM",
       ],
     },
     stack: {
       title: "Ficha técnica",
-      status: "Em produção, com partes ainda em evolução.",
+      status: "Em produção, com partes ainda em evolução",
     },
   },
   "arena-sustentabilidade": {
     headline: ["Uma experiência digital para", "o São João de Caruaru 2026."],
     context: {
       title: "Contexto",
-      text: "A Arena da Sustentabilidade fazia parte da programação oficial do São João de Caruaru 2026 e abordava sustentabilidade e geração de energia. A experiência digital foi desenvolvida para essa ativação.",
+      text: "Parte da programação oficial do São João de Caruaru 2026, a Arena abordava sustentabilidade e geração de energia. A experiência digital foi feita para essa ativação.",
     },
     calculator: {
       title: "Calculadora de impacto de CO₂",
-      lead: "O principal recurso: estimar a emissão de uma operação e quantas árvores seriam necessárias para compensá-la.",
+      lead: "Estima a emissão de uma operação e quantas árvores seriam necessárias para compensá-la.",
       inputsLabel: "O usuário informa",
       inputs: ["Dias", "Consumo / geradores", "Equipe", "Deslocamento"],
       outputsLabel: "A interface calcula",
@@ -484,13 +436,7 @@ const stories = {
     },
     highlights: {
       title: "Destaques",
-      items: [
-        "Carrossel de fotos",
-        "Layout responsivo",
-        "Animações leves",
-        "Aplicação 100% estática",
-        "HTML, CSS e JavaScript puros",
-      ],
+      items: ["Carrossel de fotos", "Layout responsivo", "Animações leves", "100% estática"],
     },
     stack: { title: "Ficha técnica" },
   },
@@ -501,7 +447,7 @@ const stories = {
       label: "Exemplo publicado",
       title: "Painéis das TVs internas",
       steps: [
-        { label: "Antes", text: "Os painéis exibidos nas TVs internas — com indicadores como vendas e agendamentos — eram atualizados à mão." },
+        { label: "Antes", text: "Os painéis das TVs internas — com indicadores como vendas e agendamentos — eram atualizados à mão." },
         { label: "Como", text: "Um script em Python com Selenium e PyAutoGUI identifica os botões via XPath e atualiza os dados sozinho." },
         { label: "Resultado", text: "Menos esforço manual e informação sempre atualizada nas telas." },
       ],
@@ -513,10 +459,186 @@ const stories = {
     blocks: [
       "Web scraping",
       "Automação de navegador",
-      "Scripts",
       "Coleta de dados",
       "Tarefas repetitivas eliminadas por código",
     ],
+  },
+  sentavos: {
+    status: "Em produção",
+    /** `{date}` vira o mês de entrada em produção (portfolio.ts). */
+    since: "Desde {date}",
+    use: "Uso pessoal, com conta demo somente-leitura",
+    problem: {
+      title: "O problema",
+      lead: "Antes, o controle ficava numa planilha. No cartão, o mês mostrava uma linha só: “Fatura”.",
+      body: "Eu sabia quanto tinha pago, mas não em que o dinheiro tinha sido gasto. E gasto e saída de caixa eram tratados como a mesma coisa.",
+    },
+    decision: {
+      statement: ["Gasto", "≠", "Saída de caixa"],
+      lead: ["Compra no cartão é gasto hoje.", "Saída de caixa, só quando a fatura é paga."],
+      steps: [
+        { label: "Compra no cartão" },
+        { label: "Competência", note: "No mês da parcela", mark: "Gasto" },
+        { label: "Fatura" },
+        { label: "Pagamento", mark: "Saída de caixa" },
+      ],
+      note: "O pagamento da fatura não cria um novo gasto.",
+    },
+    how: {
+      title: "Como funciona",
+      steps: ["Lançar", "Classificar", "Cartão / à vista", "Fatura", "Pagamento", "Relatórios"],
+      modes: [
+        { title: "À vista", text: "Gasto e caixa acontecem juntos." },
+        { title: "Cartão", text: "Gasto e caixa acontecem em momentos diferentes." },
+      ],
+      cardLabel: "Cartão e parcelamento",
+      card: [
+        "Uma compra, parcelas por competência",
+        "Cada parcela na fatura certa",
+        "Pagamento total ou parcial",
+        "Parcelas fecham o total, centavo por centavo",
+      ],
+    },
+    rules: {
+      title: "Regras que protegem o dado",
+      statement: "O sistema prefere não saber a inventar.",
+      items: [
+        {
+          title: "Não classificado",
+          text: "Histórico antigo sem forma de pagamento não ganha uma por palpite.",
+        },
+        {
+          title: "Reconciliação explícita",
+          text: "Conciliar é uma ação declarada, não uma suposição do sistema.",
+        },
+        {
+          title: "Fatura sem categoria",
+          text: "O pagamento não tem categoria: o gasto já foi contado na compra.",
+        },
+        {
+          title: "Recalcular, não duplicar",
+          text: "Valores derivados são recalculados — nunca duplicados.",
+        },
+      ],
+    },
+    engineering: {
+      title: "Engenharia",
+      role: "Concepção e desenvolvimento end‑to‑end: produto, regras financeiras, backend, frontend, interface, migração e deploy.",
+      notes: ["Autenticação própria", "Isolamento entre contas", "Migrations", "Demo somente-leitura"],
+    },
+    result: {
+      title: "Resultado",
+      lead: "O Sentavos substituiu minha planilha e hoje é a fonte principal do meu controle financeiro.",
+      body: "O uso real também mudou o produto: funcionalidades foram removidas, reformuladas ou criadas conforme os problemas apareciam no dia a dia.",
+      metrics: [
+        { value: "14 meses", caption: "De histórico preservados, sem divergência, na migração do cartão" },
+        { value: "285", caption: "Testes automatizados" },
+        { value: "Produção", caption: "Desde {date}" },
+      ],
+      evolutionLabel: "Evolução",
+      evolution: ["Planilha", "Web app", "Produção", "Cartões & faturas", "Relatórios"],
+      featuresLabel: "No app",
+      features: [
+        "Dashboard mensal",
+        "Lançamentos",
+        "Metas por categoria",
+        "Cartões",
+        "Faturas",
+        "Parcelamento",
+        "Pessoal, Família e Empresa",
+        "Relatórios",
+        "Patrimônio",
+        "Investimentos",
+      ],
+    },
+  },
+  geocarbo: {
+    status: ["Protótipo funcional", "Em fase de MVP"],
+    problem: {
+      title: "O problema",
+      quote: "O mercado precisa confiar no número antes de confiar no crédito.",
+      lead: "Medir carbono em campo é caro e lento.",
+      body: "Na Caatinga, a sazonalidade, a perda de folhas e o solo exposto dificultam estimativas genéricas por satélite. O GeoCarbo busca uma primeira leitura automatizada e transparente, antes das etapas mais caras de inventário e certificação.",
+    },
+    how: {
+      title: "Como funciona",
+      lead: "O GeoCarbo estima o carbono da vegetação de propriedades na Caatinga a partir de imagens Sentinel-2 e equações publicadas para o bioma.",
+      steps: [
+        { label: "Propriedade", note: "Cadastro da área" },
+        { label: "Polígono", note: "KML ou GeoJSON" },
+        { label: "Sentinel-2", note: "Cenas recentes, sem nuvens" },
+        { label: "Índices de vegetação", note: "Sobre a composição das cenas" },
+        { label: "Biomassa", note: "Regressão publicada para a Caatinga" },
+        { label: "Carbono / CO₂e", note: "Coeficientes declarados" },
+        { label: "Relatório", note: "Resultado e PDF" },
+      ],
+      metrics: [
+        { value: "Sentinel-2", caption: "Imagens abertas via Copernicus" },
+        { value: "10 m", caption: "Resolução das principais bandas usadas" },
+        { prefix: "até", value: "5 cenas", caption: "Composição temporal por mediana" },
+      ],
+    },
+    science: {
+      statement: ["Método declarado.", "Limites declarados."],
+      chain: ["Biomassa", "Carbono", "CO₂e"],
+      text: "O modelo ativo usa uma regressão publicada para a Caatinga. Coeficientes científicos declarados convertem a biomassa em carbono e em CO₂ equivalente.",
+      quote: "O sistema não esconde quando o dado extrapola o modelo.",
+      limits: [
+        { title: "Faixa calibrada", text: "O modelo vale para a faixa de NDVI em que foi calibrado." },
+        { title: "Aviso de extrapolação", text: "Fora dessa faixa, a estimativa sai sinalizada." },
+        { title: "Só acima do solo", text: "O cálculo cobre apenas a biomassa acima do solo." },
+        { title: "Sem validação de campo", text: "Ainda não há validação de campo." },
+      ],
+    },
+    technology: {
+      title: "Tecnologia",
+      architectureLabel: "Arquitetura",
+      architecture: [
+        "Usuário",
+        "Frontend",
+        "FastAPI",
+        "Celery / Redis",
+        "Copernicus",
+        "Processamento",
+        "Supabase",
+        "Resultado / PDF",
+      ],
+    },
+    stage: {
+      statement: ["Protótipo funcional.", "Em fase de MVP."],
+      doesLabel: "O pipeline já",
+      does: [
+        "Recebe a propriedade",
+        "Processa Sentinel-2",
+        "Calcula a estimativa",
+        "Salva o resultado",
+        "Gera o PDF",
+      ],
+      notYetLabel: "Ainda não é",
+      notYet: [
+        "Plataforma de certificação",
+        "Produto validado por certificadoras",
+        "dMRV completo",
+        "Sistema com validação de campo",
+        "Solução comercial madura",
+      ],
+      roadmap: "A arquitetura já tem o encaixe para modelos treinados com dados de campo.",
+    },
+    role: {
+      title: "Minha atuação",
+      lead: "Co-Founder & CPO da SECCO, com atuação direta no backend e na evolução do GeoCarbo.",
+      items: [
+        "Arquitetura backend",
+        "API",
+        "Processamento",
+        "Integração de polígonos",
+        "Pipeline de satélite",
+        "Persistência",
+        "Relatórios",
+        "Deploy",
+      ],
+      context: "Contexto: incubação da SECCO no Porto Digital e participação no Inova Caatinga.",
+    },
   },
 };
 
@@ -667,7 +789,12 @@ const stackGroups: Record<StackGroupKey, string> = {
   ai: "IA / NLP",
   frontend: "Frontend",
   interface: "Interface",
+  database: "Dados",
+  processing: "Processamento",
+  satellite: "Satélite",
+  reports: "Relatórios",
   infrastructure: "Infraestrutura",
+  quality: "Qualidade",
   stack: "Stack",
 };
 
@@ -725,7 +852,6 @@ const pt = {
     figure: "Fig.",
     stackGroups,
     pending: "Contexto, processo e resultado entram em breve.",
-    gallery: "Galeria",
     back: "Voltar à categoria",
     next: "Próximo case",
   },
@@ -735,10 +861,8 @@ const pt = {
     journey: "Minha trajetória",
     areas: "Áreas de atuação",
     built: "Coisas que construí",
-    gallery: "Galeria",
     writing: "Capítulo em escrita.",
     builtEmpty: "Os cases desta experiência entram em breve.",
-    galleryEmpty: "Fotos e screenshots em breve.",
     back: "Voltar à experiência",
     next: "Próxima experiência",
   },

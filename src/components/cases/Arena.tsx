@@ -3,20 +3,17 @@ import { Band } from "@/components/case/Band";
 import { CaseLinks, CaseTags } from "@/components/case/CaseMeta";
 import { CaseNext } from "@/components/case/CaseNext";
 import { Figure } from "@/components/case/Figure";
-import { Gallery } from "@/components/case/Gallery";
 import { StackSheet } from "@/components/case/StackSheet";
 import { Chapter } from "@/components/layout/Chapter";
 import { PageHero } from "@/components/layout/PageHero";
 import { Contact } from "@/components/sections/Contact";
 import { BackLink } from "@/components/ui/BackLink";
 import { Reveal } from "@/components/ui/Reveal";
-import { RevealLines } from "@/components/ui/RevealLines";
+import { cn } from "@/lib/cn";
+import { figureCounter, imageOf } from "@/lib/media";
 import { routes } from "@/lib/routes";
 import { caseTitle, titleLines } from "@/lib/work";
 import type { StoryProps } from "./index";
-
-/** A calculadora aparece no meio da história; o resto vai para a galeria. */
-const INLINE = "calculator";
 
 /** Uma coluna da "conta": o que entra ou o que sai, em display. */
 function Column({ label, items }: { label: string; items: readonly string[] }) {
@@ -30,7 +27,7 @@ function Column({ label, items }: { label: string; items: readonly string[] }) {
             className="flex items-baseline gap-5 border-t border-rule-dark py-4"
           >
             <span className="meta w-[1.35rem] shrink-0 text-fog">{pad(i + 1)}</span>
-            <span className="display text-[clamp(1.6rem,2.8vw,2.75rem)]">{entry}</span>
+            <span className="display text-[clamp(1.6rem,2.6vw,2.6rem)]">{entry}</span>
           </li>
         ))}
       </ul>
@@ -39,18 +36,26 @@ function Column({ label, items }: { label: string; items: readonly string[] }) {
 }
 
 /**
- * Arena da Sustentabilidade — case visual, mais curto. O contexto do evento,
- * a calculadora de CO₂ como uma conta (o que entra, o que sai) e a
- * otimização que manteve o site leve.
+ * Arena da Sustentabilidade — case visual, mais curto. O contexto do evento
+ * ao lado do que o visitante encontra, a calculadora de CO₂ como uma conta
+ * (o que entra, o que sai) ao lado da tela, e a otimização que manteve o
+ * site leve. Cada print mora na seção dele; a versão mobile entra nos
+ * destaques quando o print existir.
  */
 export function Arena({ item, dict, locale }: StoryProps) {
   const story = dict.stories["arena-sustentabilidade"];
   const copy = dict.cases[item.slug];
   const figure = dict.caseStudy.figure;
   const title = caseTitle(item, dict);
-  const images = item.images ?? [];
-  const calculator = images.find((image) => image.id === INLINE);
-  const gallery = images.filter((image) => image.id !== INLINE);
+  const experiences = imageOf(item.images, "experiences");
+  const calculator = imageOf(item.images, "calculator");
+  const mobile = imageOf(item.images, "mobile");
+  const next = figureCounter(2);
+  const numbers = {
+    experiences: next(experiences),
+    calculator: next(calculator),
+    mobile: next(mobile),
+  };
 
   return (
     <>
@@ -93,97 +98,125 @@ export function Arena({ item, dict, locale }: StoryProps) {
           />
         </div>
 
+        {/* Contexto: a frase ao lado do que o visitante encontrava */}
         <Band tone="paper" after="stone" labelledBy="arena-context">
-          <Chapter id="arena-context" title={story.context.title}>
-            <Reveal>
-              <p className="voice text-voice text-pretty">{story.context.text}</p>
-            </Reveal>
+          <Chapter id="arena-context" title={story.context.title} wide>
+            <div className="grid grid-cols-12 gap-x-6 gap-y-12 lg:items-center">
+              <Reveal
+                className={cn(
+                  "col-span-12",
+                  experiences ? "lg:col-span-5" : "md:col-span-10 md:col-start-2 md:text-center lg:col-span-8 lg:col-start-3",
+                )}
+              >
+                <p className="voice text-[clamp(1.75rem,2.8vw,2.9rem)] leading-[1.08] text-pretty">
+                  {story.context.text}
+                </p>
+              </Reveal>
+              {experiences ? (
+                <Figure
+                  media={experiences}
+                  number={numbers.experiences}
+                  label={figure}
+                  caption={copy.captions?.[experiences.id]}
+                  tone="mist"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="col-span-12 lg:col-span-6 lg:col-start-7"
+                />
+              ) : null}
+            </div>
           </Chapter>
         </Band>
 
-        {/* A calculadora como conta: entradas → resultado */}
+        {/* A calculadora como conta: entradas → resultado, ao lado da tela */}
         <Band tone="void" after="paper" labelledBy="arena-calculator">
-          <RevealLines
-            as="h2"
-            id="arena-calculator"
-            lines={[story.calculator.title]}
-            className="display text-[clamp(1.6rem,2.6vw,2.4rem)]"
-          />
-          <Reveal delay={100}>
-            <p className="voice mt-8 max-w-[26ch] text-voice text-pretty">
-              {story.calculator.lead}
-            </p>
-          </Reveal>
+          <Chapter id="arena-calculator" title={story.calculator.title} wide>
+            <Reveal>
+              <p className="voice mx-auto max-w-[30ch] text-voice text-balance md:text-center">
+                {story.calculator.lead}
+              </p>
+            </Reveal>
 
-          <Reveal
-            delay={160}
-            className="mt-[10vh] grid grid-cols-1 gap-y-10 md:grid-cols-[1fr_auto_1fr] md:gap-x-[4vw]"
-          >
-            <Column label={story.calculator.inputsLabel} items={story.calculator.inputs} />
-            <span
-              aria-hidden="true"
-              className="self-center text-center text-[clamp(2rem,4vw,3.5rem)] opacity-30"
-            >
-              <span className="md:hidden">↓</span>
-              <span className="hidden md:inline">→</span>
-            </span>
-            <Column label={story.calculator.outputsLabel} items={story.calculator.outputs} />
-          </Reveal>
-
-          {calculator ? (
-            <Figure
-              media={calculator}
-              number={2}
-              label={figure}
-              caption={copy.captions?.[calculator.id]}
-              tone="mist"
-              sizes="(max-width: 768px) 100vw, 70vw"
-              maxHeight="70svh"
-              className="mx-auto mt-[12vh]"
-            />
-          ) : null}
+            <div className="mt-[9vh] grid grid-cols-12 gap-x-6 gap-y-14 lg:items-center">
+              <Reveal
+                delay={120}
+                className={cn(
+                  "col-span-12 flex flex-col gap-10",
+                  calculator && "lg:col-span-5",
+                  !calculator && "md:grid md:grid-cols-2",
+                )}
+              >
+                <Column label={story.calculator.inputsLabel} items={story.calculator.inputs} />
+                <Column label={story.calculator.outputsLabel} items={story.calculator.outputs} />
+              </Reveal>
+              {calculator ? (
+                <Figure
+                  media={calculator}
+                  number={numbers.calculator}
+                  label={figure}
+                  caption={copy.captions?.[calculator.id]}
+                  tone="mist"
+                  maxHeight="72svh"
+                  sizes="(max-width: 1024px) 100vw, 55vw"
+                  className="col-span-12 mx-auto w-full lg:col-span-7"
+                />
+              ) : null}
+            </div>
+          </Chapter>
         </Band>
 
-        {/* Otimização: o antes vazado, o depois cheio */}
+        {/* Otimização e destaques, no mesmo eixo central */}
         <Band tone="stone" after="void" labelledBy="arena-optimization">
-          <RevealLines
-            as="h2"
-            id="arena-optimization"
-            lines={[story.optimization.title]}
-            className="display text-[clamp(1.6rem,2.6vw,2.4rem)]"
-          />
-          <Reveal
-            delay={120}
-            className="mt-[6vh] flex flex-wrap items-baseline gap-x-[0.3em] display text-[clamp(4rem,13vw,13rem)] leading-[0.9]"
-          >
-            <span className="type-outline">{story.optimization.before}</span>
-            <span aria-hidden="true" className="font-sans font-normal opacity-30">
-              →
-            </span>
-            <span>{story.optimization.after}</span>
-          </Reveal>
-          <Reveal delay={200}>
-            <p className="mt-8 max-w-[34ch] text-lead leading-snug text-ash">
-              {story.optimization.caption}
-            </p>
-          </Reveal>
+          <Chapter id="arena-optimization" title={story.optimization.title} wide>
+            <Reveal
+              delay={120}
+              className="display flex flex-wrap items-baseline gap-x-[0.3em] text-[clamp(4rem,13vw,13rem)] leading-[0.9] md:justify-center"
+            >
+              <span className="type-outline">{story.optimization.before}</span>
+              <span aria-hidden="true" className="font-sans font-normal opacity-30">
+                →
+              </span>
+              <span>{story.optimization.after}</span>
+            </Reveal>
+            <Reveal delay={200}>
+              <p className="mt-8 max-w-[34ch] text-lead leading-snug text-ash md:mx-auto md:text-center">
+                {story.optimization.caption}
+              </p>
+            </Reveal>
+          </Chapter>
 
-          <div className="mt-[12vh]">
-            <Chapter id="arena-highlights" title={story.highlights.title}>
-              <ul>
-                {story.highlights.items.map((entry, i) => (
-                  <li key={entry}>
-                    <Reveal variant="draw" delay={i * 60} className="h-px w-full bg-ink/15" />
-                    <Reveal
-                      delay={i * 60 + 40}
-                      className="flex items-baseline gap-5 py-4 md:gap-8 md:py-5"
-                    >
-                      <span className="meta w-[1.35rem] shrink-0 text-ash">{pad(i + 1)}</span>
-                      <span className="display text-[clamp(1.5rem,2.8vw,2.75rem)]">{entry}</span>
-                    </Reveal>
-                  </li>
-                ))}
-              </ul>
+          <div className="mt-[14vh]">
+            <Chapter id="arena-highlights" title={story.highlights.title} wide>
+              <div className="grid grid-cols-12 gap-x-6 gap-y-12 lg:items-end">
+                <ul
+                  className={cn(
+                    "col-span-12 grid grid-cols-1 gap-x-6 sm:grid-cols-2",
+                    mobile ? "lg:col-span-8" : "lg:grid-cols-4",
+                  )}
+                >
+                  {story.highlights.items.map((entry, i) => (
+                    <li key={entry}>
+                      <Reveal variant="draw" delay={i * 70} className="h-px w-full bg-ink/15" />
+                      <Reveal delay={i * 70 + 40} className="pt-5 pb-8">
+                        <span className="meta text-ash">{pad(i + 1)}</span>
+                        <p className="display mt-4 text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
+                          {entry}
+                        </p>
+                      </Reveal>
+                    </li>
+                  ))}
+                </ul>
+                {mobile ? (
+                  <Figure
+                    media={mobile}
+                    number={numbers.mobile}
+                    label={figure}
+                    caption={copy.captions?.[mobile.id]}
+                    tone="mist"
+                    sizes="(max-width: 1024px) 60vw, 25vw"
+                    className="col-span-8 sm:col-span-5 lg:col-span-3 lg:col-start-10"
+                  />
+                ) : null}
+              </div>
             </Chapter>
           </div>
         </Band>
@@ -191,14 +224,8 @@ export function Arena({ item, dict, locale }: StoryProps) {
         <Band tone="paper" after="stone" label={title}>
           <div className="flex flex-col gap-y-[16vh]">
             {item.technologies ? (
-              <Chapter id="arena-stack" title={story.stack.title}>
+              <Chapter id="arena-stack" title={story.stack.title} wide>
                 <StackSheet groups={item.technologies} labels={dict.caseStudy.stackGroups} />
-              </Chapter>
-            ) : null}
-
-            {gallery.length > 0 ? (
-              <Chapter id="arena-gallery" title={dict.caseStudy.gallery} wide>
-                <Gallery images={gallery} captions={copy.captions} label={figure} start={3} />
               </Chapter>
             ) : null}
 
