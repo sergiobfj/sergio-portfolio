@@ -2,9 +2,9 @@ import type { Dictionary } from "./pt";
 
 const en: Dictionary = {
   meta: {
-    title: "Sergio Barbosa — Creator & Developer",
+    title: "Sergio Barbosa — Innovator, Creator, Developer",
     description:
-      "Creator and developer building products, systems and automations.",
+      "Innovator, creator and developer. From problem to production: product, code and operations.",
   },
   nav: {
     work: "Work",
@@ -51,13 +51,12 @@ const en: Dictionary = {
     },
     tools: {
       title: ["Experiments &", "Tools"],
-      description: "Internal tools, scripts and technical experiments: small solutions to specific problems.",
+      description: "Internal tools, scripts and experiments for specific problems.",
     },
   },
   cases: {
     "router-planner": {
-      summary:
-        "From manual route planning in Excel to an operation connected to the CRM.",
+      summary: "Logistics routes organized straight from the CRM, without copying clients one by one.",
       kicker: "Internal system · Logistics · Ploomes API",
       tags: ["Internal product", "Logistics"],
       captions: {
@@ -79,7 +78,7 @@ const en: Dictionary = {
       },
     },
     geocarbo: {
-      summary: "Satellite-based carbon estimates for the Caatinga, with a declared method.",
+      summary: "From satellite to a carbon estimate that shows how it was calculated.",
       kicker: "Climate tech · Carbon · MVP",
       tags: ["Climate tech", "Carbon"],
       captions: {
@@ -96,8 +95,7 @@ const en: Dictionary = {
     },
     "bot-de-vendas": {
       title: "Sales Bot",
-      summary:
-        "Conversational BI with notifications and natural-language questions, straight from the CRM.",
+      summary: "Sales notifications and questions answered on Telegram, straight from the CRM.",
       kicker: "Conversational BI · Virtron",
       tags: ["Conversational BI", "In production"],
       captions: {
@@ -120,12 +118,11 @@ const en: Dictionary = {
       kicker: "Internal tool · Python",
       tags: ["Internal tool", "Python"],
       headline:
-        "My first internal system started with a simple question: why spend an hour on something code can do in a few minutes?",
-      context: "One of the first tools I built at Virtron.",
+        "My first internal system came from a question: why spend an hour on something code can do in minutes?",
+      context: "One of my first tools at Virtron.",
       problem: "Two Excel reports had to be cross-referenced by hand.",
-      solution:
-        "A Python application that merges both reports, using the client’s internal code as the key.",
-      impact: "The tool is still in use internally.",
+      solution: "A Python application that cross-references both by the client’s internal code.",
+      impact: "Still in use at the company.",
       metrics: [
         { value: "~1 h", caption: "Before, per merge" },
         { value: "~5 min", caption: "After, with the tool" },
@@ -150,8 +147,8 @@ const en: Dictionary = {
       code: ["Internal project", "Proprietary code"],
       before: {
         title: "The previous process",
-        lead: "Before Router Planner, routes were organized by hand.",
-        body: "Every week, each client in Ploomes was copied into its route’s tab in an Excel spreadsheet.",
+        lead: "Before, the spreadsheet was the process.",
+        body: "Every week, each client in Ploomes was copied by hand into its route’s tab.",
         metrics: [
           { value: "~40", caption: "Clients in a typical week" },
           { value: "8+", caption: "Routes usually organized" },
@@ -183,13 +180,13 @@ const en: Dictionary = {
         manual: "Manual",
         decision: "Human decision",
         quote: [
-          "The main human decision becomes:",
+          "What’s left for a person to decide:",
           "“Which route should this client follow?”",
         ],
       },
       output: {
-        statement: ["Excel as output,", "not as the system."],
-        lead: "Excel is still part of the operation. What went away was the manual work of building it.",
+        statement: ["The spreadsheet stayed.", "The manual process didn’t."],
+        lead: "Now Router Planner is the system. Excel is just the output.",
         file: "The generated file",
         general: "General",
         route: "Route",
@@ -199,8 +196,8 @@ const en: Dictionary = {
         ],
       },
       data: {
-        title: ["It wasn’t just about", "going faster."],
-        subtitle: "It was about working with the right information.",
+        title: ["Fast wasn’t enough.", "It had to be right."],
+        subtitle: "Before it goes out, every route is checked against Ploomes.",
         checks: [
           {
             title: "Record changes",
@@ -230,7 +227,7 @@ const en: Dictionary = {
         title: "Result",
         value: "~1–2h",
         caption:
-          "Approximate time, today, to organize a typical operation — depending on the number of clients. Before, it could run from Friday into Saturday.",
+          "To organize a typical operation today, depending on the number of clients. Before, it could run from Friday into Saturday.",
         note: "Operational estimate, not a benchmark.",
         gains: [
           "Less manual work",
@@ -263,8 +260,8 @@ const en: Dictionary = {
       ],
       problem: {
         title: "The problem",
-        lead: "The sales data already lived in Ploomes. But every quick lookup meant opening the CRM, filtering and interpreting by hand.",
-        body: "Born from the customer-journey automation, the Sales Bot turned that lookup into a Telegram conversation.",
+        lead: ["The data was already in the CRM.", "There just wasn’t a way to talk to it."],
+        body: "Every quick lookup meant opening Ploomes, filtering and interpreting by hand. The Sales Bot moved those questions to Telegram.",
       },
       layers: {
         title: "How it works",
@@ -272,7 +269,7 @@ const en: Dictionary = {
         items: [
           {
             title: "Straight from the CRM",
-            text: "Notifications and conversational BI query Ploomes directly.",
+            text: "Notifications and questions query the Ploomes API, with no spreadsheet in between.",
             steps: ["Ploomes API", "Python", "Telegram"],
           },
           {
@@ -302,9 +299,9 @@ const en: Dictionary = {
           "And by salesperson?",
           "What was this month’s average ticket?",
         ],
-        statement: ["The AI interprets.", "The code calculates."],
+        statement: ["The AI understands the question.", "The system finds the answer."],
         explain:
-          "The LLM only steps in when the parser can’t resolve a question. Querying, filtering and calculating stay with the code — the architecture was designed to reduce hallucination.",
+          "The LLM only steps in when the parser can’t resolve a question — and only to interpret it. Querying Ploomes, filtering and calculating stay with the code, to reduce hallucination.",
         interpret: {
           title: "Interpret",
           steps: ["Question", "Deterministic parser", "LLM fallback", "Structured intent"],
@@ -384,12 +381,12 @@ const en: Dictionary = {
     },
     "automacoes-operacionais": {
       headline: ["Not every problem needs", "to become a big system."],
-      lead: "Small scripts and automations, built to get repetitive work out of the operation’s way.",
+      lead: "Small scripts that take repetitive work out of the operation’s way.",
       featured: {
         label: "Published example",
         title: "Internal TV dashboards",
         steps: [
-          { label: "Before", text: "The dashboards on the internal TVs — with indicators such as sales and appointments — were refreshed by hand." },
+          { label: "Before", text: "The dashboards on the internal TVs, with sales and appointments, were refreshed by hand." },
           { label: "How", text: "A Python script with Selenium and PyAutoGUI finds the buttons via XPath and updates the data on its own." },
           { label: "Result", text: "Less manual effort, and the screens always show current information." },
         ],
@@ -411,26 +408,26 @@ const en: Dictionary = {
       use: "Personal use, with a read-only demo account",
       problem: {
         title: "The problem",
-        lead: "It all used to live in a spreadsheet. For the credit card, each month showed a single line: “Invoice”.",
-        body: "I knew how much I had paid, but not what the money had been spent on. And spending and cash outflow were treated as the same thing.",
+        lead: ["I knew how much I was paying.", "I didn’t know where the money had gone."],
+        body: "In my old spreadsheet, the card showed up as a single line: “Invoice”.",
       },
       decision: {
-        statement: ["Spending", "≠", "Cash outflow"],
-        lead: ["A card purchase is spending today.", "Cash leaves only when the invoice is paid."],
+        statement: ["Purchase", "≠", "Payment"],
+        lead: ["A card purchase is spending.", "Paying the invoice is cash outflow."],
         steps: [
           { label: "Card purchase" },
           { label: "Accrual month", note: "The installment’s month", mark: "Spending" },
           { label: "Invoice" },
           { label: "Payment", mark: "Cash outflow" },
         ],
-        note: "Paying the invoice doesn’t create new spending.",
+        note: "So the same money isn’t counted twice.",
       },
       how: {
         title: "How it works",
         steps: ["Record", "Classify", "Card / upfront", "Invoice", "Payment", "Reports"],
         modes: [
-          { title: "Paid upfront", text: "Spending and cash happen together." },
-          { title: "Credit card", text: "Spending and cash happen at different moments." },
+          { title: "Paid upfront", text: "Spending and cash together." },
+          { title: "Credit card", text: "Spending now, cash later." },
         ],
         cardLabel: "Cards & installments",
         card: [
@@ -464,13 +461,13 @@ const en: Dictionary = {
       },
       engineering: {
         title: "Engineering",
-        role: "End‑to‑end conception and development: product, financial rules, backend, frontend, interface, migration and deployment.",
+        role: "End‑to‑end conception and development: product, financial rules, backend, frontend, migration and deployment.",
         notes: ["Custom authentication", "Account isolation", "Migrations", "Read-only demo"],
       },
       result: {
         title: "Result",
-        lead: "Sentavos replaced my spreadsheet and is now the main source of my financial tracking.",
-        body: "Real use changed the product too: features were removed, reshaped or created as problems showed up day to day.",
+        lead: "Sentavos replaced my spreadsheet. It’s where I track my money today.",
+        body: "Real use changed the product too: features were dropped, reworked or born as problems showed up.",
         metrics: [
           { value: "14 months", caption: "Of history preserved, with no discrepancies, through the card migration" },
           { value: "285", caption: "Automated tests" },
@@ -499,11 +496,11 @@ const en: Dictionary = {
         title: "The problem",
         quote: "The market needs to trust the number before it can trust the credit.",
         lead: "Measuring carbon in the field is expensive and slow.",
-        body: "In the Caatinga, seasonality, leaf loss and exposed soil make generic satellite estimates harder. GeoCarbo aims to offer a first automated, transparent reading, ahead of the costlier inventory and certification stages.",
+        body: "In the Caatinga, seasonality, leaf drop and exposed soil throw off generic satellite estimates. GeoCarbo aims for a first reading, automated and transparent, ahead of inventory and certification.",
       },
       how: {
         title: "How it works",
-        lead: "GeoCarbo estimates the vegetation carbon of properties in the Caatinga from Sentinel-2 imagery and equations published for the biome.",
+        lead: "Sentinel-2 imagery and equations published for the Caatinga estimate the vegetation carbon of each property.",
         steps: [
           { label: "Property", note: "Registering the area" },
           { label: "Polygon", note: "KML or GeoJSON" },
@@ -520,15 +517,15 @@ const en: Dictionary = {
         ],
       },
       science: {
-        statement: ["Declared method.", "Declared limits."],
+        statement: ["Published method.", "Declared limits."],
         chain: ["Biomass", "Carbon", "CO₂e"],
-        text: "The active model uses a regression published for the Caatinga. Declared scientific coefficients turn biomass into carbon and CO₂ equivalent.",
+        text: "A regression published for the Caatinga estimates biomass; declared coefficients convert it into carbon and CO₂e.",
         quote: "The system doesn’t hide it when the data goes beyond the model.",
         limits: [
           { title: "Calibrated range", text: "The model holds for the NDVI range it was calibrated on." },
           { title: "Extrapolation warning", text: "Outside that range, the estimate is flagged." },
           { title: "Above ground only", text: "The calculation covers above-ground biomass only." },
-          { title: "No field validation", text: "There is no field validation yet." },
+          { title: "No field validation", text: "A preliminary estimate, not yet compared against field measurements." },
         ],
       },
       technology: {
@@ -635,8 +632,8 @@ const en: Dictionary = {
     virtron: {
       role: "Apprentice → IT Assistant",
       summary:
-        "I started in support. Then I began building systems, automations and infrastructure for the operation.",
-      headline: ["I started by solving tickets.", "Then I started solving processes."],
+        "I started in support. Over time, I began turning operational problems into systems and automations.",
+      headline: ["I came in through support.", "I grew by understanding the operation", "and building for it."],
       captions: {
         promotion: "Promotion milestone",
         start: "Workstation at Virtron",
@@ -657,7 +654,7 @@ const en: Dictionary = {
     virtron: {
       intro: {
         title: "My journey",
-        lead: "I joined as an apprentice and started with the fundamentals: hardware, support, networking and operations. Over time, I began building systems, automations and integrations to solve the company’s real problems.",
+        lead: "I started as an apprentice. Over time, I began turning operational problems into systems and automations.",
         rolesLabel: "Formal track",
         roles: { apprentice: "Apprentice", assistant: "IT Assistant" },
         evolutionLabel: "How the work changed",
@@ -665,7 +662,7 @@ const en: Dictionary = {
           "Learn",
           "Understand the operation",
           "Spot problems",
-          "Build solutions",
+          "Build systems",
           "Ship to production",
           "Maintain",
         ],
@@ -673,7 +670,7 @@ const en: Dictionary = {
       start: {
         title: "The beginning",
         quote:
-          "In the first months, a lot of things were literally a first: opening a laptop, diagnosing hardware, working with network infrastructure and understanding how technology works inside a real company.",
+          "In the first months, almost everything was a first: opening up a laptop, diagnosing hardware, dealing with networks and understanding how technology works inside a real company.",
         fundamentalsLabel: "Fundamentals",
         fundamentals: [
           "Technical support",
@@ -682,7 +679,7 @@ const en: Dictionary = {
           "Ploomes",
         ],
         ploomes:
-          "Ploomes is the company’s main CRM. Studying it in depth at that stage is what later made it possible to build systems and integrations on its API.",
+          "Ploomes is the company’s CRM. Studying it in depth at that stage is what later let me build on its API.",
       },
       firstTool: {
         label: "First tool",
@@ -695,8 +692,7 @@ const en: Dictionary = {
         title: "A broader scope",
         text: "When the department’s manager left, I took on a larger share of the area’s technical and operational responsibilities.",
         todayLabel: "Today",
-        today:
-          "I remain directly involved in the infrastructure, systems, automations and applications I built and maintain.",
+        today: "I’m still on the infrastructure, systems and automations I built and maintain.",
       },
       infrastructure: {
         title: "From code to infrastructure",
@@ -716,26 +712,22 @@ const en: Dictionary = {
       },
       closing: {
         statement: ["My first job", "was also my first", "big lab."],
-        text: "In less than two years, I went through support, hardware, networking, infrastructure, automation, development and integrations. It wasn’t always simple. Maybe that’s exactly why it’s where I grew the most professionally.",
+        text: "In less than two years: support, hardware, networking, infrastructure, automation, development and integrations. It wasn’t always simple — and maybe that’s why it’s where I grew the most.",
       },
     },
     secco: {
       about: {
         title: "What SECCO is",
-        text: "SECCO is a technology company focused on building digital products, systems and software solutions for real problems.",
-        quote:
-          "It’s where we turn ideas into products, technology into solutions and ambition into something built.",
+        text: "SECCO builds digital products and systems for real problems.",
+        quote: "It’s where ambition becomes something built.",
       },
       role: {
         title: "My role",
         dimensions: [
-          { title: "Product", items: ["Prioritization", "Structure", "Product decisions"] },
-          {
-            title: "Technology",
-            items: ["Backend", "Architecture", "Integrations", "Deploy", "Infrastructure"],
-          },
-          { title: "Building", items: ["Taking ideas off paper", "and turning them into systems"] },
-          { title: "Company", items: ["Taking part in shaping", "and building SECCO"] },
+          { title: "Product", items: ["Turning a problem into a direction."] },
+          { title: "Technology", items: ["Architecture, backend and integrations."] },
+          { title: "Building", items: ["Getting the idea off paper and making it work."] },
+          { title: "Company", items: ["Building SECCO together with the team."] },
         ],
       },
       built: { title: "What we build" },
@@ -755,22 +747,23 @@ const en: Dictionary = {
           },
           "unifavip-empreendedorismo": {
             title: "From College to Entrepreneurship",
-            text: "A conversation about the move from college to building projects, the first challenges, and the process of turning an idea into a company.",
+            text: "The first projects, the first challenges and the road from an idea to a company.",
           },
           "bug-hunt": {
             title: "Bug Hunt & Code Review",
-            subtitle: "Learning from Real-World Code",
-            text: "A hands-on workshop on reading code, finding flaws and fixing problems close to what production software really looks like.",
+            occasion: "IT Week",
+            subtitle: "Code broken on purpose. Real problems to find and fix.",
+            detail: "The workshop application projected on the wall, with a login error to investigate",
           },
         },
       },
       milestones: {
         title: "Milestones",
         items: {
-          "porto-digital": "Incubation and connection to the ecosystem",
-          "inova-caatinga": "Participation and development linked to GeoCarbo",
-          recnplay: "Workshops and community presence",
-          "global-pe": "Coming soon",
+          "porto-digital": "SECCO’s incubation and its link to the innovation ecosystem.",
+          "inova-caatinga": "GeoCarbo developed within an innovation program for the Caatinga.",
+          recnplay: "Two hands-on workshops, on Python and the terminal, for the community.",
+          "global-pe": "Approved for missions to Portugal and Argentina, still ahead.",
         },
       },
     },
@@ -798,8 +791,7 @@ const en: Dictionary = {
   about: {
     label: "About",
     headline: ["Building things", "that work."],
-    statement:
-      "From the first commit to day-to-day operation: interface, system, automation and the business around it.",
+    statement: "From problem to production: product, code and operations.",
     portraitAlt: "Sergio Barbosa leading a workshop at REC'n'Play Caruaru",
     portraitCaption: "Workshop at REC'n'Play Caruaru",
   },

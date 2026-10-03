@@ -29,7 +29,7 @@ export function Contact({
       id="contact"
       aria-labelledby="contact-heading"
       data-tone="dark"
-      className="relative bg-void pt-[calc(var(--curve)+11vh)] pb-8 text-paper"
+      className="relative bg-void pt-(--band-top) pb-8 text-paper"
     >
       <SectionCurve tone={curve} />
 

@@ -11,7 +11,8 @@ import { Contact } from "@/components/sections/Contact";
 
 /**
  * Ritmo de cor: cinza → off-white → preto → cinza → preto. Cada troca de
- * tom é uma base curva; dentro do mesmo tom, só espaço.
+ * tom é uma base curva; dentro do mesmo tom, só espaço. Os vãos vêm dos
+ * mesmos tokens `--band-*` das páginas internas (globals.css).
  *
  * Trabalhos, experiência e background dividem o off-white: o que construí,
  * onde, e com que formação — e o background termina em SECCO, que é a

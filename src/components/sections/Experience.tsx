@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { experiences } from "@/data/portfolio";
+import { experiences, pad } from "@/data/portfolio";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionary";
+import { SectionHeading } from "@/components/layout/SectionHeading";
 import { ArrowDisc } from "@/components/ui/ArrowDisc";
 import { Logo } from "@/components/ui/Logo";
 import { Reveal } from "@/components/ui/Reveal";
-import { RevealLines } from "@/components/ui/RevealLines";
 import { yearOf } from "@/lib/dates";
 import { routes } from "@/lib/routes";
 
@@ -28,14 +28,13 @@ export function Experience({
     <section
       id="experience"
       aria-labelledby="experience-heading"
-      className="gutter-x bg-paper pt-[4vh] pb-[14vh]"
+      className="gutter-x bg-paper pt-(--band-continue) pb-(--band-bottom)"
     >
       <div>
-        <RevealLines
-          as="h2"
+        <SectionHeading
           id="experience-heading"
-          lines={[dict.experience.title]}
-          className="display mb-[5vh] text-[clamp(1.6rem,2.6vw,2.4rem)] md:text-center"
+          index={pad(2)}
+          title={dict.experience.title}
         />
         <ul className="row-list">
           {experiences.map((item, i) => {

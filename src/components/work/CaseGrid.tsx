@@ -137,8 +137,31 @@ function Pair({
   );
 }
 
-/** Um leve sozinho não vira destaque: meia largura, altura baixa. */
+/**
+ * Um leve sozinho não vira destaque: altura baixa. Sem nada ao lado, a
+ * legenda ocupa o vão — meia largura e a outra metade vazia lia como falta
+ * de conteúdo. Com `trailing`, a legenda fica embaixo e o vão é dele.
+ */
 function Single({ trailing, ...props }: ItemProps & { trailing?: React.ReactNode }) {
+  if (!trailing) {
+    return (
+      <CaseLink {...props}>
+        <div className="grid grid-cols-1 gap-x-(--seam) gap-y-5 lg:grid-cols-12 lg:items-end">
+          <CaseSurface
+            {...props}
+            sizes="(max-width: 768px) 100vw, 58vw"
+            className={cn("aspect-(--ratio) md:aspect-auto lg:col-span-7", LOW)}
+          />
+          <Caption
+            item={props.item}
+            dict={props.dict}
+            className="lg:col-span-5 lg:pb-1 lg:pl-[8%]"
+          />
+        </div>
+      </CaseLink>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 gap-x-(--seam) gap-y-12 md:grid-cols-12">
       <CaseLink {...props} className="md:col-span-6">

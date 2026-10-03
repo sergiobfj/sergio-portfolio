@@ -1,7 +1,7 @@
-import { background } from "@/data/portfolio";
+import { background, pad } from "@/data/portfolio";
 import type { Dictionary } from "@/i18n/dictionary";
 import { Metrics, type Metric } from "@/components/case/Metrics";
-import { RevealLines } from "@/components/ui/RevealLines";
+import { SectionHeading } from "@/components/layout/SectionHeading";
 
 /**
  * Background em quatro medidas: trajetória em tecnologia, formação técnica,
@@ -41,13 +41,12 @@ export function Background({ dict }: { dict: Dictionary }) {
   return (
     <section
       aria-labelledby="background-heading"
-      className="gutter-x bg-paper pb-[18vh]"
+      className="gutter-x bg-paper pt-(--band-continue) pb-(--band-bottom)"
     >
-      <RevealLines
-        as="h2"
+      <SectionHeading
         id="background-heading"
-        lines={[copy.title]}
-        className="display mb-[5vh] text-[clamp(1.6rem,2.6vw,2.4rem)] md:text-center"
+        index={pad(3)}
+        title={copy.title}
       />
       <Metrics items={items} />
     </section>

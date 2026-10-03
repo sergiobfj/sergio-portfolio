@@ -118,9 +118,10 @@ experiência nova sem narrativa usa a página genérica.
   "gestor" ou "líder"). Promoção, fase de responsabilidades ampliadas e
   infraestrutura também em `virtronStory`.
 - SECCO: `talks` (eventos; `status: "upcoming"` enquanto não aconteceu — sem
-  foto e sem texto no passado; trocar para `done` depois) e `milestones`
-  (`visible: false` tira o marco da página inteira até a divulgação oficial —
-  hoje, Global PE).
+  foto e sem texto no passado; trocar para `done` depois; `detail` é a
+  segunda foto, que põe o grupo do evento em linhas) e `milestones`
+  (`visible: false` tira o marco da página inteira até a divulgação oficial;
+  hoje os quatro estão visíveis).
 
 Meses são formatados por idioma (`lib/dates.ts`); listas de nomes usam a
 conjunção do idioma.
@@ -146,7 +147,7 @@ focal quando o bloco corta a imagem).
 | `public/projects/sentavos/` | `tela-principal` `dashboard` (conta demo) | `lancamento-cartao` `fatura` `revisao` `patrimonio` (prints de celular) |
 | `public/projects/geocarbo/` | `tela-principal` `cadastro-recorte` `relatorios-recorte` (recortes sem o menu lateral) · sem uso: `dashboard` (números fixos), `cadastro-propriedade`, `relatorios` | `mapa-propriedade` `analise` `relatorio-pdf` |
 | `public/experience/virtron/` | `estacao-de-trabalho` `promocao-assistente-ti` `foto-com-antigo-gestor` · sem uso: `trabalhando-virtron-01` `trabalhando-virtron-02` | |
-| `public/experience/secco/` | `recnplay-oficina-python` `recnplay-oficina-terminal` `unifavip-talk-empreendedorismo` `equipe-secco-01` · sem uso: `unifavip-talk-sala` `cartaz-semana-de-ti` | `bug-hunt` (só depois do evento) |
+| `public/experience/secco/` | `recnplay-oficina-python` `recnplay-oficina-terminal` `unifavip-talk-empreendedorismo` `unifavip-bug-hunt-oficina` `unifavip-bug-hunt-aplicacao` `equipe-secco-01` · sem uso: `unifavip-talk-sala` `cartaz-semana-de-ti` | |
 
 Prévias das categorias na home: `workCategories[].preview` — uma imagem
 principal que sangra pela borda e um recorte na frente, em % da prancha

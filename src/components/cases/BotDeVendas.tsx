@@ -101,7 +101,7 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
           <Chapter id="jc-problem" title={story.problem.title}>
             <RevealLines
               as="p"
-              lines={[story.problem.lead]}
+              lines={story.problem.lead}
               className="voice text-voice text-balance md:text-center"
             />
             <Reveal delay={140}>

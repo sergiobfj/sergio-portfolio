@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-  cases,
   casesIn,
   categoryNumber,
   pad,
@@ -9,9 +8,9 @@ import {
 } from "@/data/portfolio";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionary";
+import { SectionHeading } from "@/components/layout/SectionHeading";
 import { ArrowDisc } from "@/components/ui/ArrowDisc";
 import { Reveal } from "@/components/ui/Reveal";
-import { RevealLines } from "@/components/ui/RevealLines";
 import { SectionCurve } from "@/components/ui/SectionCurve";
 import { Surface } from "@/components/ui/Surface";
 import { WorkCursor } from "@/components/ui/WorkCursor";
@@ -100,27 +99,18 @@ export function Work({ dict, locale }: { dict: Dictionary; locale: Locale }) {
     <section
       id="work"
       aria-labelledby="work-heading"
-      className="relative bg-paper pt-[calc(var(--curve)+9vh)] pb-[16vh] [--seam:clamp(0.625rem,1vw,1rem)]"
+      className="relative bg-paper pt-(--band-top) pb-(--band-bottom) [--seam:clamp(0.625rem,1vw,1rem)]"
     >
       <SectionCurve tone="stone" />
 
       <div className="gutter-x">
-        <div className="mb-[7vh] grid grid-cols-12 items-end gap-x-6 gap-y-8">
-          <Reveal className="col-span-12 max-w-[34ch] md:col-span-4 md:pb-[1.2vw]">
-            <p className="text-lead leading-snug text-ash">{dict.work.note}</p>
-          </Reveal>
-          <div className="col-span-12 flex items-start gap-[1.2vw] md:col-span-8 md:justify-end">
-            <RevealLines
-              as="h2"
-              id="work-heading"
-              lines={[dict.work.title]}
-              className="display text-display"
-            />
-            <Reveal delay={200} className="meta mt-[0.4em] text-ash">
-              ({pad(cases.length)})
-            </Reveal>
-          </div>
-        </div>
+        <SectionHeading
+          id="work-heading"
+          index={pad(1)}
+          title={dict.work.title}
+          caption={dict.work.note}
+        />
+
 
         <WorkCursor label={dict.work.cursor}>
           <div className="flex flex-col gap-y-[clamp(3.5rem,7vw,6rem)]">

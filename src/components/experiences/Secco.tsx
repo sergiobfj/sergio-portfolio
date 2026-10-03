@@ -26,10 +26,53 @@ import { listOf } from "@/lib/dates";
 import { mediaSrc } from "@/lib/media";
 import { growStyle, pairSpans } from "@/lib/spreads";
 
+/** Tipo, título e texto de uma talk — embaixo da foto ou ao lado dela. */
+function TalkText({
+  talk,
+  dict,
+  locale,
+  className,
+}: {
+  talk: Talk;
+  dict: Dictionary;
+  locale: Locale;
+  className?: string;
+}) {
+  const copy = dict.experienceStories.secco.talks;
+  const text = copy.items[talk.key];
+  const upcoming = talk.status === "upcoming";
+
+  return (
+    <Reveal delay={90} className={className}>
+      <p className="label text-ash">
+        {copy.kinds[talk.kind]}
+        {text.occasion ? ` · ${text.occasion}` : null}
+        {upcoming ? <span className="text-ink"> · {copy.upcoming}</span> : null}
+      </p>
+      <h4 className="display mt-4 text-title leading-[0.95]">{text.title}</h4>
+      {text.subtitle ? (
+        <p className="voice mt-3 text-[clamp(1.4rem,2vw,1.95rem)] leading-[1.1]">
+          {text.subtitle}
+        </p>
+      ) : null}
+      {text.text ? (
+        <p className="mt-4 max-w-[46ch] text-[0.9375rem] leading-snug text-ash">
+          {text.text}
+        </p>
+      ) : null}
+      {talk.with?.length ? (
+        <p className="label mt-5 text-ash">
+          {copy.with.replace("{names}", listOf(talk.with, locale))}
+        </p>
+      ) : null}
+    </Reveal>
+  );
+}
+
 /**
- * Uma talk ou oficina. A que ainda não aconteceu (`upcoming`) não finge foto:
- * a prancha só aparece quando o arquivo existir, e o texto não vai para o
- * passado.
+ * Uma talk ou oficina, com o texto embaixo da foto. A que ainda não aconteceu
+ * (`upcoming`) não finge foto: a prancha só aparece quando o arquivo existir,
+ * e o texto não vai para o passado.
  */
 function TalkItem({
   talk,
@@ -46,10 +89,8 @@ function TalkItem({
   className?: string;
   style?: React.CSSProperties;
 }) {
-  const copy = dict.experienceStories.secco.talks;
-  const text = copy.items[talk.key];
-  const upcoming = talk.status === "upcoming";
-  const showFigure = !upcoming || Boolean(mediaSrc(talk.media));
+  const text = dict.experienceStories.secco.talks.items[talk.key];
+  const showFigure = talk.status !== "upcoming" || Boolean(mediaSrc(talk.media));
 
   return (
     <article className={className} style={style}>
@@ -63,28 +104,56 @@ function TalkItem({
           sizes="(max-width: 768px) 100vw, 54vw"
         />
       ) : null}
-      <Reveal delay={90} className={showFigure ? "mt-6" : undefined}>
-        <p className="label text-ash">
-          {copy.kinds[talk.kind]}
-          {upcoming ? <span className="text-ink"> · {copy.upcoming}</span> : null}
-        </p>
-        <h4 className="display mt-4 text-title leading-[0.95]">{text.title}</h4>
-        {text.subtitle ? (
-          <p className="voice mt-3 text-[clamp(1.4rem,2vw,1.95rem)] leading-[1.1]">
-            {text.subtitle}
-          </p>
+      <TalkText talk={talk} dict={dict} locale={locale} className={showFigure ? "mt-6" : undefined} />
+    </article>
+  );
+}
+
+/**
+ * Uma talk em linha: a foto principal à esquerda, o texto ao lado e, se
+ * houver, a foto de detalhe embaixo dele, fechando na base da principal.
+ * No celular e no tablet, empilha — e o detalhe fica menor, à direita.
+ */
+function TalkRow({
+  talk,
+  number,
+  detailNumber,
+  dict,
+  locale,
+}: {
+  talk: Talk;
+  number: number;
+  detailNumber: number;
+  dict: Dictionary;
+  locale: Locale;
+}) {
+  const text = dict.experienceStories.secco.talks.items[talk.key];
+
+  return (
+    <article className="grid grid-cols-1 gap-x-[clamp(0.625rem,1vw,1rem)] lg:grid-cols-12">
+      <Figure
+        media={talk.media}
+        number={number}
+        label={dict.caseStudy.figure}
+        alt={`${text.title} — ${talk.event}`}
+        tone={number % 2 === 0 ? "void" : "mist"}
+        sizes="(max-width: 1024px) 100vw, 58vw"
+        className="lg:col-span-7"
+      />
+      <div className="mt-6 flex flex-col justify-between gap-y-10 lg:col-span-5 lg:mt-0 lg:pl-[3%]">
+        <TalkText talk={talk} dict={dict} locale={locale} />
+        {talk.detail && detailNumber > 0 ? (
+          <Figure
+            media={talk.detail}
+            number={detailNumber}
+            label={dict.caseStudy.figure}
+            alt={`${text.title} — ${text.detail ?? talk.event}`}
+            tone={detailNumber % 2 === 0 ? "void" : "mist"}
+            sizes="(max-width: 640px) 58vw, (max-width: 1280px) 42vw, 24vw"
+            className="w-[58%] self-end sm:w-[42%] lg:w-[50%] xl:w-[58%]"
+          />
         ) : null}
-        {text.text ? (
-          <p className="mt-4 max-w-[46ch] text-[0.9375rem] leading-snug text-ash">
-            {text.text}
-          </p>
-        ) : null}
-        {talk.with?.length ? (
-          <p className="label mt-5 text-ash">
-            {copy.with.replace("{names}", listOf(talk.with, locale))}
-          </p>
-        ) : null}
-      </Reveal>
+      </div>
     </article>
   );
 }
@@ -111,13 +180,16 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
     if (group) group.items.push(talk);
     else events.push({ event: talk.event, items: [talk] });
   }
-  // Fig. 01 é a equipe, na abertura; as talks seguem a numeração.
+  // Fig. 01 é a equipe, na abertura; as talks seguem a numeração, e a foto
+  // de detalhe conta logo depois da principal.
   let figureCount = 1;
   const numbered = events.map((group) => ({
     ...group,
     items: group.items.map((talk) => {
       const counts = talk.status === "done" || Boolean(mediaSrc(talk.media));
-      return { talk, number: counts ? ++figureCount : 0 };
+      const number = counts ? ++figureCount : 0;
+      const detailNumber = number && talk.detail && mediaSrc(talk.detail) ? ++figureCount : 0;
+      return { talk, number, detailNumber };
     }),
   }));
 
@@ -133,9 +205,12 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
               <p className="voice text-voice text-balance md:text-center">{story.about.text}</p>
             </Reveal>
           </Chapter>
-          <div className="mt-[12vh] grid grid-cols-12 gap-x-6 gap-y-12 border-t border-rule pt-10 md:pt-14">
-            <Reveal className="col-span-12 lg:col-span-7">
-              <p className="voice max-w-[22ch] text-[clamp(2.2rem,4.4vw,4.75rem)] leading-[1.02] italic">
+          {/* Um spread: a frase numa coluna estreita, a equipe em 8 colunas.
+              A legenda fecha a coluna da frase, na base da foto — o vão
+              entre as duas é o respiro da página, não sobra. */}
+          <div className="mt-[12vh] grid grid-cols-12 gap-x-6 gap-y-8 border-t border-rule pt-10 md:pt-14 lg:grid-rows-[auto_1fr] lg:gap-y-0">
+            <Reveal className="col-span-12 lg:col-span-4 lg:row-start-1">
+              <p className="voice max-w-[16ch] text-[clamp(2.4rem,4.8vw,5.25rem)] leading-[1] italic">
                 {story.about.quote}
               </p>
             </Reveal>
@@ -143,11 +218,22 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
               media={seccoTeam}
               number={1}
               label={dict.caseStudy.figure}
-              caption={copy.captions?.[seccoTeam.id]}
+              alt={copy.captions?.[seccoTeam.id]}
               tone="mist"
-              sizes="(max-width: 1024px) 100vw, 40vw"
-              className="col-span-12 sm:col-span-10 lg:col-span-5 lg:self-end"
+              sizes="(max-width: 1024px) 100vw, 62vw"
+              className="col-span-12 lg:col-span-8 lg:col-start-5 lg:row-span-2 lg:row-start-1"
             />
+            {copy.captions?.[seccoTeam.id] ? (
+              <Reveal
+                delay={160}
+                className="col-span-12 lg:col-span-4 lg:row-start-2 lg:self-end"
+              >
+                <p aria-hidden="true" className="flex items-baseline gap-3 text-[0.9375rem] leading-snug opacity-70">
+                  <span className="meta">{pad(1)}</span>
+                  {copy.captions[seccoTeam.id]}
+                </p>
+              </Reveal>
+            ) : null}
           </div>
         </Band>
 
@@ -236,34 +322,53 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
               // (como no FigureSpread). Com um item só de texto, fica o grid 7/5.
               const matched =
                 group.items.length > 1 && group.items.every(({ number }) => number > 0);
+              // Uma foto de detalhe não cabe na fileira lado a lado: o grupo
+              // vira linhas, cada talk com o texto ao lado da própria foto.
+              const rows =
+                matched && group.items.some(({ detailNumber }) => detailNumber > 0);
               return (
                 <section key={group.event} aria-label={group.event}>
                   <Reveal variant="draw" className="h-px w-full bg-ink/15" />
                   <h3 className="label mt-5 text-ash">{group.event}</h3>
-                  <div
-                    className={cn(
-                      "mt-8 items-start gap-x-[clamp(0.625rem,1vw,1rem)] gap-y-14",
-                      matched ? "flex flex-col md:flex-row" : "grid grid-cols-1 md:grid-cols-12",
-                    )}
-                  >
-                    {group.items.map(({ talk, number }, i) => (
-                      <TalkItem
-                        key={talk.key}
-                        talk={talk}
-                        number={number}
-                        dict={dict}
-                        locale={locale}
-                        style={matched ? growStyle(talk.media.ratio) : undefined}
-                        className={
-                          matched
-                            ? "w-full min-w-0 md:[flex:var(--grow)_1_0%]"
-                            : group.items.length === 1
-                              ? "md:col-span-8"
-                              : `${spans[i % 2]} ${i % 2 === 1 ? "md:pl-[3%]" : ""}`
-                        }
-                      />
-                    ))}
-                  </div>
+                  {rows ? (
+                    <div className="mt-8 flex flex-col gap-y-16 lg:gap-y-[9vh]">
+                      {group.items.map(({ talk, number, detailNumber }) => (
+                        <TalkRow
+                          key={talk.key}
+                          talk={talk}
+                          number={number}
+                          detailNumber={detailNumber}
+                          dict={dict}
+                          locale={locale}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div
+                      className={cn(
+                        "mt-8 items-start gap-x-[clamp(0.625rem,1vw,1rem)] gap-y-14",
+                        matched ? "flex flex-col md:flex-row" : "grid grid-cols-1 md:grid-cols-12",
+                      )}
+                    >
+                      {group.items.map(({ talk, number }, i) => (
+                        <TalkItem
+                          key={talk.key}
+                          talk={talk}
+                          number={number}
+                          dict={dict}
+                          locale={locale}
+                          style={matched ? growStyle(talk.media.ratio) : undefined}
+                          className={
+                            matched
+                              ? "w-full min-w-0 md:[flex:var(--grow)_1_0%]"
+                              : group.items.length === 1
+                                ? "md:col-span-8"
+                                : `${spans[i % 2]} ${i % 2 === 1 ? "md:pl-[3%]" : ""}`
+                          }
+                        />
+                      ))}
+                    </div>
+                  )}
                 </section>
               );
             })}
@@ -300,7 +405,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
                     <p className="display mt-8 text-[min(13cqi,3.4rem)] leading-[0.95]">
                       {milestone.name}
                     </p>
-                    <p className="mt-4 max-w-[30ch] text-[0.9375rem] leading-snug text-fog">
+                    <p className="mt-4 max-w-[30ch] text-[0.9375rem] leading-snug text-pretty text-fog">
                       {story.milestones.items[milestone.key]}
                     </p>
                   </Reveal>

@@ -26,7 +26,7 @@ export function Secco({ dict, locale }: { dict: Dictionary; locale: Locale }) {
     <section
       aria-labelledby="secco-heading"
       data-tone="dark"
-      className="relative bg-void pt-[calc(var(--curve)+9vh)] pb-[13vh] text-paper"
+      className="relative bg-void pt-(--band-top) pb-(--band-bottom) text-paper"
     >
       <SectionCurve tone="paper" />
 

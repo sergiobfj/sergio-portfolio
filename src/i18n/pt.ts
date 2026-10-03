@@ -79,15 +79,13 @@ const categories: Record<WorkCategoryKey, CategoryCopy> = {
   },
   tools: {
     title: ["Experimentos &", "Tools"],
-    description:
-      "Ferramentas internas, scripts e experimentos técnicos: soluções pequenas para problemas específicos.",
+    description: "Ferramentas internas, scripts e experimentos para problemas específicos.",
   },
 };
 
 const cases: Record<CaseKey, CaseCopy> = {
   "router-planner": {
-    summary:
-      "Da organização manual de rotas em Excel para uma operação integrada ao CRM.",
+    summary: "Rotas da logística organizadas direto do CRM, sem copiar cliente por cliente.",
     kicker: "Sistema interno · Logística · Ploomes API",
     tags: ["Produto interno", "Logística"],
     captions: {
@@ -109,7 +107,7 @@ const cases: Record<CaseKey, CaseCopy> = {
     },
   },
   geocarbo: {
-    summary: "Estimativa de carbono da Caatinga por satélite, com método declarado.",
+    summary: "Do satélite a uma estimativa de carbono que mostra como foi calculada.",
     kicker: "Climate tech · Carbono · MVP",
     tags: ["Climate tech", "Carbono"],
     captions: {
@@ -125,8 +123,7 @@ const cases: Record<CaseKey, CaseCopy> = {
     tags: ["Sistema em desenvolvimento"],
   },
   "bot-de-vendas": {
-    summary:
-      "BI conversacional com notificações e perguntas em linguagem natural, direto do CRM.",
+    summary: "Vendas notificadas e perguntas respondidas no Telegram, direto do CRM.",
     kicker: "BI Conversacional · Virtron",
     tags: ["BI Conversacional", "Em produção"],
     captions: {
@@ -149,12 +146,11 @@ const cases: Record<CaseKey, CaseCopy> = {
     kicker: "Ferramenta interna · Python",
     tags: ["Ferramenta interna", "Python"],
     headline:
-      "Meu primeiro sistema interno começou com um problema simples: por que gastar uma hora fazendo algo que o código consegue resolver em poucos minutos?",
-    context: "Uma das primeiras ferramentas que desenvolvi dentro da Virtron.",
+      "Meu primeiro sistema interno nasceu de uma pergunta: por que gastar uma hora no que o código resolve em minutos?",
+    context: "Uma das minhas primeiras ferramentas na Virtron.",
     problem: "Dois relatórios Excel precisavam ser cruzados à mão.",
-    solution:
-      "Uma aplicação Python que mescla os dois relatórios usando o código interno do cliente como identificador.",
-    impact: "A ferramenta continua em uso internamente.",
+    solution: "Uma aplicação Python que cruza os dois pelo código interno do cliente.",
+    impact: "Continua em uso na empresa.",
     metrics: [
       { value: "~1 h", caption: "Antes, a cada cruzamento" },
       { value: "~5 min", caption: "Depois, com a ferramenta" },
@@ -174,8 +170,8 @@ const experiences: Record<ExperienceKey, ExperienceCopy> = {
   virtron: {
     role: "Jovem Aprendiz → Assistente de T.I.",
     summary:
-      "Entrei pelo suporte. Passei a construir sistemas, automações e infraestrutura para a operação.",
-    headline: ["Comecei resolvendo chamados.", "Depois comecei resolvendo processos."],
+      "Entrei pelo suporte. Com o tempo, passei a transformar problemas da operação em sistemas e automações.",
+    headline: ["Entrei pelo suporte.", "Cresci entendendo a operação", "e construindo para ela."],
     captions: {
       promotion: "Registro da promoção",
       start: "Estação de trabalho na Virtron",
@@ -207,8 +203,8 @@ const stories = {
     code: ["Projeto interno", "Código proprietário"],
     before: {
       title: "O processo anterior",
-      lead: "Antes do Router Planner, as rotas eram organizadas à mão.",
-      body: "Toda semana, cada cliente do Ploomes era copiado para a aba da sua rota numa planilha Excel.",
+      lead: "Antes, a planilha era o processo.",
+      body: "Toda semana, cada cliente do Ploomes era copiado à mão para a aba da sua rota.",
       metrics: [
         { value: "~40", caption: "Clientes em uma semana típica" },
         { value: "8+", caption: "Rotas normalmente organizadas" },
@@ -240,13 +236,13 @@ const stories = {
       manual: "Manual",
       decision: "Decisão humana",
       quote: [
-        "A principal decisão humana passa a ser:",
+        "A decisão que fica com a pessoa:",
         "“Qual rota esse cliente deve seguir?”",
       ],
     },
     output: {
-      statement: ["Excel como saída,", "não como sistema."],
-      lead: "O Excel continua na operação. O que saiu foi o trabalho manual de montá-lo.",
+      statement: ["A planilha continuou.", "O processo manual não."],
+      lead: "Agora o sistema é o Router Planner. O Excel é só a saída.",
       file: "O arquivo gerado",
       general: "Geral",
       route: "Rota",
@@ -256,8 +252,8 @@ const stories = {
       ],
     },
     data: {
-      title: ["Não era apenas sobre", "fazer mais rápido."],
-      subtitle: "Era sobre trabalhar com a informação certa.",
+      title: ["Rápido não bastava.", "Tinha que estar certo."],
+      subtitle: "Antes de sair, cada rota é conferida no Ploomes.",
       checks: [
         {
           title: "Alterações cadastrais",
@@ -287,7 +283,7 @@ const stories = {
       title: "Resultado",
       value: "~1–2h",
       caption:
-        "Tempo aproximado, hoje, para organizar uma operação típica — depende da quantidade de clientes. Antes, podia ir da sexta ao sábado.",
+        "Para organizar uma operação típica hoje, conforme o número de clientes. Antes, podia ir da sexta ao sábado.",
       note: "Estimativa operacional, não benchmark.",
       gains: [
         "Menos trabalho manual",
@@ -320,8 +316,8 @@ const stories = {
     ],
     problem: {
       title: "O problema",
-      lead: "Os dados comerciais já estavam no Ploomes. Mas cada consulta rápida exigia abrir o CRM, filtrar e interpretar à mão.",
-      body: "Nascido da automação da Jornada do Cliente, o Bot de Vendas levou essa consulta para uma conversa no Telegram.",
+      lead: ["Os dados já estavam no CRM.", "Faltava conseguir conversar com eles."],
+      body: "Cada consulta rápida exigia abrir o Ploomes, filtrar e interpretar à mão. O Bot de Vendas levou essas perguntas para o Telegram.",
     },
     layers: {
       title: "Como funciona",
@@ -329,7 +325,7 @@ const stories = {
       items: [
         {
           title: "Direto do CRM",
-          text: "Notificações e BI conversacional consultam o Ploomes diretamente.",
+          text: "Notificações e perguntas consultam a API do Ploomes, sem planilha no meio.",
           steps: ["Ploomes API", "Python", "Telegram"],
         },
         {
@@ -360,9 +356,9 @@ const stories = {
         "E por vendedor?",
         "Qual foi o ticket médio deste mês?",
       ],
-      statement: ["A IA interpreta.", "O código calcula."],
+      statement: ["A IA entende a pergunta.", "O sistema encontra a resposta."],
       explain:
-        "O LLM só entra quando o parser não resolve. Consultar, filtrar e calcular fica com o código — a arquitetura foi desenhada para reduzir alucinação.",
+        "O LLM só entra quando o parser não resolve — e só para interpretar. Consultar o Ploomes, filtrar e calcular fica com o código, para reduzir alucinação.",
       interpret: {
         title: "Interpretar",
         steps: ["Pergunta", "Parser determinístico", "Fallback LLM", "Intenção estruturada"],
@@ -442,12 +438,12 @@ const stories = {
   },
   "automacoes-operacionais": {
     headline: ["Nem todo problema precisa", "virar um grande sistema."],
-    lead: "Scripts e automações pequenas, feitas para tirar trabalho repetitivo do caminho da operação.",
+    lead: "Scripts pequenos que tiram trabalho repetitivo do caminho da operação.",
     featured: {
       label: "Exemplo publicado",
       title: "Painéis das TVs internas",
       steps: [
-        { label: "Antes", text: "Os painéis das TVs internas — com indicadores como vendas e agendamentos — eram atualizados à mão." },
+        { label: "Antes", text: "Os painéis das TVs internas, com vendas e agendamentos, eram atualizados à mão." },
         { label: "Como", text: "Um script em Python com Selenium e PyAutoGUI identifica os botões via XPath e atualiza os dados sozinho." },
         { label: "Resultado", text: "Menos esforço manual e informação sempre atualizada nas telas." },
       ],
@@ -470,26 +466,27 @@ const stories = {
     use: "Uso pessoal, com conta demo somente-leitura",
     problem: {
       title: "O problema",
-      lead: "Antes, o controle ficava numa planilha. No cartão, o mês mostrava uma linha só: “Fatura”.",
-      body: "Eu sabia quanto tinha pago, mas não em que o dinheiro tinha sido gasto. E gasto e saída de caixa eram tratados como a mesma coisa.",
+      lead: ["Eu sabia quanto pagava.", "Não sabia para onde o dinheiro tinha ido."],
+      body: "Na planilha antiga, o cartão aparecia como uma linha só: “Fatura”.",
     },
     decision: {
-      statement: ["Gasto", "≠", "Saída de caixa"],
-      lead: ["Compra no cartão é gasto hoje.", "Saída de caixa, só quando a fatura é paga."],
+      // "Compra e pagamento não são a mesma coisa", na forma do ≠.
+      statement: ["Compra", "≠", "Pagamento"],
+      lead: ["Compra no cartão é gasto.", "Pagamento da fatura é saída de caixa."],
       steps: [
         { label: "Compra no cartão" },
         { label: "Competência", note: "No mês da parcela", mark: "Gasto" },
         { label: "Fatura" },
         { label: "Pagamento", mark: "Saída de caixa" },
       ],
-      note: "O pagamento da fatura não cria um novo gasto.",
+      note: "Assim, o mesmo dinheiro não é contado duas vezes.",
     },
     how: {
       title: "Como funciona",
       steps: ["Lançar", "Classificar", "Cartão / à vista", "Fatura", "Pagamento", "Relatórios"],
       modes: [
-        { title: "À vista", text: "Gasto e caixa acontecem juntos." },
-        { title: "Cartão", text: "Gasto e caixa acontecem em momentos diferentes." },
+        { title: "À vista", text: "Gasto e caixa juntos." },
+        { title: "Cartão", text: "Gasto agora, caixa depois." },
       ],
       cardLabel: "Cartão e parcelamento",
       card: [
@@ -523,13 +520,13 @@ const stories = {
     },
     engineering: {
       title: "Engenharia",
-      role: "Concepção e desenvolvimento end‑to‑end: produto, regras financeiras, backend, frontend, interface, migração e deploy.",
+      role: "Concepção e desenvolvimento end‑to‑end: produto, regras financeiras, backend, frontend, migração e deploy.",
       notes: ["Autenticação própria", "Isolamento entre contas", "Migrations", "Demo somente-leitura"],
     },
     result: {
       title: "Resultado",
-      lead: "O Sentavos substituiu minha planilha e hoje é a fonte principal do meu controle financeiro.",
-      body: "O uso real também mudou o produto: funcionalidades foram removidas, reformuladas ou criadas conforme os problemas apareciam no dia a dia.",
+      lead: "O Sentavos substituiu minha planilha. Hoje, é onde controlo meu dinheiro.",
+      body: "O uso real também mudou o produto: recursos saíram, mudaram ou nasceram conforme os problemas apareciam.",
       metrics: [
         { value: "14 meses", caption: "De histórico preservados, sem divergência, na migração do cartão" },
         { value: "285", caption: "Testes automatizados" },
@@ -558,11 +555,11 @@ const stories = {
       title: "O problema",
       quote: "O mercado precisa confiar no número antes de confiar no crédito.",
       lead: "Medir carbono em campo é caro e lento.",
-      body: "Na Caatinga, a sazonalidade, a perda de folhas e o solo exposto dificultam estimativas genéricas por satélite. O GeoCarbo busca uma primeira leitura automatizada e transparente, antes das etapas mais caras de inventário e certificação.",
+      body: "Na Caatinga, sazonalidade, queda de folhas e solo exposto atrapalham estimativas genéricas por satélite. O GeoCarbo busca uma primeira leitura, automatizada e transparente, antes do inventário e da certificação.",
     },
     how: {
       title: "Como funciona",
-      lead: "O GeoCarbo estima o carbono da vegetação de propriedades na Caatinga a partir de imagens Sentinel-2 e equações publicadas para o bioma.",
+      lead: "Imagens Sentinel-2 e equações publicadas para a Caatinga estimam o carbono da vegetação de cada propriedade.",
       steps: [
         { label: "Propriedade", note: "Cadastro da área" },
         { label: "Polígono", note: "KML ou GeoJSON" },
@@ -579,15 +576,15 @@ const stories = {
       ],
     },
     science: {
-      statement: ["Método declarado.", "Limites declarados."],
+      statement: ["Método publicado.", "Limites declarados."],
       chain: ["Biomassa", "Carbono", "CO₂e"],
-      text: "O modelo ativo usa uma regressão publicada para a Caatinga. Coeficientes científicos declarados convertem a biomassa em carbono e em CO₂ equivalente.",
+      text: "Uma regressão publicada para a Caatinga estima a biomassa; coeficientes declarados a convertem em carbono e CO₂e.",
       quote: "O sistema não esconde quando o dado extrapola o modelo.",
       limits: [
         { title: "Faixa calibrada", text: "O modelo vale para a faixa de NDVI em que foi calibrado." },
         { title: "Aviso de extrapolação", text: "Fora dessa faixa, a estimativa sai sinalizada." },
         { title: "Só acima do solo", text: "O cálculo cobre apenas a biomassa acima do solo." },
-        { title: "Sem validação de campo", text: "Ainda não há validação de campo." },
+        { title: "Sem validação de campo", text: "Estimativa preliminar, ainda sem comparação com medições em campo." },
       ],
     },
     technology: {
@@ -642,7 +639,15 @@ const stories = {
   },
 };
 
-type TalkCopy = { title: string; subtitle?: string; text?: string };
+type TalkCopy = {
+  title: string;
+  subtitle?: string;
+  text?: string;
+  /** A edição ou o encontro dentro do evento, ao lado do tipo ("Oficina · Semana de TI"). */
+  occasion?: string;
+  /** Texto alternativo da foto de detalhe. */
+  detail?: string;
+};
 
 const talkCopy: Record<TalkKey, TalkCopy> = {
   "recnplay-python": {
@@ -655,21 +660,24 @@ const talkCopy: Record<TalkKey, TalkCopy> = {
   },
   "unifavip-empreendedorismo": {
     title: "Da Faculdade até o Empreendedorismo",
-    text: "Uma conversa sobre a transição entre faculdade, construção de projetos, primeiros desafios e o processo de transformar uma ideia em empresa.",
+    text: "Os primeiros projetos, os primeiros desafios e o caminho de uma ideia até virar empresa.",
   },
   "bug-hunt": {
     title: "Bug Hunt & Code Review",
-    subtitle: "Aprendendo com o Código do Mundo Real",
-    text: "Uma oficina prática sobre análise de código, identificação de falhas e correção de problemas próximos da realidade de software em produção.",
+    occasion: "Semana de TI",
+    // "Oficina · Semana de TI" e "UniFavip Wyden" já estão logo acima: sem `text`.
+    subtitle: "Código quebrado de propósito. Problemas reais para encontrar e corrigir.",
+    detail: "A aplicação da oficina projetada na parede, com um erro de login para investigar",
   },
 };
 
 /** Marco oculto (`visible: false`) também precisa de texto aqui, mas não é exibido. */
 const milestoneCopy: Record<MilestoneKey, string> = {
-  "porto-digital": "Incubação e conexão com o ecossistema",
-  "inova-caatinga": "Participação e desenvolvimento ligados ao GeoCarbo",
-  recnplay: "Oficinas e presença na comunidade",
-  "global-pe": "Em breve",
+  "porto-digital": "Incubação da SECCO e conexão com o ecossistema de inovação.",
+  "inova-caatinga": "O GeoCarbo em desenvolvimento num programa de inovação para a Caatinga.",
+  recnplay: "Duas oficinas práticas, de Python e de terminal, para a comunidade.",
+  // Aprovação, não viagem: as missões ainda não aconteceram.
+  "global-pe": "Aprovados para missões em Portugal e na Argentina, ainda por vir.",
 };
 
 /**
@@ -680,7 +688,7 @@ const experienceStories = {
   virtron: {
     intro: {
       title: "Minha trajetória",
-      lead: "Entrei como Jovem Aprendiz e comecei pelo fundamento: hardware, suporte, redes e operação. Com o tempo, passei a construir sistemas, automações e integrações para resolver problemas reais da empresa.",
+      lead: "Comecei como Jovem Aprendiz. Com o tempo, passei a transformar problemas da operação em sistemas e automações.",
       rolesLabel: "Trajetória formal",
       roles: { apprentice: "Jovem Aprendiz", assistant: "Assistente de T.I." },
       evolutionLabel: "Como o trabalho foi mudando",
@@ -688,7 +696,7 @@ const experienceStories = {
         "Aprender",
         "Entender a operação",
         "Identificar problemas",
-        "Construir soluções",
+        "Construir sistemas",
         "Colocar em produção",
         "Manter",
       ],
@@ -696,7 +704,7 @@ const experienceStories = {
     start: {
       title: "O começo",
       quote:
-        "Nos primeiros meses, muita coisa era literalmente a primeira vez: abrir um notebook, diagnosticar hardware, trabalhar com infraestrutura de rede e entender como funciona a tecnologia dentro de uma empresa real.",
+        "Nos primeiros meses, quase tudo era a primeira vez: abrir um notebook, diagnosticar hardware, lidar com rede e entender como a tecnologia funciona dentro de uma empresa real.",
       fundamentalsLabel: "Fundamentos",
       fundamentals: [
         "Suporte técnico",
@@ -705,7 +713,7 @@ const experienceStories = {
         "Ploomes",
       ],
       ploomes:
-        "O Ploomes é o principal CRM da empresa. Estudá-lo a fundo nessa fase foi o que depois permitiu construir sistemas e integrações sobre a API dele.",
+        "O Ploomes é o CRM da empresa. Estudá-lo a fundo nessa fase foi o que depois me permitiu construir sobre a API dele.",
     },
     firstTool: {
       label: "Primeira ferramenta",
@@ -716,10 +724,9 @@ const experienceStories = {
     },
     broaderScope: {
       title: "Responsabilidades ampliadas",
-      text: "Com a saída do gestor do setor, passei a assumir uma parcela maior das responsabilidades técnicas e operacionais da área.",
+      text: "Com a saída do gestor do setor, assumi uma parte maior das responsabilidades técnicas e operacionais da área.",
       todayLabel: "Hoje",
-      today:
-        "Sigo diretamente envolvido na infraestrutura, nos sistemas, nas automações e nas aplicações que construí e mantenho.",
+      today: "Sigo na infraestrutura, nos sistemas e nas automações que construí e mantenho.",
     },
     infrastructure: {
       title: "Do código à infraestrutura",
@@ -740,26 +747,22 @@ const experienceStories = {
     },
     closing: {
       statement: ["Meu primeiro emprego", "também foi meu primeiro", "grande laboratório."],
-      text: "Em menos de dois anos, passei por suporte, hardware, redes, infraestrutura, automação, desenvolvimento e integrações. Nem sempre foi simples. Talvez justamente por isso tenha sido onde mais amadureci profissionalmente.",
+      text: "Em menos de dois anos: suporte, hardware, redes, infraestrutura, automação, desenvolvimento e integrações. Nem sempre foi simples — e talvez por isso tenha sido onde mais amadureci.",
     },
   },
   secco: {
     about: {
       title: "O que é a SECCO",
-      text: "A SECCO é uma empresa de tecnologia focada na criação de produtos digitais, sistemas e soluções de software para problemas reais.",
-      quote:
-        "É onde transformamos ideias em produtos, tecnologia em solução e ambição em coisa construída.",
+      text: "A SECCO cria produtos digitais e sistemas para problemas reais.",
+      quote: "É onde a ambição vira coisa construída.",
     },
     role: {
       title: "Minha atuação",
       dimensions: [
-        { title: "Produto", items: ["Priorização", "Estrutura", "Decisões de produto"] },
-        {
-          title: "Tecnologia",
-          items: ["Backend", "Arquitetura", "Integrações", "Deploy", "Infraestrutura"],
-        },
-        { title: "Construção", items: ["Tirar ideias do papel", "e transformar em sistemas"] },
-        { title: "Empresa", items: ["Participação na evolução", "e na construção da SECCO"] },
+        { title: "Produto", items: ["Transformar problema em direção."] },
+        { title: "Tecnologia", items: ["Arquitetura, backend e integrações."] },
+        { title: "Construção", items: ["Tirar a ideia do papel e colocar para funcionar."] },
+        { title: "Empresa", items: ["Construir a SECCO junto com o time."] },
       ],
     },
     built: { title: "O que construímos" },
@@ -800,9 +803,9 @@ const stackGroups: Record<StackGroupKey, string> = {
 
 const pt = {
   meta: {
-    title: "Sergio Barbosa — Criador & Desenvolvedor",
+    title: "Sergio Barbosa — Inovador, Criador, Desenvolvedor",
     description:
-      "Criador e desenvolvedor construindo produtos, sistemas e automações.",
+      "Inovador, criador e desenvolvedor. Do problema à produção: produto, código e operação.",
   },
   nav: {
     work: "Trabalhos",
@@ -891,8 +894,7 @@ const pt = {
   about: {
     label: "Sobre",
     headline: ["Construo coisas", "que funcionam."],
-    statement:
-      "Do primeiro commit até a operação: interface, sistema, automação e o negócio em volta.",
+    statement: "Do problema à produção: produto, código e operação.",
     portraitAlt: "Sergio Barbosa conduzindo uma oficina na REC'n'Play Caruaru",
     portraitCaption: "Oficina na REC'n'Play Caruaru",
   },

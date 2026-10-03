@@ -225,12 +225,11 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
           </section>
         </Band>
 
-        {/* O que foi construído aqui */}
-        <Band tone="paper" after="paper" labelledBy="virtron-built">
+        {/* O que foi construído aqui: continua o off-white da promoção, sem curva */}
+        <Band tone="paper" labelledBy="virtron-built">
           <Chapter id="virtron-built" title={dict.experience.built} wide>
             <CaseGrid items={built} dict={dict} locale={locale} context="category" />
           </Chapter>
-
         </Band>
 
         {/* Fechamento */}

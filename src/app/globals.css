@@ -39,6 +39,12 @@
   --radius-block: clamp(0.875rem, 1.6vw, 1.75rem);
   /* Profundidade máxima da base curva de cada seção. */
   --curve: clamp(3rem, 9vw, 10rem);
+  /* Ritmo vertical entre faixas — a fonte única para Band, home e contato.
+     Troca de tom: a base da faixa de cima + a curva + o respiro depois dela.
+     Mesmo tom: só a base de cima e um respiro curto, sem curva. */
+  --band-top: calc(var(--curve) + 11vh);
+  --band-bottom: 16vh;
+  --band-continue: 6vh;
   /* Altura da faixa do topo e diâmetro do botão de menu. */
   --bar: clamp(4.75rem, 7vw, 6.5rem);
   --disc: clamp(3rem, 3.9vw, 3.75rem);
@@ -233,107 +239,79 @@
     flex-shrink: 0;
   }
 
-  /* As três palavras (sections/HeroWords): a régua numa coluna, as palavras
-     na outra. Celular e tablet: palavras encostadas à direita, régua vindo
-     da margem. O vão entre as colunas é maior que a folga da cápsula — a
-     régua termina antes dela. */
-  .hero-sub {
-    --words-size: 13cqw;
+  /* O lockup das três palavras (sections/HeroWords): um filete de margem a
+     margem e a escada encostada à direita. Cada degrau recua `--step`
+     pisadas para a esquerda; o índice marca a quina, na altura das versais.
+     A do meio em itálico. Celular e tablet: o mesmo desenho, maior. */
+  .hero-lockup {
+    --words-size: 12.4cqw;
+    --tread: 0.9em;
 
-    position: relative;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) max-content;
-    column-gap: 8cqw;
-    margin-top: 9cqw;
+    margin-top: 7cqw;
   }
 
-  .hero-sub__strut {
-    display: none;
+  .hero-rule {
+    display: block;
+    height: 1px;
+    background-color: currentColor;
+    opacity: 0.24;
+    transform-origin: left;
+    animation: hero-rule-in 1.6s var(--ease-out-expo) both;
+    animation-delay: 480ms;
   }
 
   .hero-words {
-    position: relative;
-    grid-area: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: max-content;
+    margin-top: 5.5cqw;
+    margin-left: auto;
     font-size: var(--words-size);
-    line-height: 1.04;
+    line-height: 1.02;
     white-space: nowrap;
   }
 
-  /* A lente: as mesmas palavras em papel sobre tinta, recortadas pela
-     cápsula. Maior que o bloco (a folga da cápsula cabe dentro do recorte)
-     e com o mesmo recuo por dentro, para as palavras coincidirem. */
-  .hero-lens {
-    position: absolute;
-    inset: -0.3em calc(var(--lens-pad) * -1);
-    padding: 0.3em var(--lens-pad);
-    background-color: var(--color-ink);
-    color: var(--color-paper);
-    pointer-events: none;
-    clip-path: var(--clip, inset(50% 100% 50% 0 round 999px));
-    transition: clip-path 1.1s var(--ease-in-out-quart);
-  }
-
-  .hero-lens[data-phase="dot"] {
-    transition-duration: 0.55s;
-    transition-timing-function: var(--ease-out-expo);
-  }
-
-  .hero-lens[data-phase="off"],
-  [data-instant] .hero-lens,
-  [data-instant] .hero-lead__row {
-    transition: none;
-  }
-
-  /* A régua: o número da palavra e um filete até a cápsula; desce junto. */
-  .hero-lead {
-    position: relative;
-    grid-area: 1 / 1;
-  }
-
-  .hero-lead__row {
-    position: absolute;
-    inset-inline: 0;
-    top: 0;
+  /* O cursor desloca cada degrau poucos pixels — o de baixo mais que o de
+     cima —, sempre com atraso: a escada respira, não persegue. */
+  .hero-step {
     display: flex;
-    align-items: center;
-    gap: clamp(0.6rem, 1.2vw, 1.1rem);
-    transform: translateY(calc(var(--cy, 0px) - 50%));
-    transition: transform 1.1s var(--ease-in-out-quart);
+    align-items: flex-start;
+    gap: 0.3em;
+    margin-left: calc(var(--step) * var(--tread));
+    transform: translate3d(
+      calc(var(--mx, 0) * var(--depth) * 3px),
+      calc(var(--my, 0) * var(--depth) * 1.5px),
+      0
+    );
+    transition: transform 1.8s var(--ease-out-quart);
   }
 
-  .hero-lead__index {
-    opacity: 0;
+  .hero-step:nth-child(2) .hero-word {
+    font-style: italic;
   }
 
-  .hero-sub[data-on] .hero-lead__index {
-    animation: hero-index-in 0.7s var(--ease-out-quart) both;
-  }
-
-  .hero-lead__rule {
-    flex: 1;
-    height: 1px;
-    background-color: currentColor;
-    opacity: 0.28;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 1.4s var(--ease-out-expo);
-  }
-
-  .hero-sub[data-on] .hero-lead__rule {
-    transform: scaleX(1);
+  .hero-index {
+    margin-top: calc(var(--words-size) * 0.2);
+    color: var(--color-ash);
+    animation: hero-index-in 0.9s var(--ease-out-quart) both;
+    animation-delay: var(--delay, 0ms);
   }
 
   @media (min-width: 640px) {
-    .hero-sub {
-      --words-size: 9.5cqw;
-      column-gap: 5.5cqw;
-      margin-top: 5cqw;
+    .hero-lockup {
+      --words-size: 8.4cqw;
+
+      margin-top: 4.5cqw;
+    }
+
+    .hero-words {
+      margin-top: 3.6cqw;
     }
   }
 
-  /* Desktop: o nome vira uma linha só, e as palavras começam sob a segunda
-     palavra dele. A régua invisível (a primeira palavra do nome, no corpo do
-     nome) dá à coluna da esquerda a largura exata; o vão é o do nome. */
+  /* Desktop: o nome vira uma linha só, e a escada pende da borda direita
+     dele — o primeiro degrau termina onde o "A" de BARBOSA termina. */
   @media (min-width: 1024px) {
     .hero-stage {
       --name-size: 16.05cqw;
@@ -344,33 +322,35 @@
       gap: 0.19em;
     }
 
-    .hero-sub {
-      --words-size: 7cqw;
-      grid-template-columns: max-content minmax(0, 1fr);
-      column-gap: calc(var(--name-size) * 0.19);
-      margin-top: 3cqw;
+    .hero-lockup {
+      --words-size: 6.2cqw;
+      --tread: 1.05em;
+
+      margin-top: 2.8cqw;
     }
 
-    .hero-sub__strut {
-      display: block;
-      grid-area: 1 / 1;
-      height: 0;
-      overflow: hidden;
-      visibility: hidden;
-      font-size: var(--name-size);
-      line-height: 0;
-      white-space: nowrap;
+    .hero-words {
+      margin-top: 2.2cqw;
     }
+  }
+}
+
+@keyframes hero-rule-in {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
   }
 }
 
 @keyframes hero-index-in {
   from {
     opacity: 0;
-    transform: translateY(45%);
+    transform: translateY(0.5rem);
   }
   to {
-    opacity: 0.6;
+    opacity: 1;
     transform: none;
   }
 }
@@ -1202,9 +1182,13 @@
     animation: none !important;
   }
 
-  .hero-sub[data-on] .hero-lead__index {
+  .hero-rule,
+  .hero-index {
     animation: none !important;
-    opacity: 0.6;
+  }
+
+  .hero-step {
+    transform: none !important;
   }
 
   .menu-item {

@@ -17,7 +17,7 @@ export function About({ dict }: { dict: Dictionary }) {
     <section
       id="about"
       aria-labelledby="about-heading"
-      className="relative bg-stone pt-[calc(var(--curve)+12vh)] pb-[16vh]"
+      className="relative bg-stone pt-(--band-top) pb-(--band-bottom)"
     >
       <SectionCurve tone="void" />
 

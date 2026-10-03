@@ -29,6 +29,10 @@ const MOBILE_MAX = "34vw";
  * maior que cabe — "Virtron" e "Automatizaciones &" usam a mesma regra.
  * A seção seguinte desenha a base curva. `compact` não ocupa a tela toda:
  * o peso do topo acompanha o peso do trabalho.
+ *
+ * Em tablet de pé, a tela é muito mais alta que o título (que cresce com a
+ * largura): a altura mínima passa a acompanhar a largura, senão o conteúdo
+ * ficaria preso no fundo de meia tela vazia. Celular e paisagem: a tela toda.
  */
 export function PageHero({
   label,
@@ -46,7 +50,7 @@ export function PageHero({
         "gutter-x flex flex-col justify-end bg-stone pb-[10vh]",
         compact
           ? "pt-[calc(var(--bar)+16vh)]"
-          : "min-h-[calc(100svh-var(--curve))] pt-(--bar)",
+          : "min-h-[calc(100svh-var(--curve))] pt-(--bar) sm:portrait:min-h-[min(calc(100svh-var(--curve)),calc(var(--bar)+80vw))]",
       )}
     >
       <div className="hero-fade flex items-baseline justify-between gap-6 text-ash">

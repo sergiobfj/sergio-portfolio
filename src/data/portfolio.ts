@@ -602,6 +602,11 @@ export type Talk = {
    */
   status: "done" | "upcoming";
   media: MediaSlot;
+  /**
+   * Segunda foto, de detalhe. Com ela, o evento vira linhas: a foto principal
+   * à esquerda, o texto e o detalhe ao lado.
+   */
+  detail?: MediaSlot;
   /** Quem dividiu o palco, só o primeiro nome. */
   with?: string[];
 };
@@ -645,9 +650,11 @@ export const talks: Talk[] = [
     experience: "secco",
     event: "UniFavip Wyden",
     kind: "workshop",
-    status: "upcoming",
-    // Ainda não aconteceu: sem foto até existir uma real.
-    media: { src: "/experience/secco/bug-hunt.jpg", ratio: "4 / 3" },
+    status: "done",
+    // A sala: o código projetado, quem conduz e as bancadas.
+    media: { src: "/experience/secco/unifavip-bug-hunt-oficina.jpg", ratio: "4 / 3" },
+    // O detalhe: a aplicação da oficina na parede, com o erro de login.
+    detail: { src: "/experience/secco/unifavip-bug-hunt-aplicacao.jpg", ratio: "1 / 1" },
   },
 ];
 
@@ -663,7 +670,8 @@ export const milestones: {
   { key: "porto-digital", name: "Porto Digital", experience: "secco", visible: true },
   { key: "inova-caatinga", name: "Inova Caatinga", experience: "secco", visible: true },
   { key: "recnplay", name: "REC'n'Play", experience: "secco", visible: true },
-  { key: "global-pe", name: "Global PE", experience: "secco", visible: false },
+  // Aprovação para as missões; as viagens ainda não aconteceram.
+  { key: "global-pe", name: "Global PE", experience: "secco", visible: true },
 ];
 
 /* ---------------------------------------------------------------------------

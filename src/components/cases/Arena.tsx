@@ -4,7 +4,7 @@ import { CaseLinks, CaseTags } from "@/components/case/CaseMeta";
 import { CaseNext } from "@/components/case/CaseNext";
 import { Figure } from "@/components/case/Figure";
 import { StackSheet } from "@/components/case/StackSheet";
-import { Chapter } from "@/components/layout/Chapter";
+import { Chapter, ChapterTitle } from "@/components/layout/Chapter";
 import { PageHero } from "@/components/layout/PageHero";
 import { Contact } from "@/components/sections/Contact";
 import { BackLink } from "@/components/ui/BackLink";
@@ -100,31 +100,36 @@ export function Arena({ item, dict, locale }: StoryProps) {
 
         {/* Contexto: a frase ao lado do que o visitante encontrava */}
         <Band tone="paper" after="stone" labelledBy="arena-context">
-          <Chapter id="arena-context" title={story.context.title} wide>
+          {experiences ? (
+            // Com a tela ao lado, o título é a cabeça da coluna do texto.
             <div className="grid grid-cols-12 gap-x-6 gap-y-12 lg:items-center">
-              <Reveal
-                className={cn(
-                  "col-span-12",
-                  experiences ? "lg:col-span-5" : "md:col-span-10 md:col-start-2 md:text-center lg:col-span-8 lg:col-start-3",
-                )}
-              >
-                <p className="voice text-[clamp(1.75rem,2.8vw,2.9rem)] leading-[1.08] text-pretty">
+              <div className="col-span-12 lg:col-span-5">
+                <ChapterTitle id="arena-context" title={story.context.title} className="mb-6" />
+                <Reveal delay={90}>
+                  <p className="voice text-[clamp(1.75rem,2.8vw,2.9rem)] leading-[1.08] text-pretty">
+                    {story.context.text}
+                  </p>
+                </Reveal>
+              </div>
+              <Figure
+                media={experiences}
+                number={numbers.experiences}
+                label={figure}
+                caption={copy.captions?.[experiences.id]}
+                tone="mist"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="col-span-12 lg:col-span-6 lg:col-start-7"
+              />
+            </div>
+          ) : (
+            <Chapter id="arena-context" title={story.context.title}>
+              <Reveal>
+                <p className="voice text-[clamp(1.75rem,2.8vw,2.9rem)] leading-[1.08] text-pretty md:text-center">
                   {story.context.text}
                 </p>
               </Reveal>
-              {experiences ? (
-                <Figure
-                  media={experiences}
-                  number={numbers.experiences}
-                  label={figure}
-                  caption={copy.captions?.[experiences.id]}
-                  tone="mist"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="col-span-12 lg:col-span-6 lg:col-start-7"
-                />
-              ) : null}
-            </div>
-          </Chapter>
+            </Chapter>
+          )}
         </Band>
 
         {/* A calculadora como conta: entradas → resultado, ao lado da tela */}

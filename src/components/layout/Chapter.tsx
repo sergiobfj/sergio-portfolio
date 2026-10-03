@@ -3,6 +3,30 @@ import { RevealLines } from "@/components/ui/RevealLines";
 import { cn } from "@/lib/cn";
 
 /**
+ * O título de capítulo, sozinho: para quando o conteúdo se divide em duas
+ * colunas e o título vira a cabeça da coluna do texto — um título
+ * centralizado sobre um par texto + imagem ficaria sobre o vão entre eles.
+ */
+export function ChapterTitle({
+  id,
+  title,
+  className,
+}: {
+  id: string;
+  title: string;
+  className?: string;
+}) {
+  return (
+    <RevealLines
+      as="h2"
+      id={id}
+      lines={[title]}
+      className={cn("display text-[clamp(1.6rem,2.6vw,2.4rem)]", className)}
+    />
+  );
+}
+
+/**
  * Um capítulo das páginas internas. O critério é um só: título pequeno fica
  * em cima, centralizado (do tablet em diante), e o conteúdo vem embaixo —
  * nunca um título sozinho numa coluna lateral vazia.
@@ -27,12 +51,11 @@ export function Chapter({
 }) {
   return (
     <section aria-labelledby={id} className="grid grid-cols-12 gap-x-6">
-      <RevealLines
-        as="h2"
+      <ChapterTitle
         id={id}
-        lines={[title]}
+        title={title}
         className={cn(
-          "display col-span-12 mb-[5vh] text-[clamp(1.6rem,2.6vw,2.4rem)]",
+          "col-span-12 mb-[5vh]",
           inset ? "lg:col-span-8 lg:col-start-5" : "md:text-center",
         )}
       />

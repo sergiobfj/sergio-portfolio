@@ -5,19 +5,13 @@ import { delay } from "@/lib/cn";
 
 /**
  * A hero é uma composição, não uma landing: o nome atravessa a tela de
- * margem a margem e, sob ele, três palavras em serifa — o segundo ponto
- * focal. Entre os dois, a assinatura do site em escala grande: o ponto que
- * floresce em cápsula (o mesmo do "Code by Sergio") passa de palavra em
- * palavra, e uma régua com o número liga a margem até ele.
+ * margem a margem e, sob ele, o lockup das três palavras em serifa — um
+ * filete e uma escada que desce da borda direita do nome. Só isso: sem
+ * cargo, sem bio, sem empresa. A simplicidade é a decisão.
  *
- * No desktop as palavras começam exatamente sob a segunda palavra do nome, e
- * a régua ocupa o lugar sob a primeira: uma diagonal, não um bloco solto. No
- * tablet e no celular, o nome em duas linhas e as palavras encostadas à
- * direita, com a régua vindo da margem.
- *
- * Sem retrato por enquanto: a fotografia real volta com a interação
- * foto/tipografia, não como placeholder. O nome é nome próprio — a
- * composição é idêntica nos três idiomas; só as palavras mudam.
+ * No desktop o nome numa linha; no tablet e no celular, em duas, também de
+ * margem a margem. A escada fica sempre encostada à direita. O nome é nome
+ * próprio — a composição é idêntica nos três idiomas; só as palavras mudam.
  */
 export function Hero({ dict }: { dict: Dictionary }) {
   return (
@@ -33,7 +27,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
             </span>
           </h1>
 
-          <HeroWords words={dict.hero.role} strut={site.firstName} />
+          <HeroWords words={dict.hero.role} />
         </div>
       </div>
     </section>

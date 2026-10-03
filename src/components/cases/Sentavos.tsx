@@ -7,7 +7,7 @@ import { FigureSpread } from "@/components/case/FigureSpread";
 import { InlineFlow, Progression } from "@/components/case/Flow";
 import { Metrics } from "@/components/case/Metrics";
 import { StackSheet } from "@/components/case/StackSheet";
-import { Chapter } from "@/components/layout/Chapter";
+import { Chapter, ChapterTitle } from "@/components/layout/Chapter";
 import { PageHero } from "@/components/layout/PageHero";
 import { Contact } from "@/components/sections/Contact";
 import { BackLink } from "@/components/ui/BackLink";
@@ -116,7 +116,7 @@ export function Sentavos({ item, dict, locale }: StoryProps) {
           <Chapter id="st-problem" title={story.problem.title}>
             <RevealLines
               as="p"
-              lines={[story.problem.lead]}
+              lines={story.problem.lead}
               className="voice text-voice text-balance md:text-center"
             />
             <Reveal delay={140}>
@@ -228,34 +228,34 @@ export function Sentavos({ item, dict, locale }: StoryProps) {
 
         {/* Regras que protegem o dado: a filosofia ao lado de quatro exemplos */}
         <Band tone="paper" after="stone" labelledBy="st-rules">
-          <Chapter id="st-rules" title={story.rules.title} wide>
-            <div className="grid grid-cols-12 gap-x-6 gap-y-14">
-              <div className="col-span-12 lg:col-span-5">
-                <Reveal>
-                  <p className="voice max-w-[14ch] text-[clamp(2.4rem,4.4vw,4.75rem)] leading-[1] italic">
-                    {story.rules.statement}
-                  </p>
-                </Reveal>
-                {review ? phone(review, numbers.review, "mt-12 block lg:w-3/5") : null}
-              </div>
-              <ol className="col-span-12 grid grid-cols-1 gap-x-6 sm:grid-cols-2 lg:col-span-7">
-                {story.rules.items.map((rule, i) => (
-                  <li key={rule.title}>
-                    <Reveal variant="draw" delay={i * 80} className="h-px w-full bg-rule" />
-                    <Reveal delay={i * 80 + 50} className="pt-5 pb-10">
-                      <span className="meta text-ash">{pad(i + 1)}</span>
-                      <p className="display mt-4 text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
-                        {rule.title}
-                      </p>
-                      <p className="mt-3 max-w-[34ch] text-[0.9375rem] leading-snug text-ash">
-                        {rule.text}
-                      </p>
-                    </Reveal>
-                  </li>
-                ))}
-              </ol>
+          {/* O título abre a coluna da filosofia; os quatro exemplos ao lado. */}
+          <div className="grid grid-cols-12 gap-x-6 gap-y-14">
+            <div className="col-span-12 lg:col-span-5">
+              <ChapterTitle id="st-rules" title={story.rules.title} className="mb-8" />
+              <Reveal>
+                <p className="voice max-w-[14ch] text-[clamp(2.4rem,4.4vw,4.75rem)] leading-[1] italic">
+                  {story.rules.statement}
+                </p>
+              </Reveal>
+              {review ? phone(review, numbers.review, "mt-12 block lg:w-3/5") : null}
             </div>
-          </Chapter>
+            <ol className="col-span-12 grid grid-cols-1 gap-x-6 sm:grid-cols-2 lg:col-span-7">
+              {story.rules.items.map((rule, i) => (
+                <li key={rule.title}>
+                  <Reveal variant="draw" delay={i * 80} className="h-px w-full bg-rule" />
+                  <Reveal delay={i * 80 + 50} className="pt-5 pb-10">
+                    <span className="meta text-ash">{pad(i + 1)}</span>
+                    <p className="display mt-4 text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
+                      {rule.title}
+                    </p>
+                    <p className="mt-3 max-w-[34ch] text-[0.9375rem] leading-snug text-ash">
+                      {rule.text}
+                    </p>
+                  </Reveal>
+                </li>
+              ))}
+            </ol>
+          </div>
         </Band>
 
         {/* Engenharia: quem fez e com o quê */}

@@ -11,10 +11,13 @@ const surfaces: Record<CurveTone, string> = {
 /**
  * Uma faixa de tom. Quando o tom muda, `after` recebe o tom de cima e a base
  * curva dele desce sobre esta faixa — a mesma transição da home. Sem
- * `after`, a faixa continua o tom anterior e só o espaço separa.
+ * `after`, ou com `after` igual ao próprio tom, a faixa continua a de cima:
+ * sem curva e só um respiro curto. (Uma curva do mesmo tom é invisível, mas
+ * reservaria a altura dela inteira — um vão sem transição nenhuma.)
  *
- * As faixas definem `--band-ink` e `--band-bg`, lidos por peças que invertem
- * o tom (a pílula de destaque, o contorno).
+ * O ritmo vem dos tokens `--band-*` (globals.css). As faixas definem
+ * `--band-ink` e `--band-bg`, lidos por peças que invertem o tom (a pílula
+ * de destaque, o contorno).
  */
 export function Band({
   tone,
@@ -31,19 +34,22 @@ export function Band({
   className?: string;
   children: ReactNode;
 }) {
+  const curve = after !== tone ? after : undefined;
+  const curved = curve !== undefined;
+
   return (
     <section
       aria-label={label}
       aria-labelledby={labelledBy}
       data-tone={tone === "void" ? "dark" : undefined}
       className={cn(
-        "relative pb-[16vh]",
-        after ? "pt-[calc(var(--curve)+11vh)]" : "pt-[6vh]",
+        "relative pb-(--band-bottom)",
+        curved ? "pt-(--band-top)" : "pt-(--band-continue)",
         surfaces[tone],
         className,
       )}
     >
-      {after ? <SectionCurve tone={after} /> : null}
+      {curve ? <SectionCurve tone={curve} /> : null}
       <div className="gutter-x">{children}</div>
     </section>
   );

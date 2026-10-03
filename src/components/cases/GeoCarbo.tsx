@@ -7,7 +7,7 @@ import { FigureSpread } from "@/components/case/FigureSpread";
 import { InlineFlow, Progression } from "@/components/case/Flow";
 import { Metrics } from "@/components/case/Metrics";
 import { StackSheet } from "@/components/case/StackSheet";
-import { Chapter } from "@/components/layout/Chapter";
+import { Chapter, ChapterTitle } from "@/components/layout/Chapter";
 import { PageHero } from "@/components/layout/PageHero";
 import { Contact } from "@/components/sections/Contact";
 import { BackLink } from "@/components/ui/BackLink";
@@ -127,25 +127,29 @@ export function GeoCarbo({ item, dict, locale }: StoryProps) {
           />
         </div>
 
-        {/* O problema: a frase de confiança ao lado do porquê */}
+        {/* O problema: a frase de confiança ao lado do porquê. O título é a
+            cabeça da coluna que explica — centralizado, ficaria sobre o vão. */}
         <Band tone="paper" after="stone" labelledBy="gc-problem">
-          <Chapter id="gc-problem" title={story.problem.title} wide>
-            <div className="grid grid-cols-12 gap-x-6 gap-y-10 lg:items-end">
-              <Reveal className="col-span-12 lg:col-span-6">
-                <p className="voice max-w-[18ch] text-[clamp(2.2rem,4.2vw,4.5rem)] leading-[1.02] italic">
-                  “{story.problem.quote}”
-                </p>
-              </Reveal>
-              <Reveal delay={120} className="col-span-12 lg:col-span-5 lg:col-start-8">
-                <p className="voice text-[clamp(1.6rem,2.3vw,2.3rem)] leading-[1.1]">
-                  {story.problem.lead}
-                </p>
-                <p className="mt-5 max-w-[46ch] text-lead leading-snug text-ash">
-                  {story.problem.body}
-                </p>
-              </Reveal>
-            </div>
-          </Chapter>
+          <div className="grid grid-cols-12 gap-x-6 gap-y-8 lg:grid-rows-[1fr_auto] lg:items-end lg:gap-y-6">
+            <ChapterTitle
+              id="gc-problem"
+              title={story.problem.title}
+              className="col-span-12 lg:col-span-5 lg:col-start-8 lg:row-start-1"
+            />
+            <Reveal className="col-span-12 lg:col-span-6 lg:row-span-2 lg:row-start-1">
+              <p className="voice max-w-[18ch] text-[clamp(2.2rem,4.2vw,4.5rem)] leading-[1.02] italic">
+                “{story.problem.quote}”
+              </p>
+            </Reveal>
+            <Reveal delay={120} className="col-span-12 lg:col-span-5 lg:col-start-8 lg:row-start-2">
+              <p className="voice text-[clamp(1.6rem,2.3vw,2.3rem)] leading-[1.1]">
+                {story.problem.lead}
+              </p>
+              <p className="mt-5 max-w-[46ch] text-lead leading-snug text-ash">
+                {story.problem.body}
+              </p>
+            </Reveal>
+          </div>
         </Band>
 
         {/* Como funciona: da propriedade ao relatório, e o que vem do satélite */}
