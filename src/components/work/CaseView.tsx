@@ -70,8 +70,6 @@ function GenericCase({ item, dict, locale }: Props) {
           <div className="gutter-x bg-stone pb-[12vh]">
             <Figure
               media={cover}
-              number={1}
-              label={dict.caseStudy.figure}
               alt={title}
               tone={item.tone}
               priority
@@ -89,8 +87,6 @@ function GenericCase({ item, dict, locale }: Props) {
                 {cover && beside ? (
                   <Figure
                     media={cover}
-                    number={1}
-                    label={dict.caseStudy.figure}
                     alt={title}
                     tone={item.tone}
                     priority

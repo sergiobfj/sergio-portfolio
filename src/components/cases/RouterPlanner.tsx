@@ -14,7 +14,7 @@ import { BackLink } from "@/components/ui/BackLink";
 import { Reveal } from "@/components/ui/Reveal";
 import { RevealLines } from "@/components/ui/RevealLines";
 import { cn, delay, fit } from "@/lib/cn";
-import { figureCounter, imageOf } from "@/lib/media";
+import { imageOf } from "@/lib/media";
 import { routes } from "@/lib/routes";
 import type { StoryProps } from "./index";
 
@@ -63,19 +63,11 @@ function SheetLegend({ legend }: { legend: readonly string[] }) {
 export function RouterPlanner({ item, dict, locale }: StoryProps) {
   const story = dict.stories["router-planner"];
   const copy = dict.cases[item.slug];
-  const figure = dict.caseStudy.figure;
 
   const legacy = imageOf(item.images, "legacy-excel");
   const selection = imageOf(item.images, "route-selection");
   const exported = imageOf(item.images, "export");
   const validation = imageOf(item.images, "validation");
-  const next = figureCounter(2);
-  const numbers = {
-    legacy: next(legacy),
-    selection: next(selection),
-    exported: next(exported),
-    validation: next(validation),
-  };
 
   const before: Step[] = story.compare.beforeSteps.map((label, i) => ({
     label,
@@ -118,8 +110,6 @@ export function RouterPlanner({ item, dict, locale }: StoryProps) {
         <div className="gutter-x bg-stone pb-[12vh]">
           <Figure
             media={item.media}
-            number={1}
-            label={figure}
             alt={item.title}
             tone="void"
             priority
@@ -147,8 +137,6 @@ export function RouterPlanner({ item, dict, locale }: StoryProps) {
           {legacy ? (
             <Figure
               media={legacy}
-              number={numbers.legacy}
-              label={figure}
               caption={copy.captions?.[legacy.id]}
               tone="mist"
               maxHeight="60svh"
@@ -205,8 +193,6 @@ export function RouterPlanner({ item, dict, locale }: StoryProps) {
             {selection ? (
               <Figure
                 media={selection}
-                number={numbers.selection}
-                label={figure}
                 caption={copy.captions?.[selection.id]}
                 tone="mist"
                 sizes="(max-width: 1024px) 100vw, 56vw"
@@ -266,8 +252,6 @@ export function RouterPlanner({ item, dict, locale }: StoryProps) {
           {exported ? (
             <Figure
               media={exported}
-              number={numbers.exported}
-              label={figure}
               caption={copy.captions?.[exported.id]}
               tone="void"
               maxHeight="60svh"
@@ -302,9 +286,6 @@ export function RouterPlanner({ item, dict, locale }: StoryProps) {
                 <li key={check.title}>
                   <Reveal variant="draw" delay={i * 90} className="h-px w-full bg-rule" />
                   <Reveal delay={i * 90 + 60} className="flex gap-5 py-6 md:py-7">
-                    <span className="meta w-[1.35rem] shrink-0 pt-[0.45em] text-ash">
-                      {pad(i + 1)}
-                    </span>
                     <div>
                       <h3 className="display text-[clamp(1.75rem,2.6vw,2.6rem)]">
                         {check.title}
@@ -321,8 +302,6 @@ export function RouterPlanner({ item, dict, locale }: StoryProps) {
             {validation ? (
               <Figure
                 media={validation}
-                number={numbers.validation}
-                label={figure}
                 caption={copy.captions?.[validation.id]}
                 tone="mist"
                 sizes="(max-width: 1024px) 100vw, 56vw"
@@ -366,8 +345,7 @@ export function RouterPlanner({ item, dict, locale }: StoryProps) {
               <li key={gain}>
                 <Reveal variant="draw" delay={i * 80} className="h-px w-full bg-rule-dark" />
                 <Reveal delay={i * 80 + 50} className="pt-5 pb-8">
-                  <span className="meta text-fog">{pad(i + 1)}</span>
-                  <p className="display mt-4 text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
+                  <p className="display text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
                     {gain}
                   </p>
                 </Reveal>
@@ -393,7 +371,6 @@ export function RouterPlanner({ item, dict, locale }: StoryProps) {
                       delay={i * 70 + 50}
                       className="flex items-baseline gap-5 py-5 md:py-6"
                     >
-                      <span className="meta w-[1.35rem] shrink-0 text-ash">{pad(i + 1)}</span>
                       <span className="display text-[clamp(1.45rem,2vw,2.1rem)] leading-[0.96]">
                         {entry}
                       </span>

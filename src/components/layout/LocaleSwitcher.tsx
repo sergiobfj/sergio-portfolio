@@ -40,7 +40,7 @@ export function LocaleSwitcher({
     <div
       role="group"
       aria-label={label}
-      className={cn("flex items-center", large ? "gap-5" : "gap-3", className)}
+      className={cn("flex items-center", large ? "gap-3" : "gap-0", className)}
       style={style}
     >
       {locales.map((item) => {
@@ -56,23 +56,26 @@ export function LocaleSwitcher({
               document.cookie = `${localeCookie}=${item};path=/;max-age=31536000;samesite=lax`;
               onNavigate?.();
             }}
+            // Área de toque de 44px; o texto e o ponto continuam do tamanho de antes.
             className={cn(
-              "relative py-1 transition-opacity duration-300",
-              large ? "display text-[clamp(1.6rem,3vw,2.25rem)]" : "label",
+              "inline-flex min-h-11 min-w-9 items-center justify-center transition-opacity duration-300",
+              large ? "display px-1 text-[clamp(1.6rem,3vw,2.25rem)]" : "label",
               dark ? "text-ink" : "text-paper",
               active ? "opacity-100" : "opacity-40 hover:opacity-85",
             )}
           >
-            {item.toUpperCase()}
-            <span
-              aria-hidden="true"
-              className={cn(
-                "absolute left-1/2 size-1 -translate-x-1/2 rounded-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
-                large ? "-bottom-2" : "-bottom-1.5",
-                dark ? "bg-ink" : "bg-paper",
-                active ? "scale-100" : "scale-0",
-              )}
-            />
+            <span className="relative">
+              {item.toUpperCase()}
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "absolute left-1/2 size-1 -translate-x-1/2 rounded-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                  large ? "-bottom-2" : "-bottom-1.5",
+                  dark ? "bg-ink" : "bg-paper",
+                  active ? "scale-100" : "scale-0",
+                )}
+              />
+            </span>
           </Link>
         );
       })}

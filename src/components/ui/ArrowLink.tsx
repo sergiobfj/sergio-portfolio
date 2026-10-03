@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowDisc } from "@/components/ui/ArrowDisc";
 import { cn } from "@/lib/cn";
 
 type Props = {
@@ -6,12 +7,13 @@ type Props = {
   label: string;
   className?: string;
   tone?: "ink" | "paper";
+  /** Sai do site: abre em outra aba e leva ↗; senão, → . */
   external?: boolean;
 };
 
 /**
- * Rótulo + disco com seta. É o botão padrão do site: pequeno, sem borda,
- * sem sombra. No hover o disco gira levemente e a seta avança.
+ * Rótulo + disco com seta: o botão padrão do site — pequeno, sem borda dura,
+ * sem sombra. A área de toque tem no mínimo 44px de altura.
  */
 export function ArrowLink({
   href,
@@ -20,31 +22,21 @@ export function ArrowLink({
   tone = "ink",
   external = false,
 }: Props) {
-  const dark = tone === "ink";
   const content = (
     <>
       <span className="label">{label}</span>
-      <span
-        aria-hidden="true"
-        className={cn(
-          "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/arrow:rotate-45 group-focus-visible/arrow:rotate-45",
-          dark ? "bg-ink text-paper" : "bg-paper text-ink",
-        )}
-      >
-        ↗
-      </span>
+      <ArrowDisc size="sm" tone={tone === "ink" ? "ink" : "paper"} direction={external ? "external" : "forward"} />
     </>
   );
-
   const classes = cn(
-    "group/arrow inline-flex w-fit items-center gap-3 transition-opacity duration-300 hover:opacity-70",
-    dark ? "text-ink" : "text-paper",
+    "inline-flex min-h-11 w-fit items-center gap-3",
+    tone === "ink" ? "text-ink" : "text-paper",
     className,
   );
 
   if (external) {
     return (
-      <a href={href} target="_blank" rel="noreferrer noopener" className={classes}>
+      <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
         {content}
       </a>
     );

@@ -1,4 +1,4 @@
-import { background, pad } from "@/data/portfolio";
+import { background } from "@/data/portfolio";
 import type { Dictionary } from "@/i18n/dictionary";
 import { Metrics, type Metric } from "@/components/case/Metrics";
 import { SectionHeading } from "@/components/layout/SectionHeading";
@@ -45,7 +45,6 @@ export function Background({ dict }: { dict: Dictionary }) {
     >
       <SectionHeading
         id="background-heading"
-        index={pad(3)}
         title={copy.title}
       />
       <Metrics items={items} />

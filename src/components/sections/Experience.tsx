@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { experiences, pad } from "@/data/portfolio";
+import { experiences } from "@/data/portfolio";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionary";
 import { SectionHeading } from "@/components/layout/SectionHeading";
@@ -33,7 +33,6 @@ export function Experience({
       <div>
         <SectionHeading
           id="experience-heading"
-          index={pad(2)}
           title={dict.experience.title}
         />
         <ul className="row-list">

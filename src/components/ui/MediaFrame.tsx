@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { FadeImage } from "@/components/ui/FadeImage";
 import type { MediaSlot } from "@/data/portfolio";
 import { cn } from "@/lib/cn";
 import { mediaSrc } from "@/lib/media";
@@ -35,7 +35,7 @@ export function MediaFrame({
       style={{ aspectRatio: media.ratio }}
     >
       {src ? (
-        <Image
+        <FadeImage
           src={src}
           alt={alt}
           fill

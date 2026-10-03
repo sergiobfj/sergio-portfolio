@@ -578,11 +578,14 @@
     }
   }
 
-  /* Seta das linhas e blocos clicáveis: anel em repouso; no hover do link,
-     o disco se preenche por dentro e a seta vira para frente. */
+  /* Seta dos links (ui/ArrowDisc): anel em repouso; no hover ou foco do
+     link, o disco se preenche por dentro, o contraste inverte e a seta anda
+     ~4px no sentido dela (→ frente, ↗ diagonal, ← trás); no clique, encolhe
+     um pouco. Nada depende de hover: em repouso o anel já diz "clicável". */
   .arrow-disc {
     --disc-ink: var(--color-ink);
     --disc-bg: var(--color-paper);
+    --arrow-shift: translateX(0.26em);
 
     position: relative;
     isolation: isolate;
@@ -598,12 +601,26 @@
     line-height: 1;
     transition:
       color 0.45s var(--ease-out-quart),
-      border-color 0.45s var(--ease-out-quart);
+      border-color 0.45s var(--ease-out-quart),
+      transform 0.25s var(--ease-out-quart);
+  }
+
+  .arrow-disc[data-size="sm"] {
+    width: 2.25rem;
+    font-size: 0.85rem;
   }
 
   .arrow-disc[data-size="lg"] {
     width: clamp(3.25rem, 5vw, 5rem);
     font-size: 1.25rem;
+  }
+
+  .arrow-disc[data-dir="external"] {
+    --arrow-shift: translate(0.2em, -0.2em);
+  }
+
+  .arrow-disc[data-dir="back"] {
+    --arrow-shift: translateX(-0.26em);
   }
 
   .arrow-disc[data-tone="paper"] {
@@ -640,7 +657,11 @@
 
   a:hover .arrow-disc > span,
   a:focus-visible .arrow-disc > span {
-    transform: rotate(45deg);
+    transform: var(--arrow-shift);
+  }
+
+  a:active .arrow-disc {
+    transform: scale(0.94);
   }
 
   /* Linhas-link: a apontada fica, as outras recuam (como no menu). */
@@ -1048,7 +1069,11 @@
 
   .contact-disc:hover .contact-disc__arrow,
   .contact-disc:focus-visible .contact-disc__arrow {
-    transform: rotate(45deg);
+    transform: translate(0.2em, -0.2em);
+  }
+
+  .contact-disc:active {
+    transform: scale(0.97);
   }
 }
 
@@ -1117,6 +1142,16 @@
 [data-clip][data-revealed="true"],
 [data-revealed="true"] > [data-clip] {
   clip-path: inset(0 0 0 0);
+}
+
+/* Imagem que ainda está chegando (ui/FadeImage): transparente sobre o tom
+   da superfície, e um fade curto quando carrega. Sem skeleton, sem spinner. */
+.fade-image {
+  transition: opacity 0.5s var(--ease-out-quart);
+}
+
+.fade-image[data-loading] {
+  opacity: 0;
 }
 
 /* Coreografia da hero: roda sobre a página já renderizada. Sem loader. */

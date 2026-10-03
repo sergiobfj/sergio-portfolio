@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
-import Image from "next/image";
+import { FadeImage } from "@/components/ui/FadeImage";
 import type { MediaSlot, SurfaceTone } from "@/data/portfolio";
 import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/cn";
@@ -8,8 +8,8 @@ import { mediaSrc } from "@/lib/media";
 type Props = {
   tone: SurfaceTone;
   media: MediaSlot;
-  /** Texto da capa tipográfica, usada enquanto não há imagem. */
-  cover: string;
+  /** Texto da capa tipográfica, usada enquanto não há imagem. Sem ele, só o tom e o grão. */
+  cover?: string;
   /** Tamanho da capa em cqw; por padrão, o que ocupa a largura. */
   coverSize?: string;
   /** Rótulos impressos no topo, como a legenda de uma prancha. */
@@ -68,7 +68,7 @@ export function Surface({
           {art ? (
             art
           ) : src ? (
-            <Image
+            <FadeImage
               src={src}
               alt={alt}
               fill
@@ -77,7 +77,7 @@ export function Surface({
               className="object-cover"
               style={media.position ? { objectPosition: media.position } : undefined}
             />
-          ) : (
+          ) : cover ? (
             <span
               aria-hidden="true"
               className="surface__cover display"
@@ -89,7 +89,7 @@ export function Surface({
             >
               {cover}
             </span>
-          )}
+          ) : null}
         </div>
 
         {printed ? (

@@ -1,8 +1,6 @@
 import Link from "next/link";
 import {
   casesIn,
-  categoryNumber,
-  pad,
   workCategories,
   type WorkCategory,
 } from "@/data/portfolio";
@@ -37,7 +35,6 @@ function CategoryBlock({
 }) {
   const copy = dict.categories[category.key];
   const items = casesIn(category.key);
-  const number = categoryNumber(category.key);
 
   return (
     <article className={className}>
@@ -49,14 +46,8 @@ function CategoryBlock({
         <Surface
           tone={category.tone}
           media={category.media}
-          cover={number}
-          coverSize="74cqw"
+          cover={copy.title.join(" ")}
           art={category.preview ? <CategoryPreview preview={category.preview} /> : undefined}
-          lead={
-            <span aria-hidden="true" className="meta">
-              {number}
-            </span>
-          }
           trail={<span className="label">{countLabel(items.length, dict)}</span>}
           sizes="(max-width: 768px) 100vw, 58vw"
           className="aspect-(--ratio) md:aspect-auto md:h-[clamp(20rem,31vw,36rem)]"
@@ -106,7 +97,6 @@ export function Work({ dict, locale }: { dict: Dictionary; locale: Locale }) {
       <div className="gutter-x">
         <SectionHeading
           id="work-heading"
-          index={pad(1)}
           title={dict.work.title}
           caption={dict.work.note}
         />

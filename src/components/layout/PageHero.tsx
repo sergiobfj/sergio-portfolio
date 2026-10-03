@@ -10,8 +10,8 @@ type Props = {
   /** Coluna da direita: papel, links, voltar. */
   aside?: ReactNode;
   /**
-   * Marca na linha do título, à direita, assentada na base das letras
-   * (a partir do tablet). No celular, quem quiser mostrá-la põe no `aside`.
+   * Marca colada ao fim do título, assentada na linha de base e medida em
+   * `em` do título — acompanha o tamanho dele em qualquer largura.
    */
   mark?: ReactNode;
   /** Teto do título; abaixo dele, vale o que couber na largura. */
@@ -58,11 +58,13 @@ export function PageHero({
         {meta ? <p className="meta">{meta}</p> : null}
       </div>
 
-      <div className={cn(Boolean(mark) && "md:flex md:items-end md:justify-between md:gap-10")}>
-        <h1
-          className="fit-display display mt-6 leading-[0.96]"
-          style={fit(title, size, 86, MOBILE_MAX)}
-        >
+      {/* Com marca, o tamanho do título reserva o lugar dela: duas letras a mais
+          na conta do fit (no celular, a palavra mais longa). */}
+      <div
+        className="fit-display mt-6 flex items-end gap-[0.16em]"
+        style={fit(mark ? title.map((line) => `${line}··`) : title, size, 86, MOBILE_MAX)}
+      >
+        <h1 className="display leading-[0.96]">
           {title.map((line, i) => (
             <span key={line} className="mask-line hero-mask">
               <span style={delay(120 + i * 90)}>{line}</span>
@@ -70,7 +72,7 @@ export function PageHero({
           ))}
         </h1>
         {mark ? (
-          <div className="hero-fade hidden shrink-0 pb-[1.2vw] md:block" style={delay(360)}>
+          <div className="hero-fade mb-[0.14em] shrink-0" style={delay(360)}>
             {mark}
           </div>
         ) : null}

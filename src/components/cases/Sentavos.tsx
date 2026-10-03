@@ -1,4 +1,4 @@
-import { pad, sentavosStory } from "@/data/portfolio";
+import { sentavosStory } from "@/data/portfolio";
 import { Band } from "@/components/case/Band";
 import { CaseLinks, CaseTags } from "@/components/case/CaseMeta";
 import { CaseNext } from "@/components/case/CaseNext";
@@ -15,7 +15,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { RevealLines } from "@/components/ui/RevealLines";
 import { cn, delay, fit } from "@/lib/cn";
 import { monthYearInline } from "@/lib/dates";
-import { figureCounter, imageOf } from "@/lib/media";
+import { imageOf } from "@/lib/media";
 import { routes } from "@/lib/routes";
 import type { StoryProps } from "./index";
 
@@ -37,7 +37,6 @@ const PHONE = "col-span-8 sm:col-span-5 lg:col-span-3";
 export function Sentavos({ item, dict, locale }: StoryProps) {
   const story = dict.stories.sentavos;
   const copy = dict.cases[item.slug];
-  const figure = dict.caseStudy.figure;
   const since = monthYearInline(sentavosStory.liveSince, locale);
   const withDate = (text: string) => text.replace("{date}", since);
 
@@ -46,21 +45,11 @@ export function Sentavos({ item, dict, locale }: StoryProps) {
   const invoice = imageOf(item.images, "invoice");
   const review = imageOf(item.images, "review");
   const wealth = imageOf(item.images, "wealth");
-  const next = figureCounter(2);
-  const numbers = {
-    cardPurchase: next(cardPurchase),
-    budget: next(budget),
-    invoice: next(invoice),
-    review: next(review),
-    wealth: next(wealth),
-  };
   const screens = [budget, invoice].filter((image) => image !== undefined);
 
-  const phone = (image: NonNullable<typeof cardPurchase>, number: number, className?: string) => (
+  const phone = (image: NonNullable<typeof cardPurchase>, className?: string) => (
     <Figure
       media={image}
-      number={number}
-      label={figure}
       caption={copy.captions?.[image.id]}
       tone="void"
       maxHeight="72svh"
@@ -100,8 +89,6 @@ export function Sentavos({ item, dict, locale }: StoryProps) {
         <div className="gutter-x bg-stone pb-[12vh]">
           <Figure
             media={item.media}
-            number={1}
-            label={figure}
             alt={item.title}
             tone="void"
             priority
@@ -178,7 +165,7 @@ export function Sentavos({ item, dict, locale }: StoryProps) {
                 </p>
               </Reveal>
             </div>
-            {cardPurchase ? phone(cardPurchase, numbers.cardPurchase, "lg:col-start-10") : null}
+            {cardPurchase ? phone(cardPurchase, "lg:col-start-10") : null}
           </div>
         </Band>
 
@@ -204,8 +191,7 @@ export function Sentavos({ item, dict, locale }: StoryProps) {
                 <li key={entry}>
                   <Reveal variant="draw" delay={i * 70} className="h-px w-full bg-ink/15" />
                   <Reveal delay={i * 70 + 40} className="pt-5 pb-8">
-                    <span className="meta text-ash">{pad(i + 1)}</span>
-                    <p className="display mt-4 text-[clamp(1.4rem,1.9vw,2rem)] leading-[0.98]">
+                    <p className="display text-[clamp(1.4rem,1.9vw,2rem)] leading-[0.98]">
                       {entry}
                     </p>
                   </Reveal>
@@ -218,8 +204,6 @@ export function Sentavos({ item, dict, locale }: StoryProps) {
                 <FigureSpread
                   images={screens}
                   captions={copy.captions}
-                  label={figure}
-                  start={numbers.budget || numbers.invoice}
                 />
               </div>
             ) : null}
@@ -237,15 +221,14 @@ export function Sentavos({ item, dict, locale }: StoryProps) {
                   {story.rules.statement}
                 </p>
               </Reveal>
-              {review ? phone(review, numbers.review, "mt-12 block lg:w-3/5") : null}
+              {review ? phone(review, "mt-12 block lg:w-3/5") : null}
             </div>
             <ol className="col-span-12 grid grid-cols-1 gap-x-6 sm:grid-cols-2 lg:col-span-7">
               {story.rules.items.map((rule, i) => (
                 <li key={rule.title}>
                   <Reveal variant="draw" delay={i * 80} className="h-px w-full bg-rule" />
                   <Reveal delay={i * 80 + 50} className="pt-5 pb-10">
-                    <span className="meta text-ash">{pad(i + 1)}</span>
-                    <p className="display mt-4 text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
+                    <p className="display text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
                       {rule.title}
                     </p>
                     <p className="mt-3 max-w-[34ch] text-[0.9375rem] leading-snug text-ash">
@@ -291,7 +274,7 @@ export function Sentavos({ item, dict, locale }: StoryProps) {
                 {story.result.body}
               </p>
             </Reveal>
-            {wealth ? phone(wealth, numbers.wealth, "mx-auto mt-[8vh] block lg:w-1/4") : null}
+            {wealth ? phone(wealth, "mx-auto mt-[8vh] block lg:w-1/4") : null}
           </Chapter>
 
           <Metrics

@@ -1,7 +1,6 @@
 import {
   casesAt,
   milestones,
-  pad,
   seccoTeam,
   talks,
   upcomingAt,
@@ -76,14 +75,12 @@ function TalkText({
  */
 function TalkItem({
   talk,
-  number,
   dict,
   locale,
   className,
   style,
 }: {
   talk: Talk;
-  number: number;
   dict: Dictionary;
   locale: Locale;
   className?: string;
@@ -97,10 +94,7 @@ function TalkItem({
       {showFigure ? (
         <Figure
           media={talk.media}
-          number={number}
-          label={dict.caseStudy.figure}
           alt={`${text.title} — ${talk.event}`}
-          tone={number % 2 === 0 ? "void" : "mist"}
           sizes="(max-width: 768px) 100vw, 54vw"
         />
       ) : null}
@@ -116,39 +110,30 @@ function TalkItem({
  */
 function TalkRow({
   talk,
-  number,
-  detailNumber,
   dict,
   locale,
 }: {
   talk: Talk;
-  number: number;
-  detailNumber: number;
   dict: Dictionary;
   locale: Locale;
 }) {
   const text = dict.experienceStories.secco.talks.items[talk.key];
+  const detail = talk.detail && mediaSrc(talk.detail) ? talk.detail : undefined;
 
   return (
     <article className="grid grid-cols-1 gap-x-[clamp(0.625rem,1vw,1rem)] lg:grid-cols-12">
       <Figure
         media={talk.media}
-        number={number}
-        label={dict.caseStudy.figure}
         alt={`${text.title} — ${talk.event}`}
-        tone={number % 2 === 0 ? "void" : "mist"}
         sizes="(max-width: 1024px) 100vw, 58vw"
         className="lg:col-span-7"
       />
       <div className="mt-6 flex flex-col justify-between gap-y-10 lg:col-span-5 lg:mt-0 lg:pl-[3%]">
         <TalkText talk={talk} dict={dict} locale={locale} />
-        {talk.detail && detailNumber > 0 ? (
+        {detail ? (
           <Figure
-            media={talk.detail}
-            number={detailNumber}
-            label={dict.caseStudy.figure}
+            media={detail}
             alt={`${text.title} — ${text.detail ?? talk.event}`}
-            tone={detailNumber % 2 === 0 ? "void" : "mist"}
             sizes="(max-width: 640px) 58vw, (max-width: 1280px) 42vw, 24vw"
             className="w-[58%] self-end sm:w-[42%] lg:w-[50%] xl:w-[58%]"
           />
@@ -180,16 +165,14 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
     if (group) group.items.push(talk);
     else events.push({ event: talk.event, items: [talk] });
   }
-  // Fig. 01 é a equipe, na abertura; as talks seguem a numeração, e a foto
-  // de detalhe conta logo depois da principal.
-  let figureCount = 1;
-  const numbered = events.map((group) => ({
+  // O que cada talk mostra: a foto (a que ainda não aconteceu só aparece se o
+  // arquivo existir) e, se houver, a de detalhe.
+  const grouped = events.map((group) => ({
     ...group,
     items: group.items.map((talk) => {
-      const counts = talk.status === "done" || Boolean(mediaSrc(talk.media));
-      const number = counts ? ++figureCount : 0;
-      const detailNumber = number && talk.detail && mediaSrc(talk.detail) ? ++figureCount : 0;
-      return { talk, number, detailNumber };
+      const pictured = talk.status === "done" || Boolean(mediaSrc(talk.media));
+      const detailed = pictured && Boolean(talk.detail && mediaSrc(talk.detail));
+      return { talk, pictured, detailed };
     }),
   }));
 
@@ -216,8 +199,6 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
             </Reveal>
             <Figure
               media={seccoTeam}
-              number={1}
-              label={dict.caseStudy.figure}
               alt={copy.captions?.[seccoTeam.id]}
               tone="mist"
               sizes="(max-width: 1024px) 100vw, 62vw"
@@ -228,8 +209,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
                 delay={160}
                 className="col-span-12 lg:col-span-4 lg:row-start-2 lg:self-end"
               >
-                <p aria-hidden="true" className="flex items-baseline gap-3 text-[0.9375rem] leading-snug opacity-70">
-                  <span className="meta">{pad(1)}</span>
+                <p aria-hidden="true" className="text-[0.9375rem] leading-snug opacity-70">
                   {copy.captions[seccoTeam.id]}
                 </p>
               </Reveal>
@@ -237,7 +217,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
           </div>
         </Band>
 
-        {/* Minha atuação: quatro dimensões, numeradas — o título em display,
+        {/* Minha atuação: quatro dimensões — o título em display,
             o que entra nela em texto corrido, legível, no tom do fundo. */}
         <Band tone="void" after="paper" labelledBy="secco-role">
           <RevealLines
@@ -251,8 +231,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
               <li key={dimension.title} className="@container">
                 <Reveal variant="draw" delay={i * 90} className="h-px w-full bg-rule-dark" />
                 <Reveal delay={i * 90 + 60} className="pt-6">
-                  <span className="meta text-fog">{pad(i + 1)}</span>
-                  <p className="display mt-5 text-[min(15.5cqi,2.75rem)] leading-[0.95] sm:text-[min(15.5cqi,3.6rem)]">
+                  <p className="display text-[min(15.5cqi,2.25rem)] leading-[0.95] sm:text-[min(15.5cqi,3.6rem)]">
                     {dimension.title}
                   </p>
                   <p className="mt-6 max-w-[26ch] text-[clamp(1.05rem,1.25vw,1.2rem)] leading-[1.45] text-paper/75">
@@ -315,28 +294,26 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
           />
 
           <div className="mt-[10vh] flex flex-col gap-y-[12vh]">
-            {numbered.map((group) => {
+            {grouped.map((group) => {
               const spans = pairSpans(false);
               // Todas com foto: larguras pela proporção, fotos na mesma altura
               // (como no FigureSpread). Com um item só de texto, fica o grid 7/5.
               const matched =
-                group.items.length > 1 && group.items.every(({ number }) => number > 0);
+                group.items.length > 1 && group.items.every(({ pictured }) => pictured);
               // Uma foto de detalhe não cabe na fileira lado a lado: o grupo
               // vira linhas, cada talk com o texto ao lado da própria foto.
               const rows =
-                matched && group.items.some(({ detailNumber }) => detailNumber > 0);
+                matched && group.items.some(({ detailed }) => detailed);
               return (
                 <section key={group.event} aria-label={group.event}>
                   <Reveal variant="draw" className="h-px w-full bg-ink/15" />
                   <h3 className="label mt-5 text-ash">{group.event}</h3>
                   {rows ? (
                     <div className="mt-8 flex flex-col gap-y-16 lg:gap-y-[9vh]">
-                      {group.items.map(({ talk, number, detailNumber }) => (
+                      {group.items.map(({ talk }) => (
                         <TalkRow
                           key={talk.key}
                           talk={talk}
-                          number={number}
-                          detailNumber={detailNumber}
                           dict={dict}
                           locale={locale}
                         />
@@ -349,11 +326,10 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
                         matched ? "flex flex-col md:flex-row" : "grid grid-cols-1 md:grid-cols-12",
                       )}
                     >
-                      {group.items.map(({ talk, number }, i) => (
+                      {group.items.map(({ talk }, i) => (
                         <TalkItem
                           key={talk.key}
                           talk={talk}
-                          number={number}
                           dict={dict}
                           locale={locale}
                           style={matched ? growStyle(talk.media.ratio) : undefined}
@@ -377,8 +353,8 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
         {/* Marcos */}
         {shown.length > 0 ? (
           <Band tone="void" after="stone" labelledBy="secco-milestones">
-            {/* Um marco por coluna: o número vazado dá o ritmo, o nome pesa, a
-                frase explica. Sem ícone, sem logo de terceiro. */}
+            {/* Um marco por coluna: o filete dá o ritmo, o nome pesa, a frase
+                explica. Sem ícone, sem logo de terceiro, sem número. */}
             <RevealLines
               as="h2"
               id="secco-milestones"
@@ -395,13 +371,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
                 <li key={milestone.key} className="@container">
                   <Reveal variant="draw" delay={i * 90} className="h-px w-full bg-rule-dark" />
                   <Reveal delay={i * 90 + 60} className="pt-6">
-                    <span
-                      aria-hidden="true"
-                      className="display type-outline block text-[min(34cqi,5.5rem)] leading-[0.82] md:text-[min(34cqi,9.5rem)]"
-                    >
-                      {pad(i + 1)}
-                    </span>
-                    <p className="display mt-8 text-[min(13cqi,3.4rem)] leading-[0.95]">
+                    <p className="display text-[min(13cqi,2.25rem)] leading-[0.95] md:text-[min(13cqi,3.4rem)]">
                       {milestone.name}
                     </p>
                     <p className="mt-4 max-w-[30ch] text-[0.9375rem] leading-snug text-pretty text-fog">

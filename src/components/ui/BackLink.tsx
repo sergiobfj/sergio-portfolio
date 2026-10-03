@@ -1,7 +1,8 @@
 import Link from "next/link";
+import { ArrowDisc } from "@/components/ui/ArrowDisc";
 import { cn } from "@/lib/cn";
 
-/** Voltar: o disco com ← que recua no hover. */
+/** Voltar: o mesmo disco dos outros links, com ←, que recua no hover. */
 export function BackLink({
   href,
   label,
@@ -14,14 +15,9 @@ export function BackLink({
   return (
     <Link
       href={href}
-      className={cn("group label inline-flex w-fit items-center gap-3", className)}
+      className={cn("label inline-flex min-h-11 w-fit items-center gap-3", className)}
     >
-      <span
-        aria-hidden="true"
-        className="flex size-8 items-center justify-center rounded-full bg-ink text-sm text-paper transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-1"
-      >
-        ←
-      </span>
+      <ArrowDisc size="sm" direction="back" />
       {label}
     </Link>
   );

@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import Image from "next/image";
+import { FadeImage } from "@/components/ui/FadeImage";
 import type { CategoryPreview as Preview, PreviewShot } from "@/data/portfolio";
 import { cn } from "@/lib/cn";
 import { mediaSrc } from "@/lib/media";
@@ -18,7 +18,7 @@ function Shot({ shot, main, sizes }: { shot: PreviewShot; main: boolean; sizes: 
 
   return (
     <div className={cn("preview-shot", main ? "preview-shot--main" : "preview-shot--inset")} style={style}>
-      <Image
+      <FadeImage
         src={src}
         alt=""
         fill

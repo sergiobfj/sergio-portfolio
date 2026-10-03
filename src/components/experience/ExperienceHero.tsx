@@ -44,18 +44,15 @@ export function ExperienceHero({ entry, dict, locale }: ExperienceStoryProps) {
           ))}
         </p>
       }
+      // O símbolo, como na home: colado ao nome, na altura das letras e na
+      // escala do título (em em). O teto mantém o PNG nítido em tela retina.
       mark={
-        entry.logo ? (
-          <Logo logo={entry.logo} className="[--logo-h:clamp(2.75rem,4.2vw,4rem)]" />
+        entry.symbol ? (
+          <Logo logo={entry.symbol} className="max-h-[8rem] [--logo-h:0.62em]" />
         ) : undefined
       }
       aside={
         <>
-          {/* No celular a marca vem aqui, pequena; do tablet em diante, na linha do título. */}
-          {entry.logo ? (
-            // self-start: numa coluna flex, sem ele a imagem estica na largura.
-            <Logo logo={entry.logo} className="mb-4 self-start [--logo-h:1.75rem] md:hidden" />
-          ) : null}
           <p className="label text-ash">{copy.pageRole ?? copy.role}</p>
           {entry.website ? (
             <ArrowLink

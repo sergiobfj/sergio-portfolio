@@ -1,4 +1,3 @@
-import { pad } from "@/data/portfolio";
 import { Band } from "@/components/case/Band";
 import { CaseTags } from "@/components/case/CaseMeta";
 import { CaseNext } from "@/components/case/CaseNext";
@@ -14,7 +13,7 @@ import { BackLink } from "@/components/ui/BackLink";
 import { Reveal } from "@/components/ui/Reveal";
 import { RevealLines } from "@/components/ui/RevealLines";
 import { delay, fit } from "@/lib/cn";
-import { figureCounter, imageOf } from "@/lib/media";
+import { imageOf } from "@/lib/media";
 import { routes } from "@/lib/routes";
 import type { StoryProps } from "./index";
 
@@ -67,21 +66,12 @@ function StateList({
 export function GeoCarbo({ item, dict, locale }: StoryProps) {
   const story = dict.stories.geocarbo;
   const copy = dict.cases[item.slug];
-  const figure = dict.caseStudy.figure;
 
   const map = imageOf(item.images, "map");
   const analysis = imageOf(item.images, "analysis");
   const registration = imageOf(item.images, "registration");
   const reports = imageOf(item.images, "reports");
   const pdf = imageOf(item.images, "pdf");
-  const next = figureCounter(2);
-  const numbers = {
-    map: next(map),
-    analysis: next(analysis),
-    registration: next(registration),
-    reports: next(reports),
-    pdf: next(pdf),
-  };
   const working = [registration, reports, pdf].filter((image) => image !== undefined);
 
   return (
@@ -116,8 +106,6 @@ export function GeoCarbo({ item, dict, locale }: StoryProps) {
         <div className="gutter-x bg-stone pb-[12vh]">
           <Figure
             media={item.media}
-            number={1}
-            label={figure}
             alt={item.title}
             tone="void"
             priority
@@ -168,8 +156,6 @@ export function GeoCarbo({ item, dict, locale }: StoryProps) {
             {map ? (
               <Figure
                 media={map}
-                number={numbers.map}
-                label={figure}
                 caption={copy.captions?.[map.id]}
                 tone="mist"
                 maxHeight="66svh"
@@ -232,8 +218,6 @@ export function GeoCarbo({ item, dict, locale }: StoryProps) {
           {analysis ? (
             <Figure
               media={analysis}
-              number={numbers.analysis}
-              label={figure}
               caption={copy.captions?.[analysis.id]}
               tone="void"
               maxHeight="66svh"
@@ -247,8 +231,7 @@ export function GeoCarbo({ item, dict, locale }: StoryProps) {
               <li key={limit.title}>
                 <Reveal variant="draw" delay={i * 80} className="h-px w-full bg-ink/15" />
                 <Reveal delay={i * 80 + 50} className="pt-5 pb-8">
-                  <span className="meta text-ash">{pad(i + 1)}</span>
-                  <p className="display mt-4 text-[clamp(1.5rem,2.1vw,2.2rem)] leading-[0.96]">
+                  <p className="display text-[clamp(1.5rem,2.1vw,2.2rem)] leading-[0.96]">
                     {limit.title}
                   </p>
                   <p className="mt-3 max-w-[30ch] text-[0.9375rem] leading-snug text-ash">
@@ -299,8 +282,6 @@ export function GeoCarbo({ item, dict, locale }: StoryProps) {
               <FigureSpread
                 images={working}
                 captions={copy.captions}
-                label={figure}
-                start={numbers.registration || numbers.reports || numbers.pdf}
               />
             </div>
           ) : null}
@@ -324,7 +305,6 @@ export function GeoCarbo({ item, dict, locale }: StoryProps) {
                   <li key={entry}>
                     <Reveal variant="draw" delay={i * 60} className="h-px w-full bg-rule" />
                     <Reveal delay={i * 60 + 40} className="flex items-baseline gap-5 py-5">
-                      <span className="meta w-[1.35rem] shrink-0 text-ash">{pad(i + 1)}</span>
                       <span className="display text-[clamp(1.4rem,1.9vw,2rem)] leading-[0.96]">
                         {entry}
                       </span>

@@ -12,20 +12,16 @@ const tones: SurfaceTone[] = ["mist", "void", "stone"];
  *
  * Cada figura mantém a própria proporção — screenshot não se corta para
  * caber numa altura —, e no par a largura segue a proporção, então as duas
- * pranchas têm sempre a mesma altura. A numeração continua a partir de `start`.
+ * pranchas têm sempre a mesma altura.
  */
 export function FigureSpread({
   images,
   captions = {},
-  label,
-  start = 1,
 }: {
   images: readonly CaseImage[];
   captions?: Record<string, string>;
-  label: string;
-  start?: number;
 }) {
-  let n = start;
+  let n = 0;
 
   return (
     <div className="flex flex-col gap-y-[clamp(3rem,7vw,6rem)]">
@@ -41,15 +37,13 @@ export function FigureSpread({
             style={pair ? { maxWidth: `calc(60svh * ${sum.toFixed(4)} + 1rem)` } : undefined}
           >
             {spread.map((image) => {
-              const number = n++;
+              const tone = tones[n++ % tones.length];
               return (
                 <Figure
                   key={image.id}
                   media={image}
-                  number={number}
-                  label={label}
                   caption={captions[image.id]}
-                  tone={tones[(number - start) % tones.length]}
+                  tone={tone}
                   sizes={
                     pair ? "(max-width: 768px) 100vw, 54vw" : "(max-width: 768px) 100vw, 92vw"
                   }

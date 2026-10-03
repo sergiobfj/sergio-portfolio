@@ -1,4 +1,4 @@
-import { automationsFeatured, pad } from "@/data/portfolio";
+import { automationsFeatured } from "@/data/portfolio";
 import { Band } from "@/components/case/Band";
 import { CaseLinks, CaseTags } from "@/components/case/CaseMeta";
 import { CaseNext } from "@/components/case/CaseNext";
@@ -98,8 +98,7 @@ export function AutomacoesOperacionais({ item, dict, locale }: StoryProps) {
               <li key={block}>
                 <Reveal variant="draw" delay={i * 70} className="h-px w-full bg-rule" />
                 <Reveal delay={i * 70 + 50} className="pt-5 pb-10">
-                  <span className="meta text-ash">{pad(i + 1)}</span>
-                  <p className="display mt-4 text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
+                  <p className="display text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
                     {block}
                   </p>
                 </Reveal>

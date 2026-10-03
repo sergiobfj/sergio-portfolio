@@ -22,12 +22,3 @@ export function imageOf(images: readonly CaseImage[] | undefined, id: string) {
   const image = images?.find((entry) => entry.id === id);
   return image && mediaSrc(image) ? image : undefined;
 }
-
-/**
- * Numeração das figuras na ordem em que aparecem: só conta o que existe, então
- * "Fig. 02" nunca pula para "Fig. 04" quando um print ainda falta.
- */
-export function figureCounter(first = 1) {
-  let next = first;
-  return (image: CaseImage | undefined) => (image ? next++ : 0);
-}

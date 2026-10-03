@@ -94,8 +94,8 @@ export const workCategories: WorkCategory[] = [
     media: { src: null, ratio: "4 / 3" },
     // O sistema interno (tabela com os dados tarjados) e o produto próprio.
     preview: {
-      main: { src: "/projects/router-planner/tela-principal.png", ratio: "1274 / 636", x: 30, y: 21 },
-      inset: { src: "/projects/sentavos/tela-principal.png", ratio: "1339 / 646", x: 5, bottom: 8, w: 50 },
+      main: { src: "/projects/router-planner/tela-principal.png", ratio: "1274 / 636", x: 22, y: 13 },
+      inset: { src: "/projects/sentavos/tela-principal.png", ratio: "1339 / 646", x: 4, bottom: 7, w: 56 },
     },
   },
   {
@@ -109,17 +109,17 @@ export const workCategories: WorkCategory[] = [
         src: "/projects/jornada-cliente/telegram-pergunta.jpg",
         ratio: "3 / 4",
         position: "50% 0%",
-        x: 30,
-        y: 19,
-        w: 64,
+        x: 26,
+        y: 12,
+        w: 70,
       },
       // Recorte do print da notificação: só o card, sem a tela de bloqueio.
       inset: {
-        src: "/projects/jornada-cliente/telegram-nova-venda-card.png",
+        src: "/projects/jornada-cliente/telegram-nova-venda-card.webp",
         ratio: "734 / 423",
-        x: 5,
-        bottom: 8,
-        w: 58,
+        x: 4,
+        bottom: 7,
+        w: 64,
       },
     },
   },
@@ -129,14 +129,14 @@ export const workCategories: WorkCategory[] = [
     media: { src: null, ratio: "4 / 5" },
     // O site público: o carrossel da Arena e a calculadora de CO₂.
     preview: {
-      main: { src: "/projects/arena-sustentabilidade/tela-principal.png", ratio: "1342 / 767", x: 16, y: 19 },
+      main: { src: "/projects/arena-sustentabilidade/tela-principal.webp", ratio: "1342 / 767", x: 12, y: 12 },
       // Recorte da calculadora: o título e os parâmetros, sem as margens.
       inset: {
         src: "/projects/arena-sustentabilidade/calculadora-co2-recorte.png",
         ratio: "800 / 422",
-        x: 6,
-        bottom: 8,
-        w: 60,
+        x: 4,
+        bottom: 7,
+        w: 64,
       },
     },
   },
@@ -150,9 +150,9 @@ export const workCategories: WorkCategory[] = [
         src: "/projects/relatorio-merger/quadro-demonstracao.png",
         ratio: "680 / 652",
         position: "50% 14%",
-        x: 30,
-        y: 19,
-        w: 62,
+        x: 14,
+        y: 12,
+        w: 76,
       },
     },
   },
@@ -330,7 +330,7 @@ export const cases: WorkCase[] = [
       { group: "infrastructure", items: ["VPS Linux", "Nginx"] },
     ],
     // A landing pública. O mapa de satélite ficou de fora.
-    media: { src: "/projects/geocarbo/tela-principal.png", ratio: "1343 / 643", position: "left center" },
+    media: { src: "/projects/geocarbo/tela-principal.webp", ratio: "1343 / 643", position: "left center" },
     // Na ordem da história. Cadastro e relatórios são recortes sem o menu
     // lateral (que lista módulos fora do MVP) e só com dados de exemplo. O
     // painel com números fixos (dashboard.png) não entra. Mapa, análise e
@@ -381,7 +381,7 @@ export const cases: WorkCase[] = [
     technologies: [
       { group: "stack", items: ["HTML5", "CSS3", "JavaScript Vanilla", "Pillow"] },
     ],
-    media: { src: "/projects/arena-sustentabilidade/tela-principal.png", ratio: "1342 / 767" },
+    media: { src: "/projects/arena-sustentabilidade/tela-principal.webp", ratio: "1342 / 767" },
     // Na ordem da história: o que o visitante encontra (contexto), a
     // calculadora e, quando houver print, a versão mobile (destaques).
     images: [
@@ -442,10 +442,6 @@ export function upcomingAt(company: string) {
   return upcoming.filter((item) => item.company === company);
 }
 
-/** Número editorial derivado da posição — nunca precisa ser mantido à mão. */
-export function categoryNumber(key: WorkCategoryKey) {
-  return pad(workCategories.findIndex((category) => category.key === key) + 1);
-}
 
 export function casesIn(key: WorkCategoryKey) {
   return cases.filter((item) => item.category === key);

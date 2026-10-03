@@ -852,7 +852,6 @@ const pt = {
     context: "Contexto",
     internal: "Projeto interno",
     privateCode: "Código proprietário",
-    figure: "Fig.",
     stackGroups,
     pending: "Contexto, processo e resultado entram em breve.",
     back: "Voltar à categoria",

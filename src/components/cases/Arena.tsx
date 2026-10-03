@@ -1,4 +1,3 @@
-import { pad } from "@/data/portfolio";
 import { Band } from "@/components/case/Band";
 import { CaseLinks, CaseTags } from "@/components/case/CaseMeta";
 import { CaseNext } from "@/components/case/CaseNext";
@@ -10,7 +9,7 @@ import { Contact } from "@/components/sections/Contact";
 import { BackLink } from "@/components/ui/BackLink";
 import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/cn";
-import { figureCounter, imageOf } from "@/lib/media";
+import { imageOf } from "@/lib/media";
 import { routes } from "@/lib/routes";
 import { caseTitle, titleLines } from "@/lib/work";
 import type { StoryProps } from "./index";
@@ -21,12 +20,11 @@ function Column({ label, items }: { label: string; items: readonly string[] }) {
     <div>
       <p className="label text-fog">{label}</p>
       <ul className="mt-5">
-        {items.map((entry, i) => (
+        {items.map((entry) => (
           <li
             key={entry}
             className="flex items-baseline gap-5 border-t border-rule-dark py-4"
           >
-            <span className="meta w-[1.35rem] shrink-0 text-fog">{pad(i + 1)}</span>
             <span className="display text-[clamp(1.6rem,2.6vw,2.6rem)]">{entry}</span>
           </li>
         ))}
@@ -45,17 +43,10 @@ function Column({ label, items }: { label: string; items: readonly string[] }) {
 export function Arena({ item, dict, locale }: StoryProps) {
   const story = dict.stories["arena-sustentabilidade"];
   const copy = dict.cases[item.slug];
-  const figure = dict.caseStudy.figure;
   const title = caseTitle(item, dict);
   const experiences = imageOf(item.images, "experiences");
   const calculator = imageOf(item.images, "calculator");
   const mobile = imageOf(item.images, "mobile");
-  const next = figureCounter(2);
-  const numbers = {
-    experiences: next(experiences),
-    calculator: next(calculator),
-    mobile: next(mobile),
-  };
 
   return (
     <>
@@ -87,8 +78,6 @@ export function Arena({ item, dict, locale }: StoryProps) {
         <div className="gutter-x bg-stone pb-[12vh]">
           <Figure
             media={item.media}
-            number={1}
-            label={figure}
             alt={title}
             tone="void"
             priority
@@ -113,8 +102,6 @@ export function Arena({ item, dict, locale }: StoryProps) {
               </div>
               <Figure
                 media={experiences}
-                number={numbers.experiences}
-                label={figure}
                 caption={copy.captions?.[experiences.id]}
                 tone="mist"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -156,8 +143,6 @@ export function Arena({ item, dict, locale }: StoryProps) {
               {calculator ? (
                 <Figure
                   media={calculator}
-                  number={numbers.calculator}
-                  label={figure}
                   caption={copy.captions?.[calculator.id]}
                   tone="mist"
                   maxHeight="72svh"
@@ -202,8 +187,7 @@ export function Arena({ item, dict, locale }: StoryProps) {
                     <li key={entry}>
                       <Reveal variant="draw" delay={i * 70} className="h-px w-full bg-ink/15" />
                       <Reveal delay={i * 70 + 40} className="pt-5 pb-8">
-                        <span className="meta text-ash">{pad(i + 1)}</span>
-                        <p className="display mt-4 text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
+                        <p className="display text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
                           {entry}
                         </p>
                       </Reveal>
@@ -213,8 +197,6 @@ export function Arena({ item, dict, locale }: StoryProps) {
                 {mobile ? (
                   <Figure
                     media={mobile}
-                    number={numbers.mobile}
-                    label={figure}
                     caption={copy.captions?.[mobile.id]}
                     tone="mist"
                     sizes="(max-width: 1024px) 60vw, 25vw"

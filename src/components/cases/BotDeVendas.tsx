@@ -1,4 +1,3 @@
-import { pad } from "@/data/portfolio";
 import { Band } from "@/components/case/Band";
 import { CaseLinks, CaseTags } from "@/components/case/CaseMeta";
 import { CaseNext } from "@/components/case/CaseNext";
@@ -40,7 +39,6 @@ const LAYER_COLUMNS = 4;
 export function BotDeVendas({ item, dict, locale }: StoryProps) {
   const story = dict.stories["bot-de-vendas"];
   const copy = dict.cases[item.slug];
-  const figure = dict.caseStudy.figure;
   const title = caseTitle(item, dict);
   const sale = imageOf(item.images, "telegram-sale");
   const privateLabel = [dict.caseStudy.internal, dict.caseStudy.privateCode];
@@ -85,8 +83,6 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
         <div className="gutter-x bg-stone pb-[12vh]">
           <Figure
             media={item.media}
-            number={1}
-            label={figure}
             alt={title}
             tone="void"
             priority
@@ -125,8 +121,7 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
                   <Reveal variant="draw" delay={i * 90} className="h-px w-full bg-rule-dark" />
                   <div className="grid grid-cols-12 gap-x-6 gap-y-8 py-10 md:py-12">
                     <Reveal delay={i * 90 + 60} className="col-span-12 lg:col-span-3">
-                      <span className="meta text-fog">{pad(i + 1)}</span>
-                      <h3 className="display mt-4 text-[clamp(1.9rem,2.8vw,2.9rem)] leading-[0.95]">
+                      <h3 className="display text-[clamp(1.9rem,2.8vw,2.9rem)] leading-[0.95]">
                         {layer.title}
                       </h3>
                       <p className="mt-4 max-w-[30ch] text-[0.9375rem] leading-snug text-paper/75">
@@ -168,12 +163,11 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
               </Reveal>
               <Reveal delay={160}>
                 <ol className="mt-10">
-                  {story.notifications.items.map((entry, i) => (
+                  {story.notifications.items.map((entry) => (
                     <li
                       key={entry}
                       className="flex items-baseline gap-5 border-t border-ink/15 py-4 text-[clamp(1.05rem,1.45vw,1.35rem)] leading-snug"
                     >
-                      <span className="meta w-[1.35rem] shrink-0 text-ash">{pad(i + 1)}</span>
                       {entry}
                     </li>
                   ))}
@@ -183,8 +177,6 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
             {sale ? (
               <Figure
                 media={sale}
-                number={2}
-                label={figure}
                 caption={copy.captions?.[sale.id]}
                 tone="void"
                 sizes="(max-width: 768px) 100vw, 40vw"
@@ -296,8 +288,7 @@ export function BotDeVendas({ item, dict, locale }: StoryProps) {
                   <li key={entry}>
                     <Reveal variant="draw" delay={i * 80} className="h-px w-full bg-rule" />
                     <Reveal delay={i * 80 + 50} className="pt-5 pb-8">
-                      <span className="meta text-ash">{pad(i + 1)}</span>
-                      <p className="display mt-4 text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
+                      <p className="display text-[clamp(1.6rem,2.3vw,2.4rem)] leading-[0.96]">
                         {entry}
                       </p>
                     </Reveal>

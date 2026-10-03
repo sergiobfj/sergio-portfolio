@@ -1,7 +1,5 @@
 import {
   casesIn,
-  categoryNumber,
-  pad,
   workCategories,
   type WorkCategory,
 } from "@/data/portfolio";
@@ -41,7 +39,6 @@ export function CategoryView({
       <main id="content">
         <PageHero
           label={dict.work.title}
-          meta={`${categoryNumber(category.key)} / ${pad(workCategories.length)}`}
           title={copy.title}
           voice={
             <p className="voice max-w-[24ch] text-[clamp(1.6rem,2.6vw,2.6rem)] leading-[1.04]">

@@ -593,7 +593,6 @@ const en: Dictionary = {
     context: "Context",
     internal: "Internal project",
     privateCode: "Proprietary code",
-    figure: "Fig.",
     stackGroups: {
       backend: "Backend",
       backendData: "Backend / Data",

@@ -1,4 +1,4 @@
-import { casesAt, pad } from "@/data/portfolio";
+import { casesAt } from "@/data/portfolio";
 import { Band } from "@/components/case/Band";
 import { experienceStories } from "@/components/experiences";
 import {
@@ -54,12 +54,11 @@ function GenericExperience({ entry, dict, locale }: ExperienceStoryProps) {
             <div className="mt-[16vh]">
               <Chapter id="experience-areas" title={dict.experience.areas} level="section">
                 <ol>
-                  {areas.map((area, i) => (
+                  {areas.map((area) => (
                     <li
                       key={area}
                       className="flex items-baseline gap-5 border-t border-rule py-5 md:gap-8"
                     >
-                      <span className="meta w-[1.35rem] shrink-0 text-ash">{pad(i + 1)}</span>
                       <span className="display text-[clamp(2rem,4.6vw,4.5rem)]">{area}</span>
                     </li>
                   ))}

@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties } from "react";
 import { pad } from "@/data/portfolio";
 import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/cn";
@@ -19,15 +19,12 @@ export type Step = {
 export function StepList({
   title,
   steps,
-  eyebrow,
   size = "md",
   start = 1,
   className,
 }: {
   title?: string;
   steps: readonly Step[];
-  /** Linha pequena acima do título (ex.: o número do pilar). */
-  eyebrow?: ReactNode;
   size?: "md" | "sm";
   /** Número do primeiro passo: um fluxo partido em duas colunas continua a contagem. */
   start?: number;
@@ -37,7 +34,6 @@ export function StepList({
 
   return (
     <Reveal className={className}>
-      {eyebrow ? <p className="meta mb-4 opacity-55">{eyebrow}</p> : null}
       {title ? (
         <p
           className={cn(

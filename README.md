@@ -100,11 +100,17 @@ Automações do dia a dia (com o exemplo publicado dos painéis das TVs, em
 
 **Critérios de página.** Não existe seção "Galeria": cada imagem entra na
 seção que fala dela (`imageOf` em `lib/media.ts`), e um print que ainda não
-existe não vira prancha no meio da história — a seção se compõe sem ele e a
-numeração das figuras só conta o que aparece (`figureCounter`). Título pequeno
-de seção fica em cima, centralizado (`Chapter`); título numa coluna lateral
-vazia não existe mais. Título integrado ao bloco (cabeça de uma coluna, rótulo
-sobre um número grande) e frases em display na largura toda continuam.
+existe não vira prancha no meio da história — a seção se compõe sem ele. Sem
+numeração decorativa (nada de "Fig. 01", índices de lista ou de título):
+número só quando é informação — métrica, ano, contagem, etapa de um fluxo.
+Títulos: `SectionHeading` na home, `Chapter`/`ChapterTitle` nas internas
+(`level` seção ou capítulo); conteúdo em duas colunas leva o título como
+cabeça da coluna do texto.
+
+Setas: → navega dentro do site, ↗ sai dele (outra aba, e-mail), ← volta —
+sempre o `ArrowDisc`. Imagens: `ui/FadeImage` (fade curto se ainda estiver
+chegando) e o `Reveal` de recorte acorda as imagens uma tela e meia antes;
+o otimizador guarda as versões por 30 dias (trocar foto = nome novo).
 
 ### Experiências
 

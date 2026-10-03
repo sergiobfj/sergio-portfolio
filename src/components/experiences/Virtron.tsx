@@ -1,4 +1,4 @@
-import { casesAt, findCase, pad, virtronStory } from "@/data/portfolio";
+import { casesAt, findCase, virtronStory } from "@/data/portfolio";
 import { Band } from "@/components/case/Band";
 import { Figure } from "@/components/case/Figure";
 import { InlineFlow } from "@/components/case/Flow";
@@ -31,7 +31,6 @@ import { caseTitle } from "@/lib/work";
 export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
   const copy = dict.experiences.virtron;
   const story = dict.experienceStories.virtron;
-  const figure = dict.caseStudy.figure;
   const tool = findCase(virtronStory.firstTool);
   const toolCopy = tool ? dict.cases[tool.slug] : undefined;
   // A primeira ferramenta já tem faixa própria (com a imagem): fora do grid.
@@ -91,12 +90,11 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
                 <Reveal delay={120} className="mt-14">
                   <p className="label text-fog">{story.start.fundamentalsLabel}</p>
                   <ul className="mt-5 grid grid-cols-1 gap-x-6 sm:grid-cols-2">
-                    {story.start.fundamentals.map((entry, i) => (
+                    {story.start.fundamentals.map((entry) => (
                       <li
                         key={entry}
                         className="flex items-baseline gap-5 border-t border-rule-dark py-4 text-[clamp(1.05rem,1.45vw,1.35rem)] leading-snug"
                       >
-                        <span className="meta w-[1.35rem] shrink-0 text-fog">{pad(i + 1)}</span>
                         {entry}
                       </li>
                     ))}
@@ -111,8 +109,6 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
             </div>
             <Figure
               media={virtronStory.startPhoto}
-              number={1}
-              label={figure}
               caption={copy.captions?.start}
               tone="void"
               sizes="(max-width: 1024px) 60vw, 22vw"
@@ -194,8 +190,6 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
             <FigureSpread
               images={promotion.images}
               captions={copy.captions}
-              label={figure}
-              start={2}
             />
           </div>
 

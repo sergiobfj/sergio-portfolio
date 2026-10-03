@@ -59,7 +59,6 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     description: dict.meta.description,
     authors: [{ name: site.name }],
     creator: site.name,
-    icons: { icon: "/icon.svg" },
     alternates: alternates(locale),
     openGraph: {
       type: "website",
