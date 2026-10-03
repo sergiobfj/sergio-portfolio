@@ -1038,41 +1038,64 @@
    ========================================================================== */
 
 @layer components {
-  .contact-disc {
+  /* "Fale comigo": um botão horizontal apoiado no filete, na margem direita
+     da grade. Em repouso, o fundo da seção e um contorno fino — o filete
+     para nele; no hover ou foco, o fundo preenche em papel, o texto vira
+     tinta e a ↗ anda na diagonal; no clique, encolhe um pouco. Altura mínima
+     de 52px: área de toque confortável. */
+  .contact-cta {
     position: absolute;
     top: 0;
-    right: clamp(0rem, 9vw, 10rem);
+    right: 0;
     z-index: 2;
-    display: grid;
-    place-items: center;
-    width: clamp(8.5rem, 14vw, 13rem);
-    aspect-ratio: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85em;
+    min-height: clamp(3.25rem, 4vw, 3.75rem);
+    padding-inline: clamp(1.4rem, 2vw, 1.9rem) clamp(1.2rem, 1.7vw, 1.6rem);
+    border: 1px solid color-mix(in srgb, var(--color-paper) 32%, transparent);
     border-radius: 999px;
-    background-color: var(--color-paper);
-    color: var(--color-ink);
+    background-color: var(--color-void);
+    color: var(--color-paper);
+    font-size: clamp(0.875rem, 1vw, 1rem);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
     translate: 0 -50%;
     transition:
-      transform 0.7s var(--ease-out-expo),
-      background-color 0.4s var(--ease-out-quart);
+      background-color 0.45s var(--ease-out-quart),
+      border-color 0.45s var(--ease-out-quart),
+      color 0.45s var(--ease-out-quart),
+      transform 0.25s var(--ease-out-quart);
   }
 
-  .contact-disc:hover,
-  .contact-disc:focus-visible {
-    transform: scale(1.06);
-    background-color: var(--color-chalk);
+  .contact-cta:hover,
+  .contact-cta:focus-visible {
+    border-color: var(--color-paper);
+    background-color: var(--color-paper);
+    color: var(--color-ink);
   }
 
-  .contact-disc__arrow {
+  .contact-cta__arrow {
     display: inline-block;
-    transition: transform 0.6s var(--ease-out-expo);
+    font-size: 1.2em;
+    letter-spacing: 0;
+    transition: transform 0.5s var(--ease-out-expo);
   }
 
-  .contact-disc:hover .contact-disc__arrow,
-  .contact-disc:focus-visible .contact-disc__arrow {
-    transform: translate(0.2em, -0.2em);
+  .contact-cta:hover .contact-cta__arrow,
+  .contact-cta:focus-visible .contact-cta__arrow {
+    transform: translate(0.18em, -0.18em);
   }
 
-  .contact-disc:active {
+  /* O texto vira tinta no foco: o anel do teclado fica em papel, sobre o preto. */
+  .contact-cta:focus-visible {
+    outline-color: var(--color-paper);
+  }
+
+  .contact-cta:active {
     transform: scale(0.97);
   }
 }

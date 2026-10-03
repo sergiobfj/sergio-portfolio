@@ -23,6 +23,9 @@ type Props = {
 /** No celular o título vira cartaz: cresce até a palavra mais longa caber. */
 const MOBILE_MAX = "34vw";
 
+/** Respiro entre o header e o conteúdo no celular (~50–60px). */
+const MOBILE_TOP = "pt-[calc(var(--bar)+clamp(2.75rem,13vw,4rem))]";
+
 /**
  * Topo das páginas internas, na mesma linguagem da hero: cinza, a tela
  * inteira, o título em display assentado embaixo. O tamanho do título é o
@@ -30,9 +33,11 @@ const MOBILE_MAX = "34vw";
  * A seção seguinte desenha a base curva. `compact` não ocupa a tela toda:
  * o peso do topo acompanha o peso do trabalho.
  *
- * Em tablet de pé, a tela é muito mais alta que o título (que cresce com a
- * largura): a altura mínima passa a acompanhar a largura, senão o conteúdo
- * ficaria preso no fundo de meia tela vazia. Celular e paisagem: a tela toda.
+ * A tela toda só a partir de 640px. No celular a tela é muito mais alta que
+ * o conteúdo (o título cresce com a largura): com altura mínima de tela e o
+ * conteúdo assentado embaixo, sobravam 230–340px vazios sob o header. Ali o
+ * topo tem a altura do conteúdo — o header, um respiro curto e o texto.
+ * Em tablet de pé, a altura mínima acompanha a largura, pelo mesmo motivo.
  */
 export function PageHero({
   label,
@@ -48,9 +53,10 @@ export function PageHero({
     <section
       className={cn(
         "gutter-x flex flex-col justify-end bg-stone pb-[10vh]",
+        MOBILE_TOP,
         compact
-          ? "pt-[calc(var(--bar)+16vh)]"
-          : "min-h-[calc(100svh-var(--curve))] pt-(--bar) sm:portrait:min-h-[min(calc(100svh-var(--curve)),calc(var(--bar)+80vw))]",
+          ? "sm:pt-[calc(var(--bar)+16vh)]"
+          : "sm:min-h-[calc(100svh-var(--curve))] sm:pt-(--bar) sm:portrait:min-h-[min(calc(100svh-var(--curve)),calc(var(--bar)+80vw))]",
       )}
     >
       <div className="hero-fade flex items-baseline justify-between gap-6 text-ash">

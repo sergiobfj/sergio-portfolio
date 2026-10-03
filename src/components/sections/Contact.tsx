@@ -9,8 +9,8 @@ import { Signature } from "@/components/ui/Signature";
 
 /**
  * Fechamento escuro, quase uma última hero. A seção clara de cima desce
- * sobre ele em arco; um disco claro atravessa o filete — o único botão
- * grande do site.
+ * sobre ele em arco; o "Fale comigo" atravessa o filete, compacto, no
+ * mesmo sistema das outras setas.
  */
 export function Contact({
   dict,
@@ -44,17 +44,17 @@ export function Contact({
 
         <div className="relative mt-[13vh] md:mt-[16vh]">
           <Reveal variant="draw" className="h-px w-full bg-rule-dark" />
-          <a href={`mailto:${site.email}`} className="contact-disc">
-            <span className="flex flex-col items-center gap-2 text-center">
-              <span aria-hidden="true" className="contact-disc__arrow text-xl">
-                ↗
-              </span>
-              <span className="label">{dict.contact.cta}</span>
+          {/* O CTA apoiado no filete, na margem direita: rótulo + ↗, no mesmo
+              gesto das outras setas — o fundo preenche e o contraste inverte. */}
+          <a href={`mailto:${site.email}`} className="contact-cta">
+            {dict.contact.cta}
+            <span aria-hidden="true" className="contact-cta__arrow">
+              ↗
             </span>
           </a>
         </div>
 
-        <div className="mt-[clamp(6.5rem,11vw,9rem)] grid grid-cols-12 gap-x-6 gap-y-10">
+        <div className="mt-[clamp(4.5rem,8vw,6.5rem)] grid grid-cols-12 gap-x-6 gap-y-10">
           <div className="col-span-12 md:col-span-6">
             <p className="label mb-4 text-fog">{dict.contact.emailLabel}</p>
             <a
