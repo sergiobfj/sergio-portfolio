@@ -346,7 +346,7 @@ export function RouterPlanner({ item, dict, locale }: StoryProps) {
             as="h2"
             id="rp-result"
             lines={[story.result.title]}
-            className="display text-[clamp(1.6rem,2.6vw,2.4rem)]"
+            className="display text-chapter leading-[0.92]"
           />
 
           <div className="mt-[6vh] grid grid-cols-12 items-end gap-x-6 gap-y-8">

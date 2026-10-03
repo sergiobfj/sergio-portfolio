@@ -48,7 +48,7 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
             como o trabalho foi mudando, num fluxo curto. Nada disputa com a
             frase. */}
         <Band tone="paper" after="stone" labelledBy="virtron-intro">
-          <Chapter id="virtron-intro" title={story.intro.title}>
+          <Chapter id="virtron-intro" title={story.intro.title} level="section">
             <Reveal>
               <p className="voice text-voice text-balance md:text-center">{story.intro.lead}</p>
             </Reveal>
@@ -82,7 +82,7 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
         <Band tone="void" after="paper" labelledBy="virtron-start">
           <div className="grid grid-cols-12 gap-x-6 gap-y-14">
             <div className="col-span-12 lg:col-start-1 lg:row-start-1">
-              <Chapter id="virtron-start" title={story.start.title} inset>
+              <Chapter id="virtron-start" title={story.start.title} inset level="section">
                 <Reveal>
                   <p className="voice text-[clamp(1.75rem,3vw,3rem)] leading-[1.08] text-pretty">
                     {story.start.quote}
@@ -206,7 +206,7 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
               as="h2"
               id="virtron-scope"
               lines={[story.broaderScope.title]}
-              className="display text-[clamp(1.6rem,2.6vw,2.4rem)]"
+              className="display text-chapter leading-[0.92] text-balance"
             />
             <p className="label mt-4 text-ash">{monthYear(virtronStory.broaderScope, locale)}</p>
             <div className="mx-auto mt-[5vh] max-w-[58rem]">
@@ -227,7 +227,7 @@ export function VirtronStory({ entry, dict, locale }: ExperienceStoryProps) {
 
         {/* O que foi construído aqui: continua o off-white da promoção, sem curva */}
         <Band tone="paper" labelledBy="virtron-built">
-          <Chapter id="virtron-built" title={dict.experience.built} wide>
+          <Chapter id="virtron-built" title={dict.experience.built} wide level="section">
             <CaseGrid items={built} dict={dict} locale={locale} context="category" />
           </Chapter>
         </Band>

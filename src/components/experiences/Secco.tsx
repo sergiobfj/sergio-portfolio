@@ -21,7 +21,7 @@ import { Contact } from "@/components/sections/Contact";
 import { Reveal } from "@/components/ui/Reveal";
 import { RevealLines } from "@/components/ui/RevealLines";
 import { CaseGrid } from "@/components/work/CaseGrid";
-import { cn, fit } from "@/lib/cn";
+import { cn } from "@/lib/cn";
 import { listOf } from "@/lib/dates";
 import { mediaSrc } from "@/lib/media";
 import { growStyle, pairSpans } from "@/lib/spreads";
@@ -200,7 +200,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
 
         {/* O que é a SECCO: a definição, e a frase ao lado da equipe */}
         <Band tone="paper" after="stone" labelledBy="secco-about">
-          <Chapter id="secco-about" title={story.about.title}>
+          <Chapter id="secco-about" title={story.about.title} level="section">
             <Reveal>
               <p className="voice text-voice text-balance md:text-center">{story.about.text}</p>
             </Reveal>
@@ -244,7 +244,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
             as="h2"
             id="secco-role"
             lines={[story.role.title]}
-            className="display mb-[7vh] text-[clamp(1.6rem,2.6vw,2.4rem)] md:text-center"
+            className="display mb-[7vh] text-section leading-[0.92] md:text-center"
           />
           <ol className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 sm:gap-y-12 lg:grid-cols-4">
             {story.role.dimensions.map((dimension, i) => (
@@ -270,7 +270,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
 
         {/* O que construímos */}
         <Band tone="paper" after="void" labelledBy="secco-built">
-          <Chapter id="secco-built" title={story.built.title} wide>
+          <Chapter id="secco-built" title={story.built.title} wide level="section">
             <CaseGrid
               items={built}
               dict={dict}
@@ -306,14 +306,13 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
 
         {/* Talks, workshops & community */}
         <Band tone="stone" after="paper" labelledBy="secco-talks">
-          <div className="fit-display" style={fit(story.talks.title, "min(12rem, 11vw)", 86, "14vw")}>
-            <RevealLines
-              as="h2"
-              id="secco-talks"
-              lines={story.talks.title}
-              className="display leading-[0.96]"
-            />
-          </div>
+          {/* Mesma família de Minha atuação, O que construímos e Marcos. */}
+          <RevealLines
+            as="h2"
+            id="secco-talks"
+            lines={story.talks.title}
+            className="display text-section leading-[0.92] md:text-center"
+          />
 
           <div className="mt-[10vh] flex flex-col gap-y-[12vh]">
             {numbered.map((group) => {
@@ -384,7 +383,7 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
               as="h2"
               id="secco-milestones"
               lines={[story.milestones.title]}
-              className="display mb-[7vh] text-[clamp(1.6rem,2.6vw,2.4rem)] md:text-center"
+              className="display mb-[7vh] text-section leading-[0.92] md:text-center"
             />
             <ol
               className={cn(

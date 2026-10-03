@@ -5,13 +5,13 @@ import { delay } from "@/lib/cn";
 
 /**
  * A hero é uma composição, não uma landing: o nome atravessa a tela de
- * margem a margem e, sob ele, o lockup das três palavras em serifa — um
- * filete e uma escada que desce da borda direita do nome. Só isso: sem
- * cargo, sem bio, sem empresa. A simplicidade é a decisão.
+ * margem a margem e, sob ele, o manifesto — as três palavras em serifa,
+ * grandes, espalhadas na mesma largura. Só isso: sem cargo, sem bio, sem
+ * empresa. A simplicidade é a decisão.
  *
- * No desktop o nome numa linha; no tablet e no celular, em duas, também de
- * margem a margem. A escada fica sempre encostada à direita. O nome é nome
- * próprio — a composição é idêntica nos três idiomas; só as palavras mudam.
+ * No desktop o nome numa linha e o manifesto numa linha; no tablet e no
+ * celular, o nome em duas. O nome é nome próprio — a composição é idêntica
+ * nos três idiomas; só as palavras mudam.
  */
 export function Hero({ dict }: { dict: Dictionary }) {
   return (

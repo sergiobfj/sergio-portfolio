@@ -66,7 +66,7 @@ export function AutomacoesOperacionais({ item, dict, locale }: StoryProps) {
               <p className="label text-ash">{featured.label}</p>
               <h2
                 id="automations-featured"
-                className="display mt-4 text-[clamp(2.1rem,3.6vw,3.5rem)] leading-[0.95]"
+                className="display mt-4 text-chapter leading-[0.92]"
               >
                 {featured.title}
               </h2>

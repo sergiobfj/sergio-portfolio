@@ -4,14 +4,14 @@ import { RevealLines } from "@/components/ui/RevealLines";
 import { cn } from "@/lib/cn";
 
 /**
- * O título das seções da home: o número, o nome em display no corpo dos
- * capítulos e um filete curto que se desenha embaixo — a mesma gramática
- * em Trabalhos, Experiência e Background. O título não grita: quem pesa é o
- * conteúdo. `caption`, quando existe, é a linha de apoio sob o filete.
+ * O título das seções da home — Trabalhos, Experiência, Background — com a
+ * mesma gramática nas três: o nome é o protagonista, no corpo de seção
+ * (`text-section`); o número é detalhe, sobrescrito à direita, sem mexer na
+ * centralização; um filete curto apoia embaixo. `caption`, quando existe, é
+ * a linha de apoio sob o filete.
  *
- * Centralizado do tablet em diante; no celular, à esquerda, como os
- * capítulos das páginas internas. A distância até o conteúdo é do próprio
- * título — as três seções usam a mesma.
+ * Centralizado do tablet em diante; no celular, à esquerda. A distância até
+ * o conteúdo é do próprio título — as três seções usam a mesma.
  */
 export function SectionHeading({
   id,
@@ -29,21 +29,27 @@ export function SectionHeading({
 }) {
   return (
     <header className={cn("mb-[6vh] flex flex-col items-start md:items-center md:text-center", className)}>
-      <Reveal className="meta text-ash">{index}</Reveal>
-      <RevealLines
-        as="h2"
-        id={id}
-        lines={[title]}
-        delay={60}
-        className="display mt-4 text-[clamp(1.6rem,2.6vw,2.4rem)]"
-      />
+      <div className="relative">
+        <RevealLines
+          as="h2"
+          id={id}
+          lines={[title]}
+          className="display text-section leading-[0.9]"
+        />
+        <Reveal
+          delay={160}
+          className="meta absolute top-[0.35em] left-full ml-[0.6em] text-ash"
+        >
+          {index}
+        </Reveal>
+      </div>
       <Reveal
         variant="draw"
-        delay={160}
-        className="mt-5 h-px w-[clamp(2.5rem,4vw,4rem)] bg-current opacity-30"
+        delay={200}
+        className="mt-6 h-px w-[clamp(3rem,6vw,6rem)] bg-current opacity-30"
       />
       {caption ? (
-        <Reveal delay={200} className="mt-6 max-w-[44ch] text-[0.9375rem] leading-snug text-ash">
+        <Reveal delay={240} className="mt-6 max-w-[44ch] text-[0.9375rem] leading-snug text-ash">
           {caption}
         </Reveal>
       ) : null}

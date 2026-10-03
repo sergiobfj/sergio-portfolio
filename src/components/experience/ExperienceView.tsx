@@ -29,7 +29,7 @@ function GenericExperience({ entry, dict, locale }: ExperienceStoryProps) {
         <ExperienceHero entry={entry} dict={dict} locale={locale} />
 
         <Band tone="paper" after="stone" labelledBy="experience-journey">
-          <Chapter id="experience-journey" title={dict.experience.journey}>
+          <Chapter id="experience-journey" title={dict.experience.journey} level="section">
             <RevealLines
               as="p"
               lines={[copy.summary]}
@@ -52,7 +52,7 @@ function GenericExperience({ entry, dict, locale }: ExperienceStoryProps) {
 
           {areas.length > 0 ? (
             <div className="mt-[16vh]">
-              <Chapter id="experience-areas" title={dict.experience.areas}>
+              <Chapter id="experience-areas" title={dict.experience.areas} level="section">
                 <ol>
                   {areas.map((area, i) => (
                     <li
@@ -69,7 +69,7 @@ function GenericExperience({ entry, dict, locale }: ExperienceStoryProps) {
           ) : null}
 
           <div className="mt-[16vh] flex flex-col gap-y-[16vh]">
-            <Chapter id="experience-built" title={dict.experience.built} wide>
+            <Chapter id="experience-built" title={dict.experience.built} wide level="section">
               {built.length > 0 ? (
                 <CaseGrid items={built} dict={dict} locale={locale} context="category" />
               ) : (
