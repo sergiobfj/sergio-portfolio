@@ -2,7 +2,7 @@ import type { Dictionary } from "./pt";
 
 const es: Dictionary = {
   meta: {
-    title: "Sergio Barbosa — Innovador, Creador, Desarrollador",
+    title: "Sergio Barbosa · Innovador, Creador, Desarrollador",
     description:
       "Innovador, creador y desarrollador. Del problema a la producción: producto, código y operación.",
   },
@@ -18,7 +18,7 @@ const es: Dictionary = {
     language: "Idioma",
     social: "Redes",
     skip: "Saltar al contenido",
-    home: "Sergio Barbosa — inicio",
+    home: "Sergio Barbosa, inicio",
   },
   hero: {
     role: ["Innovador,", "Creador,", "Desarrollador."],
@@ -26,7 +26,7 @@ const es: Dictionary = {
   },
   work: {
     title: "Trabajos",
-    note: "Cosas que construí: productos, sistemas, automatizaciones y sitios — buena parte en código propietario.",
+    note: "Cosas que construí: productos, sistemas, automatizaciones y sitios. Buena parte en código propietario.",
     cursor: "Ver",
     count: { one: "trabajo", other: "trabajos" },
     soon: "Próximamente",
@@ -48,7 +48,7 @@ const es: Dictionary = {
     web: {
       title: ["Web &", "Experiencias digitales"],
       description:
-        "Sitios, landing pages y experiencias digitales — propios y para clientes.",
+        "Sitios, landing pages y experiencias digitales, propios y para clientes.",
     },
     tools: {
       title: ["Experimentos &", "Herramientas"],
@@ -193,7 +193,7 @@ const es: Dictionary = {
         route: "Ruta",
         legend: [
           "Una pestaña general, con todos los clientes.",
-          "Una pestaña por ruta — unas ocho o más por semana.",
+          "Una pestaña por ruta: unas ocho o más por semana.",
         ],
       },
       data: {
@@ -226,7 +226,7 @@ const es: Dictionary = {
       },
       result: {
         title: "Resultado",
-        value: "~1–2h",
+        value: "~1 a 2h",
         caption:
           "Para organizar una operación típica hoy, según la cantidad de clientes. Antes, podía ir del viernes al sábado.",
         note: "Estimación operativa, no un benchmark.",
@@ -302,7 +302,7 @@ const es: Dictionary = {
         ],
         statement: ["La IA entiende la pregunta.", "El sistema encuentra la respuesta."],
         explain:
-          "El LLM solo entra cuando el parser no resuelve la pregunta — y solo para interpretarla. Consultar Ploomes, filtrar y calcular queda en manos del código, para reducir alucinaciones.",
+          "El LLM solo entra cuando el parser no resuelve la pregunta, y solo para interpretarla. Consultar Ploomes, filtrar y calcular queda en manos del código, para reducir alucinaciones.",
         interpret: {
           title: "Interpretar",
           steps: ["Pregunta", "Parser determinista", "Fallback LLM", "Intención estructurada"],
@@ -456,7 +456,7 @@ const es: Dictionary = {
           },
           {
             title: "Recalcular, no duplicar",
-            text: "Los valores derivados se recalculan — nunca se duplican.",
+            text: "Los valores derivados se recalculan, nunca se duplican.",
           },
         ],
       },
@@ -619,7 +619,8 @@ const es: Dictionary = {
   },
   experience: {
     title: "Experiencia",
-    now: "Hoy",
+    since: "Desde",
+    to: "a",
     journey: "Mi trayectoria",
     areas: "Áreas de actuación",
     built: "Cosas que construí",
@@ -697,7 +698,7 @@ const es: Dictionary = {
       infrastructure: {
         title: "Del código a la infraestructura",
         statement: ["Construir también significa", "ponerlo en línea", "y mantenerlo funcionando."],
-        text: "Fui responsable de implantar la VPS que usan las aplicaciones internas — de la contratación al mantenimiento.",
+        text: "Fui responsable de implantar la VPS que usan las aplicaciones internas, de la contratación al mantenimiento.",
         steps: [
           "Contratación de la VPS",
           "Aprovisionamiento inicial",
@@ -712,7 +713,7 @@ const es: Dictionary = {
       },
       closing: {
         statement: ["Mi primer empleo", "también fue mi primer", "gran laboratorio."],
-        text: "En menos de dos años: soporte, hardware, redes, infraestructura, automatización, desarrollo e integraciones. No siempre fue simple — y quizás por eso fue donde más maduré.",
+        text: "En menos de dos años: soporte, hardware, redes, infraestructura, automatización, desarrollo e integraciones. No siempre fue simple. Quizás por eso fue donde más maduré.",
       },
     },
     secco: {

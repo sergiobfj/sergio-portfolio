@@ -6,7 +6,7 @@ import { SectionHeading } from "@/components/layout/SectionHeading";
 import { ArrowDisc } from "@/components/ui/ArrowDisc";
 import { Logo } from "@/components/ui/Logo";
 import { Reveal } from "@/components/ui/Reveal";
-import { yearOf } from "@/lib/dates";
+import { period } from "@/lib/dates";
 import { routes } from "@/lib/routes";
 
 /**
@@ -62,7 +62,7 @@ export function Experience({
                     </div>
                     <div className="col-span-3 md:col-span-1">
                       <p className="meta text-ash">
-                        {yearOf(item.from)} — {item.to ? yearOf(item.to) : dict.experience.now}
+                        {period(item.from, item.to, dict.experience)}
                       </p>
                       <p className="mt-2 max-w-[36ch] text-[0.9375rem] leading-snug">
                         {copy.summary}

@@ -55,7 +55,7 @@ export default async function OpengraphImage({
           <span>{site.lastName}</span>
         </div>
         <div style={{ display: "flex", fontSize: 26, letterSpacing: 1 }}>
-          {dict.hero.role.join(" ")} — {dict.contact.location}
+          {dict.hero.role.join(" ")} {dict.contact.location}
         </div>
       </div>
     ),

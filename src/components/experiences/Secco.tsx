@@ -94,7 +94,7 @@ function TalkItem({
       {showFigure ? (
         <Figure
           media={talk.media}
-          alt={`${text.title} — ${talk.event}`}
+          alt={`${text.title} (${talk.event})`}
           sizes="(max-width: 768px) 100vw, 54vw"
         />
       ) : null}
@@ -124,7 +124,7 @@ function TalkRow({
     <article className="grid grid-cols-1 gap-x-[clamp(0.625rem,1vw,1rem)] lg:grid-cols-12">
       <Figure
         media={talk.media}
-        alt={`${text.title} — ${talk.event}`}
+        alt={`${text.title} (${talk.event})`}
         sizes="(max-width: 1024px) 100vw, 58vw"
         className="lg:col-span-7"
       />
@@ -133,7 +133,7 @@ function TalkRow({
         {detail ? (
           <Figure
             media={detail}
-            alt={`${text.title} — ${text.detail ?? talk.event}`}
+            alt={`${text.title} (${text.detail ?? talk.event})`}
             sizes="(max-width: 640px) 58vw, (max-width: 1280px) 42vw, 24vw"
             className="w-[58%] self-end sm:w-[42%] lg:w-[50%] xl:w-[58%]"
           />

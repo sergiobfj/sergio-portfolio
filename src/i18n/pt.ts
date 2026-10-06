@@ -75,7 +75,7 @@ const categories: Record<WorkCategoryKey, CategoryCopy> = {
   web: {
     title: ["Web &", "Experiências digitais"],
     description:
-      "Sites, landing pages e experiências digitais — próprios e para clientes.",
+      "Sites, landing pages e experiências digitais, próprios e para clientes.",
   },
   tools: {
     title: ["Experimentos &", "Tools"],
@@ -248,7 +248,7 @@ const stories = {
       route: "Rota",
       legend: [
         "Uma aba geral, com todos os clientes.",
-        "Uma aba por rota — cerca de oito ou mais por semana.",
+        "Uma aba por rota: cerca de oito ou mais por semana.",
       ],
     },
     data: {
@@ -281,7 +281,7 @@ const stories = {
     },
     result: {
       title: "Resultado",
-      value: "~1–2h",
+      value: "~1 a 2h",
       caption:
         "Para organizar uma operação típica hoje, conforme o número de clientes. Antes, podia ir da sexta ao sábado.",
       note: "Estimativa operacional, não benchmark.",
@@ -358,7 +358,7 @@ const stories = {
       ],
       statement: ["A IA entende a pergunta.", "O sistema encontra a resposta."],
       explain:
-        "O LLM só entra quando o parser não resolve — e só para interpretar. Consultar o Ploomes, filtrar e calcular fica com o código, para reduzir alucinação.",
+        "O LLM só entra quando o parser não resolve, e só para interpretar. Consultar o Ploomes, filtrar e calcular fica com o código, para reduzir alucinação.",
       interpret: {
         title: "Interpretar",
         steps: ["Pergunta", "Parser determinístico", "Fallback LLM", "Intenção estruturada"],
@@ -514,7 +514,7 @@ const stories = {
         },
         {
           title: "Recalcular, não duplicar",
-          text: "Valores derivados são recalculados — nunca duplicados.",
+          text: "Valores derivados são recalculados, nunca duplicados.",
         },
       ],
     },
@@ -731,7 +731,7 @@ const experienceStories = {
     infrastructure: {
       title: "Do código à infraestrutura",
       statement: ["Construir também significa", "colocar no ar", "e manter funcionando."],
-      text: "Fui responsável pela implantação da VPS usada pelas aplicações internas — da contratação à manutenção.",
+      text: "Fui responsável pela implantação da VPS usada pelas aplicações internas, da contratação à manutenção.",
       steps: [
         "Contratação da VPS",
         "Provisionamento inicial",
@@ -747,7 +747,7 @@ const experienceStories = {
     },
     closing: {
       statement: ["Meu primeiro emprego", "também foi meu primeiro", "grande laboratório."],
-      text: "Em menos de dois anos: suporte, hardware, redes, infraestrutura, automação, desenvolvimento e integrações. Nem sempre foi simples — e talvez por isso tenha sido onde mais amadureci.",
+      text: "Em menos de dois anos: suporte, hardware, redes, infraestrutura, automação, desenvolvimento e integrações. Nem sempre foi simples. Talvez por isso tenha sido onde mais amadureci.",
     },
   },
   secco: {
@@ -803,7 +803,7 @@ const stackGroups: Record<StackGroupKey, string> = {
 
 const pt = {
   meta: {
-    title: "Sergio Barbosa — Inovador, Criador, Desenvolvedor",
+    title: "Sergio Barbosa · Inovador, Criador, Desenvolvedor",
     description:
       "Inovador, criador e desenvolvedor. Do problema à produção: produto, código e operação.",
   },
@@ -819,7 +819,7 @@ const pt = {
     language: "Idioma",
     social: "Redes",
     skip: "Pular para o conteúdo",
-    home: "Sergio Barbosa — início",
+    home: "Sergio Barbosa, início",
   },
   hero: {
     role: ["Inovador,", "Criador,", "Desenvolvedor."],
@@ -827,7 +827,7 @@ const pt = {
   },
   work: {
     title: "Trabalhos",
-    note: "Coisas que construí: produtos, sistemas, automações e sites — boa parte em código proprietário.",
+    note: "Coisas que construí: produtos, sistemas, automações e sites. Boa parte em código proprietário.",
     cursor: "Ver",
     count: { one: "trabalho", other: "trabalhos" },
     soon: "Em breve",
@@ -860,7 +860,8 @@ const pt = {
   },
   experience: {
     title: "Experiência",
-    now: "Hoje",
+    since: "Desde",
+    to: "a",
     journey: "Minha trajetória",
     areas: "Áreas de atuação",
     built: "Coisas que construí",

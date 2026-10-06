@@ -2,6 +2,7 @@ import { background } from "@/data/portfolio";
 import type { Dictionary } from "@/i18n/dictionary";
 import { Metrics, type Metric } from "@/components/case/Metrics";
 import { SectionHeading } from "@/components/layout/SectionHeading";
+import { period } from "@/lib/dates";
 
 /**
  * Background em quatro medidas: trajetória em tecnologia, formação técnica,
@@ -23,13 +24,13 @@ export function Background({ dict }: { dict: Dictionary }) {
       value: copy.technical.value,
       lines: [copy.technical.title],
       note: technical.institution,
-      meta: `${technical.from} — ${technical.to}`,
+      meta: period(technical.from, technical.to, dict.experience),
     },
     {
       value: copy.degree.value,
       lines: [copy.degree.title, copy.degree.status],
       note: degree.institution,
-      meta: `${degree.from} — ${degree.to}`,
+      meta: period(degree.from, degree.to, dict.experience),
     },
     {
       value: role,

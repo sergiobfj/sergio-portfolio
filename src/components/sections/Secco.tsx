@@ -6,7 +6,7 @@ import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Reveal } from "@/components/ui/Reveal";
 import { RevealLines } from "@/components/ui/RevealLines";
 import { SectionCurve } from "@/components/ui/SectionCurve";
-import { yearOf } from "@/lib/dates";
+import { period } from "@/lib/dates";
 import { caseTitle } from "@/lib/work";
 import { routes } from "@/lib/routes";
 
@@ -34,7 +34,7 @@ export function Secco({ dict, locale }: { dict: Dictionary; locale: Locale }) {
         <Reveal className="label text-fog">{dict.secco.discipline}</Reveal>
         {entry ? (
           <Reveal delay={80} className="meta text-fog">
-            {yearOf(entry.from)} — {entry.to ? yearOf(entry.to) : dict.experience.now}
+            {period(entry.from, entry.to, dict.experience)}
           </Reveal>
         ) : null}
       </div>

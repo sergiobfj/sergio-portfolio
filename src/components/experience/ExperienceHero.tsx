@@ -6,7 +6,7 @@ import { ArrowLink } from "@/components/ui/ArrowLink";
 import { BackLink } from "@/components/ui/BackLink";
 import { Logo } from "@/components/ui/Logo";
 import { NextLink } from "@/components/ui/NextLink";
-import { monthYear } from "@/lib/dates";
+import { monthYearInline, period } from "@/lib/dates";
 import { routes } from "@/lib/routes";
 
 export type ExperienceStoryProps = {
@@ -23,7 +23,6 @@ export type ExperienceStoryProps = {
  */
 export function ExperienceHero({ entry, dict, locale }: ExperienceStoryProps) {
   const copy = dict.experiences[entry.key];
-  const until = entry.to ? monthYear(entry.to, locale) : dict.experience.now;
 
   return (
     <PageHero
@@ -33,7 +32,7 @@ export function ExperienceHero({ entry, dict, locale }: ExperienceStoryProps) {
           {entry.legalName ? <li className="text-ink">{entry.legalName}</li> : null}
         </ul>
       }
-      meta={`${monthYear(entry.from, locale)} — ${until}`}
+      meta={period(entry.from, entry.to, dict.experience, (value) => monthYearInline(value, locale))}
       title={[entry.company]}
       voice={
         <p className="voice text-[clamp(1.75rem,3vw,3rem)] leading-[1.02]">

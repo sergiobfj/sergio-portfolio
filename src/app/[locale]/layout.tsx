@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
   return {
     metadataBase: new URL(site.url),
-    title: { default: dict.meta.title, template: `%s — ${site.name}` },
+    title: { default: dict.meta.title, template: `%s · ${site.name}` },
     description: dict.meta.description,
     authors: [{ name: site.name }],
     creator: site.name,

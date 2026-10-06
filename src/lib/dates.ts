@@ -39,6 +39,21 @@ export function monthYearShort(value: string, locale: Locale) {
   return `${month} ${yearOf(value)}`;
 }
 
+/**
+ * Um intervalo nas palavras do idioma, sem traço: "Desde 2025" quando ainda
+ * está em andamento, "2022 a 2024" quando terminou. `format` escreve cada
+ * ponta (o ano, por padrão).
+ */
+export function period(
+  from: string,
+  to: string | null,
+  words: { since: string; to: string },
+  format: (value: string) => string = yearOf,
+) {
+  const text = to ? `${format(from)} ${words.to} ${format(to)}` : `${words.since} ${format(from)}`;
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 /** "Igor, Gabriel, Luan e Juan" — a conjunção certa em cada idioma. */
 export function listOf(items: readonly string[], locale: Locale) {
   return new Intl.ListFormat(htmlLang[locale], {

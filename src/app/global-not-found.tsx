@@ -12,7 +12,7 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  title: `404 — ${site.name}`,
+  title: `404 · ${site.name}`,
 };
 
 /**

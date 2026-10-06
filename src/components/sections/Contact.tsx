@@ -115,7 +115,7 @@ export function Contact({
             <Signature tone="paper" />
           </Link>
           <p className="label text-fog">
-            © {year} {site.name} — {dict.contact.location}
+            © {year} {site.name} · {dict.contact.location}
           </p>
         </div>
       </div>

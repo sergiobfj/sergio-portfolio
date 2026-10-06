@@ -2,7 +2,7 @@ import type { Dictionary } from "./pt";
 
 const en: Dictionary = {
   meta: {
-    title: "Sergio Barbosa — Innovator, Creator, Developer",
+    title: "Sergio Barbosa · Innovator, Creator, Developer",
     description:
       "Innovator, creator and developer. From problem to production: product, code and operations.",
   },
@@ -18,7 +18,7 @@ const en: Dictionary = {
     language: "Language",
     social: "Elsewhere",
     skip: "Skip to content",
-    home: "Sergio Barbosa — home",
+    home: "Sergio Barbosa, home",
   },
   hero: {
     role: ["Innovator,", "Creator,", "Developer."],
@@ -26,7 +26,7 @@ const en: Dictionary = {
   },
   work: {
     title: "Work",
-    note: "Things I've built: products, systems, automations and sites — much of it in proprietary code.",
+    note: "Things I've built: products, systems, automations and sites. Much of it is proprietary code.",
     cursor: "View",
     count: { one: "project", other: "projects" },
     soon: "Coming soon",
@@ -48,7 +48,7 @@ const en: Dictionary = {
     web: {
       title: ["Web &", "Digital experiences"],
       description:
-        "Sites, landing pages and digital experiences — my own and for clients.",
+        "Sites, landing pages and digital experiences, my own and for clients.",
     },
     tools: {
       title: ["Experiments &", "Tools"],
@@ -193,7 +193,7 @@ const en: Dictionary = {
         route: "Route",
         legend: [
           "One general tab, with every client.",
-          "One tab per route — around eight or more a week.",
+          "One tab per route: around eight or more a week.",
         ],
       },
       data: {
@@ -226,7 +226,7 @@ const en: Dictionary = {
       },
       result: {
         title: "Result",
-        value: "~1–2h",
+        value: "1 to 2h",
         caption:
           "To organize a typical operation today, depending on the number of clients. Before, it could run from Friday into Saturday.",
         note: "Operational estimate, not a benchmark.",
@@ -302,7 +302,7 @@ const en: Dictionary = {
         ],
         statement: ["The AI understands the question.", "The system finds the answer."],
         explain:
-          "The LLM only steps in when the parser can’t resolve a question — and only to interpret it. Querying Ploomes, filtering and calculating stay with the code, to reduce hallucination.",
+          "The LLM only steps in when the parser can’t resolve a question, and only to interpret it. Querying Ploomes, filtering and calculating stay with the code, to reduce hallucination.",
         interpret: {
           title: "Interpret",
           steps: ["Question", "Deterministic parser", "LLM fallback", "Structured intent"],
@@ -456,7 +456,7 @@ const en: Dictionary = {
           },
           {
             title: "Recalculate, don’t duplicate",
-            text: "Derived values are recalculated — never duplicated.",
+            text: "Derived values are recalculated, never duplicated.",
           },
         ],
       },
@@ -619,7 +619,8 @@ const en: Dictionary = {
   },
   experience: {
     title: "Experience",
-    now: "Now",
+    since: "Since",
+    to: "to",
     journey: "My journey",
     areas: "Areas of work",
     built: "Things I built",
@@ -697,7 +698,7 @@ const en: Dictionary = {
       infrastructure: {
         title: "From code to infrastructure",
         statement: ["Building also means", "putting it live", "and keeping it running."],
-        text: "I was responsible for rolling out the VPS used by the internal applications — from signing up to ongoing maintenance.",
+        text: "I was responsible for rolling out the VPS used by the internal applications, from signing up to ongoing maintenance.",
         steps: [
           "Contracting the VPS",
           "Initial provisioning",
@@ -712,7 +713,7 @@ const en: Dictionary = {
       },
       closing: {
         statement: ["My first job", "was also my first", "big lab."],
-        text: "In less than two years: support, hardware, networking, infrastructure, automation, development and integrations. It wasn’t always simple — and maybe that’s why it’s where I grew the most.",
+        text: "In less than two years: support, hardware, networking, infrastructure, automation, development and integrations. It wasn’t always simple. Maybe that’s why it’s where I grew the most.",
       },
     },
     secco: {
