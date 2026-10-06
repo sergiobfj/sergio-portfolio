@@ -302,8 +302,10 @@ export function SeccoStory({ entry, dict, locale }: ExperienceStoryProps) {
                 group.items.length > 1 && group.items.every(({ pictured }) => pictured);
               // Uma foto de detalhe não cabe na fileira lado a lado: o grupo
               // vira linhas, cada talk com o texto ao lado da própria foto.
+              // Uma talk marcada `row` pede o mesmo, mesmo sem detalhe.
               const rows =
-                matched && group.items.some(({ detailed }) => detailed);
+                matched &&
+                group.items.some(({ talk, detailed }) => detailed || talk.row);
               return (
                 <section key={group.event} aria-label={group.event}>
                   <Reveal variant="draw" className="h-px w-full bg-ink/15" />

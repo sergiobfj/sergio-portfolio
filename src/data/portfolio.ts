@@ -616,6 +616,11 @@ export type Talk = {
    * à esquerda, o texto e o detalhe ao lado.
    */
   detail?: MediaSlot;
+  /**
+   * Em linha mesmo sem foto de detalhe: a foto à esquerda, o texto ao lado.
+   * Basta numa talk para o grupo do evento inteiro virar linhas.
+   */
+  row?: boolean;
   /** Quem dividiu o palco, só o primeiro nome. */
   with?: string[];
 };
@@ -651,6 +656,8 @@ export const talks: Talk[] = [
     event: "UniFavip Wyden",
     kind: "talk",
     status: "done",
+    // A selfie da turma pede a foto grande: o grupo da UniFavip fica em linhas.
+    row: true,
     with: ["Igor", "Gabriel", "Luan", "Juan"],
     media: { src: "/experience/secco/unifavip-talk-empreendedorismo.jpg", ratio: "16 / 10", position: "50% 40%" },
   },
@@ -662,8 +669,6 @@ export const talks: Talk[] = [
     status: "done",
     // A sala: o código projetado, quem conduz e as bancadas.
     media: { src: "/experience/secco/unifavip-bug-hunt-oficina.jpg", ratio: "4 / 3" },
-    // O detalhe: a aplicação da oficina na parede, com o erro de login.
-    detail: { src: "/experience/secco/unifavip-bug-hunt-aplicacao.jpg", ratio: "1 / 1" },
   },
 ];
 
