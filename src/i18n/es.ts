@@ -22,6 +22,7 @@ const es: Dictionary = {
   },
   hero: {
     role: ["Innovador,", "Creador,", "Desarrollador."],
+    portraitAlt: "Sergio Barbosa de pie, hablando y gesticulando, con gafas y camisa negra",
   },
   work: {
     title: "Trabajos",

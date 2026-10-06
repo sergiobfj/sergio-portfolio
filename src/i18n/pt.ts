@@ -823,6 +823,7 @@ const pt = {
   },
   hero: {
     role: ["Inovador,", "Criador,", "Desenvolvedor."],
+    portraitAlt: "Sergio Barbosa de pé, falando e gesticulando, de óculos e camisa preta",
   },
   work: {
     title: "Trabalhos",

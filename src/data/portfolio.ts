@@ -37,6 +37,19 @@ export const aboutPortrait: MediaSlot = {
   position: "50% 12%",
 };
 
+/**
+ * A mesma foto do Sobre, do arquivo original (o dobro da resolução), sem a
+ * parede: só o alfa foi calculado — nenhum pixel da pessoa foi gerado. O
+ * recorte (1600×2839) começa logo acima da cabeça e vai até os joelhos; a
+ * mão erguida esmaece onde o arquivo original a corta. As medidas que a
+ * composição usa estão no bloco HERO de globals.css. `silhouette` é o alfa
+ * da mesma foto (1000 px), a máscara que troca o tom do nome sobre o corpo.
+ */
+export const heroPortrait = {
+  src: "/images/sergio-retrato-hero.webp",
+  silhouette: "/images/sergio-retrato-hero-silhueta.webp",
+};
+
 /* ---------------------------------------------------------------------------
    TRABALHOS
    Trabalho é o que foi construído, não um repositório. A home mostra quatro

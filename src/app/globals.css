@@ -25,7 +25,8 @@
   /* Contraste de escala radical: título gigante, rótulo minúsculo. */
   --text-display: clamp(3.25rem, 11.5vw, 12.5rem);
   --text-headline: clamp(3rem, 9.5vw, 10rem);
-  /* Hierarquia dos títulos. O nome e o manifesto da hero vivem em cqw (.hero).
+  /* Hierarquia dos títulos. O nome e o manifesto da hero vivem em unidades
+     da própria hero (.hero).
      Seção: Trabalhos, Experiência, Marcos, Minha atuação… — 44px no
      celular, ~54px no tablet, ~88px em 1440, teto 96px.
      Capítulo: O problema, Como funciona, Ficha técnica… — 34 / 37 / 56px.
@@ -209,136 +210,298 @@
 
 /* ==========================================================================
    HERO
-   O nome, de margem a margem, e o papel sob SERGIO — só o essencial. O
-   conjunto fica no meio da dobra: o espaço em volta é respiro, não vazio a
-   preencher. Sem retrato por enquanto — a fotografia volta com a interação
-   foto/tipografia, não como placeholder.
+   Retrato e nome numa composição só. O nome corre de margem a margem na
+   frente do corpo (um laço de transform; o JS só o pausa fora da tela) e
+   troca de tom sobre ele: tinta no fundo, claro sobre mim. Atrás, o retrato
+   recortado; do lado para onde estou olhando, o manifesto. O corpo não para
+   na base da hero: desce para dentro da curva e é ela que o corta — a base
+   curva vira a moldura de baixo do retrato.
+
+   A geometria mora em unidades da própria hero (cqh/cqw) e o retrato é
+   dimensionado pela altura: a cabeça sempre no mesmo ponto e o fundo da
+   curva cortando o corpo na mesma altura, em qualquer proporção de tela.
+   Medidas da foto (sergio-retrato-hero.webp, 1600×2839): proporção 0.5636,
+   topo da cabeça a 1.68% da altura, centro do rosto a 61.7% da largura.
    ========================================================================== */
 
 @layer components {
   .hero {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: calc(100svh - var(--curve));
-    padding-top: var(--bar);
-    padding-bottom: clamp(1.5rem, 4vh, 3rem);
-  }
+    --head-y: 12cqh;
+    --face-x: 52cqw;
+    /* Quanto da foto aparece até o fundo da curva (0.75 ≈ quadril). */
+    --fig-visible: 0.72;
+    --fig-h: calc((100cqh - var(--head-y) + var(--curve)) / var(--fig-visible));
+    --fig-w: calc(var(--fig-h) * 0.5636);
+    --fig-top: calc(var(--head-y) - var(--fig-h) * 0.0168);
+    --fig-left: calc(var(--face-x) - var(--fig-w) * 0.617);
+    --name-size: 35cqh;
+    --name-y: 50cqh;
+    /* O manifesto logo abaixo do nome: a linha do nome mais um respiro. */
+    --words-y: calc(var(--name-y) + var(--name-size) * 0.82 + 2.5cqh);
 
-  .hero-frame {
-    container-type: inline-size;
-  }
-
-  /* Celular e tablet: o nome em duas linhas, também de margem a margem. */
-  .hero-stage {
-    --name-size: 29cqw;
-  }
-
-  .hero-name {
-    display: flex;
-    flex-direction: column;
-    font-size: var(--name-size);
-    white-space: nowrap;
-  }
-
-  /* Nunca encolher: a máscara (overflow hidden) cortaria a última letra. */
-  .hero-name > * {
-    flex-shrink: 0;
-  }
-
-  /* O manifesto (sections/HeroWords): as três palavras em serifa, grandes —
-     nome + manifesto, não nome + legenda. Do tablet em diante, uma linha só
-     de margem a margem: Inovador na margem esquerda, Desenvolvedor na
-     direita e Criador entre os dois, com vãos iguais (centrar Criador de
-     verdade colaria nele o "Desenvolvedor", que é o mais longo). No celular,
-     duas linhas: Inovador e Criador nas bordas, Desenvolvedor embaixo. */
-  .hero-words {
-    --words-size: min(15.5cqw, 3.6rem);
-
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: space-between;
-    margin-top: 6cqw;
-    font-size: var(--words-size);
-    line-height: 1.02;
-    white-space: nowrap;
-  }
-
-  /* Cada palavra do tamanho dela (a faixa do mouse abraça a palavra, não a
-     coluna do grid). */
-  .hero-word {
     position: relative;
-    isolation: isolate;
-    justify-self: start;
-    transition: color 0.35s var(--ease-out-quart);
+    /* A metade do retrato que desce pinta sobre a curva da seção de baixo. */
+    z-index: 2;
+    container-type: size;
+    height: calc(100svh - var(--curve));
+    min-height: 34rem;
+    overflow-x: clip;
+  }
+
+  /* Tipografia na frente do corpo: cada texto vem em duas camadas iguais —
+     a de tinta sem a silhueta e, por cima, a clara só dentro dela. Assim o
+     texto troca de tom ao atravessar o corpo e não some sobre a camisa preta.
+     --layer-y é o topo da camada dentro da hero; a caixa de cada camada sobra
+     um respiro acima e abaixo da linha para a máscara não comer as letras. */
+  .hero-ink,
+  .hero-over {
+    --mask-at: var(--fig-left) calc(var(--fig-top) - var(--layer-y));
+  }
+
+  .hero-ink {
+    color: var(--color-ink);
+    mask:
+      linear-gradient(#000 0 0),
+      var(--silhouette) var(--mask-at) / var(--fig-w) var(--fig-h) no-repeat;
+    mask-composite: exclude;
+  }
+
+  .hero-over {
+    position: absolute;
+    inset: 0;
+    color: var(--color-paper);
+    mask: var(--silhouette) var(--mask-at) / var(--fig-w) var(--fig-h) no-repeat;
+  }
+
+  /* O nome: uma faixa contínua de borda a borda, que começa na margem da
+     assinatura (sections/HeroName). */
+  .hero-band {
+    --band-pad: 0.2em;
+    --layer-y: calc(var(--name-y) - var(--band-pad));
+
+    position: absolute;
+    inset-inline: 0;
+    top: var(--layer-y);
+    z-index: 2;
+    font-size: var(--name-size);
+  }
+
+  .hero-band__layer {
+    padding-block: var(--band-pad);
+    overflow-x: clip;
+  }
+
+  .hero-band__track {
+    display: flex;
+    width: max-content;
+    margin-inline-start: var(--gutter);
+    animation: hero-marquee 56s linear infinite;
+  }
+
+  /* Fora da tela, o laço para (sections/HeroName). */
+  .hero-band[data-paused] .hero-band__track {
+    animation-play-state: paused;
+  }
+
+  .hero-band__run {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  /* Entre uma volta e outra, o ponto da assinatura — não um travessão. */
+  .hero-band__run::after {
+    content: "";
+    flex-shrink: 0;
+    width: 0.16em;
+    height: 0.16em;
+    margin-inline: 0.3em 0.32em;
+    border-radius: 50%;
+    background-color: currentColor;
+  }
+
+  /* O retrato não sobe na entrada, só aparece: a silhueta que recorta o
+     nome é fixa e precisa coincidir com ele desde o primeiro quadro. */
+  .hero-figure {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    animation: hero-figure-in 1.4s var(--ease-out-quart) both;
+    animation-delay: var(--delay, 0ms);
+  }
+
+  .hero-portrait {
+    position: absolute;
+    inset: 0;
+    overflow: clip;
+  }
+
+  .hero-portrait__frame {
+    position: absolute;
+    top: var(--fig-top);
+    left: var(--fig-left);
+    width: var(--fig-w);
+    height: var(--fig-h);
+  }
+
+  .hero-portrait__img {
+    object-fit: contain;
+  }
+
+  /* A metade de baixo: a mesma caixa da curva da seção seguinte (ui/SectionCurve),
+     recortada pelo mesmo arco. */
+  .hero-portrait--curve {
+    top: calc(100% - 1px);
+    bottom: auto;
+    height: calc(var(--curve) + 1px);
+    clip-path: ellipse(70% 333% at 50% -233%);
+    view-timeline: --hero-curve block;
+  }
+
+  .hero-portrait--curve > .hero-portrait__frame {
+    top: calc(var(--fig-top) - 100cqh + 1px);
+  }
+
+  /* O manifesto: a segunda linha da composição, logo abaixo do nome e na
+     mesma largura. Criador é a âncora — maior, em itálico, no centro exato
+     da hero (o eixo do nome) —, e Inovador e Desenvolvedor ficam nas
+     margens, onde estão a assinatura e o menu. A grade tem três colunas, as
+     de fora iguais: o centro não depende do tamanho das palavras.
+
+     O tamanho é o maior em que metade da linha cabe em metade da largura:
+     meio Criador (1.3 × 2.95em / 2) + vão (0.6em) + a palavra de fora mais
+     longa (Desenvolvedor., 4.9em) = 7.42em, nos três idiomas. Em tela
+     muito larga, a altura manda: 11cqh mantém a linha acima da curva. */
+  .hero-words {
+    --words-pad: 0.3em;
+    --layer-y: calc(var(--words-y) - var(--words-pad));
+
+    position: absolute;
+    inset-inline: 0;
+    top: var(--layer-y);
+    z-index: 2;
+    font-size: min(5.6cqw, 11cqh, calc((100cqw - 2 * var(--gutter)) / 14.84));
+  }
+
+  .hero-words__layer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: 0.6em;
+    padding: var(--words-pad) var(--gutter);
+    line-height: 1;
+    white-space: nowrap;
   }
 
   .hero-word:nth-child(2) {
-    justify-self: end;
-    font-style: italic;
+    font-size: 1.3em;
   }
 
   .hero-word:nth-child(3) {
-    grid-column: 1 / -1;
+    justify-self: end;
   }
 
-  /* No mouse, uma faixa escura sobe por trás da palavra e ela clareia —
-     um bloco editorial, quase sem raio. */
-  .hero-word::before {
-    content: "";
-    position: absolute;
-    inset: 0.08em -0.12em -0.02em;
-    z-index: -1;
-    border-radius: 2px;
-    background-color: var(--color-ink);
-    transform: scaleY(0);
-    transform-origin: 50% 100%;
-    transition: transform 0.45s var(--ease-out-expo);
+  /* Entra como o nome — pela máscara, palavra a palavra, logo depois dele.
+     Depois, Criador fica aceso e as duas de fora se revezam em volta dele:
+     uma acesa, a outra em meio tom. */
+  .hero-word:not(:nth-child(2)) {
+    animation: hero-word-turn 5.2s var(--ease-in-out-quart) infinite both;
+    animation-delay: calc(2.6s + var(--word) * 1.3s);
   }
 
-  @media (hover: hover) and (pointer: fine) {
-    .hero-word:hover {
-      color: var(--color-paper);
-    }
-
-    .hero-word:hover::before {
-      transform: scaleY(1);
-    }
+  /* Fora da tela, para junto com o nome. */
+  .hero:has([data-paused]) .hero-word {
+    animation-play-state: paused;
   }
 
-  @media (min-width: 640px) {
-    .hero-words {
-      --words-size: min(11cqw, 4.75rem);
-
-      margin-top: 4.5cqw;
+  /* Tela em pé (celular, tablet): outra composição, não a de cima
+     encolhida. O retrato ocupa a tela até a curva; o nome cruza o peito e
+     o manifesto vem logo abaixo, quase tudo no tom claro, sobre o corpo. */
+  @media (orientation: portrait) {
+    .hero {
+      --head-y: 17.5cqh;
+      --face-x: 56cqw;
+      --fig-visible: 0.9;
+      --name-size: 27cqh;
+      --name-y: 47.5cqh;
+      --words-y: calc(var(--name-y) + var(--name-size) * 0.82 + 1.5cqh);
     }
   }
 
-  @media (min-width: 768px) {
-    .hero-words {
-      --words-size: clamp(3.5rem, 8.4cqw, 4.75rem);
-
-      display: flex;
-      align-items: baseline;
-      margin-top: 4cqw;
-    }
-  }
-
-  /* Desktop: o nome numa linha só; o manifesto continua a linha de cima. */
-  @media (min-width: 1024px) {
-    .hero-stage {
-      --name-size: 16.05cqw;
-    }
-
-    .hero-name {
-      flex-direction: row;
-      gap: 0.19em;
+  /* Celular: a linha não cabe sem encolher demais. O manifesto vira uma
+     coluna centrada no mesmo eixo — Criador no meio, Inovador e
+     Desenvolvedor em volta dele —, atravessando o corpo no tom claro. */
+  @media (orientation: portrait) and (max-width: 639px) {
+    .hero {
+      --words-y: calc(var(--name-y) + var(--name-size) * 0.82 + 3cqh);
     }
 
     .hero-words {
-      --words-size: clamp(4.5rem, 7.2cqw, 7rem);
+      font-size: clamp(1.9rem, 9.4cqw, 3rem);
+    }
 
-      margin-top: 3.4cqw;
+    .hero-words__layer {
+      grid-template-columns: auto;
+      justify-content: center;
+      justify-items: center;
+      row-gap: 0.04em;
+    }
+
+    .hero-word:nth-child(3) {
+      justify-self: center;
+    }
+  }
+}
+
+@keyframes hero-marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* As duas palavras de fora se revezam: metade do ciclo acesa, metade em
+   meio tom, defasadas em meio ciclo. */
+@keyframes hero-word-turn {
+  0%,
+  40% {
+    opacity: 1;
+  }
+  50%,
+  90% {
+    opacity: 0.36;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-figure-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* A metade da curva assenta junto com a curva: mesma caixa, mesmo intervalo,
+   mesmo fator — scaleY(0.3) do arco é o mesmo que encolher a elipse. */
+@keyframes hero-curve-settle {
+  from {
+    clip-path: ellipse(70% 333% at 50% -233%);
+  }
+  to {
+    clip-path: ellipse(70% 99.9% at 50% -69.9%);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-portrait--curve {
+      animation-name: hero-curve-settle;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --hero-curve;
+      animation-range: entry 100% cover 72%;
     }
   }
 }
@@ -1225,6 +1388,13 @@
 
   .hero-mask > *,
   .hero-fade {
+    animation: none !important;
+  }
+
+  /* A hero fica parada e inteira: o nome na margem, o retrato no lugar. */
+  .hero-band__track,
+  .hero-figure,
+  .hero-word {
     animation: none !important;
   }
 
